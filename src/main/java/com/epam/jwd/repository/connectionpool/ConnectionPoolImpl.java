@@ -44,6 +44,7 @@ public class ConnectionPoolImpl implements ConnectionPool{
             try {
                 createConnectionAndAddToPool();
             } catch (SQLException e) {
+                //todo implement logger and custom exception
                 e.printStackTrace();
             }
             return availableConnections.poll();
