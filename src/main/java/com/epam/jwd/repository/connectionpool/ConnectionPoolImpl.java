@@ -67,7 +67,7 @@ public class ConnectionPoolImpl implements ConnectionPool{
         if (givenAwayConnections.remove((ProxyConnection) connection)){
             if (availableConnections.size() + givenAwayConnections.size() < PREFERRED_CONNECTIONS || availableConnections.size() == 0){
                 availableConnections.add((ProxyConnection) connection);
-                notifyAll();
+                notify();
             } else {
                 closeConnection((ProxyConnection) connection);
             }
