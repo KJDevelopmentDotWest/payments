@@ -27,7 +27,7 @@ public class ConnectionPoolImpl implements ConnectionPool{
         instance.initialize();
     }
 
-    public static ConnectionPoolImpl getInstance(){
+    public static ConnectionPool getInstance(){
         if(Objects.isNull(instance)){
             instance = new ConnectionPoolImpl();
         }
