@@ -7,10 +7,11 @@ import java.util.Deque;
 import java.util.Objects;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPoolImpl implements ConnectionPool{
 
-    private static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/test";
+    private static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/payments";
     private static final String USER = "postgres";
     private static final String PASS = "1234";
     private static final int MAX_CONNECTIONS = 8;
@@ -18,19 +19,23 @@ public class ConnectionPoolImpl implements ConnectionPool{
 
     private boolean initialized = false;
 
+    private static final ReentrantLock getInstanceLock = new ReentrantLock();
+
     private final BlockingDeque<ProxyConnection> availableConnections = new LinkedBlockingDeque<>();
     private final BlockingDeque<ProxyConnection> givenAwayConnections = new LinkedBlockingDeque<>();
 
-    private static ConnectionPoolImpl instance = null;
+    private static ConnectionPoolImpl instance;
 
     private ConnectionPoolImpl(){
-        instance.initialize();
     }
 
     public static ConnectionPool getInstance(){
+        getInstanceLock.lock();
         if(Objects.isNull(instance)){
             instance = new ConnectionPoolImpl();
+            instance.initialize();
         }
+        getInstanceLock.unlock();
         return instance;
     }
 
@@ -65,13 +70,14 @@ public class ConnectionPoolImpl implements ConnectionPool{
     @Override
     public synchronized void returnConnection(Connection connection) {
         if (givenAwayConnections.remove((ProxyConnection) connection)){
-            if (availableConnections.size() + givenAwayConnections.size() < PREFERRED_CONNECTIONS || availableConnections.size() == 0){
+            if (availableConnections.size() + givenAwayConnections.size() < PREFERRED_CONNECTIONS
+                    || availableConnections.isEmpty()){
                 availableConnections.add((ProxyConnection) connection);
-                notify();
             } else {
                 closeConnection((ProxyConnection) connection);
             }
         }
+        notify();
     }
 
     @Override

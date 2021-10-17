@@ -1,48 +1,45 @@
 package com.epam.jwd.repository.model.user;
 
-public class User {
+import com.epam.jwd.repository.model.Entity;
 
-    private int id;
-    private String name;
-    private Role role;
+public class User extends Entity<Integer> {
 
-    private User(){}
+    private String login;
+    private String password;
+    private Account account;
 
-    private void setId(int id){
-        this.id = id;
+    public User(Integer id){
+        super(id);
     }
 
-    private void setName(String name){
-        this.name = name;
+    public User(Integer id, String login, String password, Account account) {
+        super(id);
+        this.login = login;
+        this.password = password;
+        this.account = account;
     }
 
-    private void setRole(Role role){
-        this.role = role;
+    public Account getAccount() {
+        return account;
     }
 
-    public int getId() {
-        return id;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
-    public String getName() {
-        return name;
+    public void setLogin(String login){
+        this.login = login;
     }
 
-    public Role getRole() {
-        return role;
+    public void setPassword(String password){
+        this.password = password;
     }
 
-    static class Builder{
-        private int id;
-        private String name;
-        private Role role;
+    public String getLogin() {
+        return login;
+    }
 
-        public User build(){
-            User user = new User();
-            user.setId(id);
-            user.setName(name);
-            user.setRole(role);
-            return user;
-        }
+    public String getPassword() {
+        return password;
     }
 }
