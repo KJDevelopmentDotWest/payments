@@ -8,12 +8,9 @@ public class Role extends Entity<Integer> {
     private Boolean permissionCanViewAll;
     private Boolean permissionCanCreateRole;
 
-    public Role(Integer id) {
-        super(id);
-    }
+    public Role() {}
 
-    public Role(Integer id, String name, Boolean permissionCanUnlock, Boolean permissionCanViewAll, Boolean permissionCanCreateRole) {
-        super(id);
+    public Role(String name, Boolean permissionCanUnlock, Boolean permissionCanViewAll, Boolean permissionCanCreateRole) {
         this.name = name;
         this.permissionCanUnlock = permissionCanUnlock;
         this.permissionCanViewAll = permissionCanViewAll;

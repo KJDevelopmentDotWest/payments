@@ -8,12 +8,9 @@ public class User extends Entity<Integer> {
     private String password;
     private Account account;
 
-    public User(Integer id){
-        super(id);
-    }
+    public User(){}
 
-    public User(Integer id, String login, String password, Account account) {
-        super(id);
+    public User(String login, String password, Account account) {
         this.login = login;
         this.password = password;
         this.account = account;

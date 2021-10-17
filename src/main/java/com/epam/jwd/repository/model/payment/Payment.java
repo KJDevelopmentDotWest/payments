@@ -5,20 +5,17 @@ import com.epam.jwd.repository.model.Entity;
 import java.util.Date;
 
 public class Payment extends Entity<Integer> {
-    private Integer userId;
+    private Integer accountId;
     private String destinationAddress;
     private int price;
     private boolean committed;
     private Date time;
     private String name;
 
-    public Payment(Integer id) {
-        super(id);
-    }
+    public Payment() {}
 
-    public Payment(Integer id, Integer userId, String destinationAddress, int price, boolean committed, Date time, String name) {
-        super(id);
-        this.userId = userId;
+    public Payment(Integer userId, String destinationAddress, int price, boolean committed, Date time, String name) {
+        this.accountId = userId;
         this.destinationAddress = destinationAddress;
         this.price = price;
         this.committed = committed;
@@ -34,12 +31,12 @@ public class Payment extends Entity<Integer> {
         this.name = name;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getAccountId() {
+        return accountId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 
     public String getDestinationAddress() {

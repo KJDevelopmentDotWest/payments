@@ -20,6 +20,11 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
+    public void close() {
+        pool.returnConnection(this);
+    }
+
+    @Override
     public Statement createStatement() throws SQLException {
         return connection.createStatement();
     }
@@ -57,11 +62,6 @@ public class ProxyConnection implements Connection {
     @Override
     public void rollback() throws SQLException {
         connection.rollback();
-    }
-
-    @Override
-    public void close() {
-        pool.returnConnection(this);
     }
 
     @Override

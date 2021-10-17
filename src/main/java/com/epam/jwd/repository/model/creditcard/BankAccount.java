@@ -3,24 +3,21 @@ package com.epam.jwd.repository.model.creditcard;
 import com.epam.jwd.repository.model.Entity;
 
 public class BankAccount extends Entity<Integer> {
-    private Double balance;
+    private Integer balance;
     private Boolean blocked;
 
-    public BankAccount(Integer id){
-        super(id);
-    }
+    public BankAccount(){}
 
-    public BankAccount(Integer id, Double balance, Boolean blocked) {
-        super(id);
+    public BankAccount(Integer balance, Boolean blocked) {
         this.balance = balance;
         this.blocked = blocked;
     }
 
-    public Double getBalance() {
+    public Integer getBalance() {
         return balance;
     }
 
-    public void setBalance(Double balance) {
+    public void setBalance(Integer balance) {
         this.balance = balance;
     }
 

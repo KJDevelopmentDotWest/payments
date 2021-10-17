@@ -11,12 +11,9 @@ public class Account extends Entity<Integer> {
     private List<Integer> cardsId = new ArrayList<>();
     private Integer roleId;
 
-    public Account(Integer id) {
-        super(id);
-    }
+    public Account() {}
 
-    public Account(Integer id, String name, String surname, List<Integer> cardsId, Integer roleId) {
-        super(id);
+    public Account(String name, String surname, List<Integer> cardsId, Integer roleId) {
         this.name = name;
         this.surname = surname;
         this.cardsId = cardsId;

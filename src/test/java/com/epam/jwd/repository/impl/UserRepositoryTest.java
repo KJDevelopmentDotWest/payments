@@ -14,8 +14,8 @@ class UserRepositoryTest {
     public void saveTest(){
         UserRepository repository = new UserRepository();
 
-        Account account = new Account(1, "name", "surname", new ArrayList<Integer>(), 1);
-        User user = new User(1, "login", "password", account);
+        Account account = new Account("name", "surname", new ArrayList<Integer>(), 1);
+        User user = new User("login", "password", account);
 
         repository.save(user);
     }

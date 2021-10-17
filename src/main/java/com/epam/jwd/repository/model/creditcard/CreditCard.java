@@ -8,16 +8,23 @@ public class CreditCard extends Entity<Integer> {
     private BankAccount bankAccount;
     private String name;
     private Date expireDate;
+    private Integer accountId;
 
-    public CreditCard(Integer id) {
-        super(id);
-    }
+    public CreditCard() {}
 
-    public CreditCard(Integer id, BankAccount bankAccount, String name, Date expireDate) {
-        super(id);
+    public CreditCard(BankAccount bankAccount, String name, Date expireDate, Integer accountId) {
         this.bankAccount = bankAccount;
         this.name = name;
         this.expireDate = expireDate;
+        this.accountId = accountId;
+    }
+
+    public Integer getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 
     public BankAccount getBankAccount() {

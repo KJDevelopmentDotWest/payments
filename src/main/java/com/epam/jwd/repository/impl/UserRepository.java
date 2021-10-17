@@ -31,10 +31,11 @@ public class UserRepository implements Repository<User, Integer> {
         } catch (SQLException e) {
             //todo implement logger and custom exception
             e.printStackTrace();
+            return false;
         } finally {
             connectionPool.returnConnection(connection);
         }
-        return null;
+        return true;
     }
 
     @Override
