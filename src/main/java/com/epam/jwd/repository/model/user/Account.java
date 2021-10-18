@@ -8,16 +8,21 @@ import java.util.List;
 public class Account extends Entity<Integer> {
     private String name;
     private String surname;
-    private List<Integer> cardsId = new ArrayList<>();
     private Integer roleId;
 
     public Account() {}
 
-    public Account(String name, String surname, List<Integer> cardsId, Integer roleId) {
+    public Account(String name, String surname, Integer roleId) {
         this.name = name;
         this.surname = surname;
-        this.cardsId = cardsId;
         this.roleId = roleId;
+    }
+
+    public Account(Integer id, String name, String surname, Integer roleId) {
+        this.name = name;
+        this.surname = surname;
+        this.roleId = roleId;
+        this.id = id;
     }
 
     public String getName() {
@@ -36,19 +41,21 @@ public class Account extends Entity<Integer> {
         this.surname = surname;
     }
 
-    public List<Integer> getCardsId() {
-        return cardsId;
-    }
-
-    public void setCardsId(List<Integer> cardsId) {
-        this.cardsId = cardsId;
-    }
-
     public Integer getRoleId() {
         return roleId;
     }
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", roleId=" + roleId +
+                '}';
     }
 }

@@ -16,6 +16,13 @@ public class User extends Entity<Integer> {
         this.account = account;
     }
 
+    public User(Integer id, String login, String password, Account account) {
+        this.login = login;
+        this.password = password;
+        this.account = account;
+        this.id = id;
+    }
+
     public Account getAccount() {
         return account;
     }
@@ -38,5 +45,15 @@ public class User extends Entity<Integer> {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", account=" + account +
+                '}';
     }
 }

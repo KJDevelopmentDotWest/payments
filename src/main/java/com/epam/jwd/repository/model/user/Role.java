@@ -17,6 +17,14 @@ public class Role extends Entity<Integer> {
         this.permissionCanCreateRole = permissionCanCreateRole;
     }
 
+    public Role(Integer id, Boolean permissionCanUnlock, Boolean permissionCanViewAll, Boolean permissionCanCreateRole, String name) {
+        this.name = name;
+        this.permissionCanUnlock = permissionCanUnlock;
+        this.permissionCanViewAll = permissionCanViewAll;
+        this.permissionCanCreateRole = permissionCanCreateRole;
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -47,5 +55,16 @@ public class Role extends Entity<Integer> {
 
     public void setPermissionCanCreateRole(Boolean permissionCanCreateRole) {
         this.permissionCanCreateRole = permissionCanCreateRole;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", permissionCanUnlock=" + permissionCanUnlock +
+                ", permissionCanViewAll=" + permissionCanViewAll +
+                ", permissionCanCreateRole=" + permissionCanCreateRole +
+                '}';
     }
 }

@@ -23,6 +23,16 @@ public class Payment extends Entity<Integer> {
         this.name = name;
     }
 
+    public Payment(Integer id, Integer userId, String destinationAddress, int price, boolean committed, Date time, String name) {
+        this.accountId = userId;
+        this.destinationAddress = destinationAddress;
+        this.price = price;
+        this.committed = committed;
+        this.time = time;
+        this.name = name;
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -69,5 +79,18 @@ public class Payment extends Entity<Integer> {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "id=" + id +
+                ", accountId=" + accountId +
+                ", destinationAddress='" + destinationAddress + '\'' +
+                ", price=" + price +
+                ", committed=" + committed +
+                ", time=" + time +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

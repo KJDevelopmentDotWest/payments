@@ -70,6 +70,15 @@ public class ConnectionPoolImpl implements ConnectionPool{
     @Override
     public synchronized void returnConnection(Connection connection) {
         if (givenAwayConnections.remove((ProxyConnection) connection)){
+
+            try {
+                connection.rollback();
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                //todo implement logger and custom exception
+                e.printStackTrace();
+            }
+
             if (availableConnections.size() + givenAwayConnections.size() < PREFERRED_CONNECTIONS
                     || availableConnections.isEmpty()){
                 availableConnections.add((ProxyConnection) connection);

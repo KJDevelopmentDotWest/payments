@@ -19,6 +19,14 @@ public class CreditCard extends Entity<Integer> {
         this.accountId = accountId;
     }
 
+    public CreditCard(Integer id, BankAccount bankAccount, String name, Date expireDate, Integer accountId) {
+        this.bankAccount = bankAccount;
+        this.name = name;
+        this.expireDate = expireDate;
+        this.accountId = accountId;
+        this.id = id;
+    }
+
     public Integer getAccountId() {
         return accountId;
     }
@@ -49,5 +57,16 @@ public class CreditCard extends Entity<Integer> {
 
     public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
+    }
+
+    @Override
+    public String toString() {
+        return "CreditCard{" +
+                "id=" + id +
+                ", bankAccount=" + bankAccount +
+                ", name='" + name + '\'' +
+                ", expireDate=" + expireDate +
+                ", accountId=" + accountId +
+                '}';
     }
 }
