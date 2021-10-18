@@ -24,6 +24,7 @@ public class CreditCardRepository implements Repository<CreditCard, Integer> {
 
     private static final String SQL_FIND_ALL_CREDIT_CARD = "SELECT id, name, expire_date, account_id FROM credit_cards";
     private static final String SQL_FIND_CREDIT_CARD_BY_ID = "SELECT id, name, expire_date, account_id FROM credit_cards WHERE id = ?";
+    private static final String SQL_FIND_CREDIT_CARD_BY_ACCOUNT_ID = "SELECT id, name, expire_date, account_id FROM credit_cards WHERE account_id = ?";
 
     private static final String SQL_FIND_BANK_ACCOUNT_BY_ID = "SELECT id, balance, blocked FROM bank_accounts WHERE id = ?";
 
@@ -123,6 +124,18 @@ public class CreditCardRepository implements Repository<CreditCard, Integer> {
         return creditCard;
     }
 
+    public List<CreditCard> findCByAccountId(Integer id){
+        Connection connection = connectionPool.takeConnection();
+        List<CreditCard> creditCards = new ArrayList<>();
+        try {
+            creditCards = findCreditCardByAccountId(connection, id);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            e.printStackTrace();
+        }
+        return creditCards;
+    }
+
     private void saveCreditCard(Connection connection, CreditCard card) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_CREDIT_CARD);
         preparedStatement.setString(1, card.getName());
@@ -201,6 +214,32 @@ public class CreditCardRepository implements Repository<CreditCard, Integer> {
         } else {
             return null;
         }
+    }
+
+    private List<CreditCard> findCreditCardByAccountId(Connection connection, Integer accountId)throws SQLException{
+        List<CreditCard> result = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_CREDIT_CARD_BY_ACCOUNT_ID);
+        preparedStatement.setInt(1, accountId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            try {
+                CreditCard creditCard = new CreditCard(resultSet.getInt(1),
+                        findBankAccountById(connection, resultSet.getInt(1)),
+                        resultSet.getString(2),
+                        new SimpleDateFormat().parse(resultSet.getString(3)),
+                        resultSet.getInt(4));
+                result.add(creditCard);
+            } catch (ParseException e) {
+                CreditCard creditCard = new CreditCard(findBankAccountById(connection, resultSet.getInt(1)),
+                        resultSet.getString(2),
+                        new Date(),
+                        resultSet.getInt(4));
+                //todo and logger
+                result.add(creditCard);
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 
     private Boolean updateCreditCardById(Connection connection, CreditCard creditCard) throws SQLException{
