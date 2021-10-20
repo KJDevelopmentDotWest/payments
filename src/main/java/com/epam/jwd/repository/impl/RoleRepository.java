@@ -15,12 +15,12 @@ import java.util.Objects;
 
 public class RoleRepository implements Repository<Role, Integer> {
 
-    private static final String SQL_SAVE_ROLE = "INSERT INTO roles (permission_can_unlock, permission_can_view_all, permission_can_create_role, name) VALUES (?, ?, ?, ?)";
+    private static final String SQL_SAVE_ROLE = "INSERT INTO roles (name) VALUES (?)";
 
-    private static final String SQL_FIND_ALL_ROLE = "SELECT id, permission_can_unlock, permission_can_view_all, permission_can_create_role, name FROM roles";
-    private static final String SQL_FIND_ROLE_BY_ID = "SELECT id, permission_can_unlock, permission_can_view_all, permission_can_create_role, name FROM roles";
+    private static final String SQL_FIND_ALL_ROLE = "SELECT id name FROM roles";
+    private static final String SQL_FIND_ROLE_BY_ID = "SELECT id name FROM roles WHERE id = ?";
 
-    private static final String SQL_UPDATE_ROLE_BY_ID = "UPDATE roles SET permission_can_unlock = ?, permission_can_view_all = ?, permission_can_create_role = ?, name = ? WHERE id = ?";
+    private static final String SQL_UPDATE_ROLE_BY_ID = "UPDATE roles SET name = ? WHERE id = ?";
 
     private static final String SQL_DELETE_ROLE_BY_ID = "DELETE FROM roles WHERE id = ?";
 
@@ -97,10 +97,7 @@ public class RoleRepository implements Repository<Role, Integer> {
 
     private void saveRole(Connection connection, Role role) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_ROLE);
-        preparedStatement.setBoolean(1, role.getPermissionCanUnlock());
-        preparedStatement.setBoolean(2, role.getPermissionCanViewAll());
-        preparedStatement.setBoolean(3, role.getPermissionCanCreateRole());
-        preparedStatement.setString(4, role.getName());
+        preparedStatement.setString(1, role.getName());
         preparedStatement.executeUpdate();
     }
 
@@ -110,10 +107,7 @@ public class RoleRepository implements Repository<Role, Integer> {
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
             Role role = new Role(resultSet.getInt(1),
-                    resultSet.getBoolean(2),
-                    resultSet.getBoolean(3),
-                    resultSet.getBoolean(4),
-                    resultSet.getString(5));
+                    resultSet.getString(2));
             result.add(role);
         }
         return result;
@@ -125,10 +119,7 @@ public class RoleRepository implements Repository<Role, Integer> {
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()){
             return new Role(resultSet.getInt(1),
-                    resultSet.getBoolean(2),
-                    resultSet.getBoolean(3),
-                    resultSet.getBoolean(4),
-                    resultSet.getString(5));
+                    resultSet.getString(2));
         } else {
             return null;
         }
@@ -136,11 +127,8 @@ public class RoleRepository implements Repository<Role, Integer> {
 
     private Boolean updateRoleById(Connection connection, Role role) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ROLE_BY_ID);
-        preparedStatement.setBoolean(1, role.getPermissionCanUnlock());
-        preparedStatement.setBoolean(2, role.getPermissionCanViewAll());
-        preparedStatement.setBoolean(3, role.getPermissionCanCreateRole());
-        preparedStatement.setString(4, role.getName());
-        preparedStatement.setInt(5, role.getId());
+        preparedStatement.setString(1, role.getName());
+        preparedStatement.setInt(2, role.getId());
         return Objects.equals(preparedStatement.executeUpdate(), 1);
     }
 

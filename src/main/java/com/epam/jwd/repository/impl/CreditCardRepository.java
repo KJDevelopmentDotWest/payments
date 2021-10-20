@@ -19,16 +19,16 @@ import java.util.Objects;
 
 public class CreditCardRepository implements Repository<CreditCard, Integer> {
 
-    private static final String SQL_SAVE_CREDIT_CARD = "INSERT INTO credit_cards (name, expire_date, account_id) VALUES (?, ?, ?)";
+    private static final String SQL_SAVE_CREDIT_CARD = "INSERT INTO credit_cards (name, expire_date, user_id) VALUES (?, ?, ?)";
     private static final String SQL_SAVE_BANK_ACCOUNT = "INSERT INTO bank_accounts (balance, blocked) VALUES (?, ?)";
 
-    private static final String SQL_FIND_ALL_CREDIT_CARD = "SELECT id, name, expire_date, account_id FROM credit_cards";
-    private static final String SQL_FIND_CREDIT_CARD_BY_ID = "SELECT id, name, expire_date, account_id FROM credit_cards WHERE id = ?";
-    private static final String SQL_FIND_CREDIT_CARD_BY_ACCOUNT_ID = "SELECT id, name, expire_date, account_id FROM credit_cards WHERE account_id = ?";
+    private static final String SQL_FIND_ALL_CREDIT_CARD = "SELECT id, name, expire_date, user_id FROM credit_cards";
+    private static final String SQL_FIND_CREDIT_CARD_BY_ID = "SELECT id, name, expire_date, user_id FROM credit_cards WHERE id = ?";
+    private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID = "SELECT id, name, expire_date, user_id FROM credit_cards WHERE user_id = ?";
 
     private static final String SQL_FIND_BANK_ACCOUNT_BY_ID = "SELECT id, balance, blocked FROM bank_accounts WHERE id = ?";
 
-    private static final String SQL_UPDATE_CREDIT_CARD_BY_ID = "UPDATE credit_cards SET name = ?, expire_date = ?, account_id = ? WHERE id = ?";
+    private static final String SQL_UPDATE_CREDIT_CARD_BY_ID = "UPDATE credit_cards SET name = ?, expire_date = ?, user_id = ? WHERE id = ?";
     private static final String SQL_UPDATE_BANK_ACCOUNT_BY_ID = "UPDATE bank_accounts SET balance = ?, blocked = ? WHERE id = ?";
 
     private static final String SQL_DELETE_CREDIT_CARD_BY_ID = "DELETE FROM credit_cards WHERE id = ?";
@@ -218,7 +218,7 @@ public class CreditCardRepository implements Repository<CreditCard, Integer> {
 
     private List<CreditCard> findCreditCardByAccountId(Connection connection, Integer accountId)throws SQLException{
         List<CreditCard> result = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_CREDIT_CARD_BY_ACCOUNT_ID);
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_CREDIT_CARD_BY_USER_ID);
         preparedStatement.setInt(1, accountId);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){

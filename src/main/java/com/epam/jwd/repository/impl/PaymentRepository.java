@@ -18,12 +18,12 @@ import java.util.Objects;
 
 public class PaymentRepository implements Repository<Payment, Integer> {
 
-    private static final String SQL_SAVE_PAYMENT = "INSERT INTO payments (account_id, destination_address, price, committed, time, name) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String SQL_SAVE_PAYMENT = "INSERT INTO payments (user_id, destination_address, price, committed, time, name) VALUES (?, ?, ?, ?, ?, ?)";
 
-    private static final String SQL_FIND_ALL_PAYMENT = "select id, account_id, destination_address, price, committed, time, name FROM payments";
-    private static final String SQL_FIND_PAYMENT_BY_ID = "select id, account_id, destination_address, price, committed, time, name FROM payments WHERE id = ?";
+    private static final String SQL_FIND_ALL_PAYMENT = "select id, user_id, destination_address, price, committed, time, name FROM payments";
+    private static final String SQL_FIND_PAYMENT_BY_ID = "select id, user_id, destination_address, price, committed, time, name FROM payments WHERE id = ?";
 
-    private static final String SQL_UPDATE_PAYMENT_BY_ID = "UPDATE payments SET account_id = ?, destination_address = ?, price = ?, committed = ?, time = ?, name = ? WHERE id = ?";
+    private static final String SQL_UPDATE_PAYMENT_BY_ID = "UPDATE payments SET user_id = ?, destination_address = ?, price = ?, committed = ?, time = ?, name = ? WHERE id = ?";
 
     private static final String SQL_DELETE_PAYMENT_BY_ID = "DELETE FROM payments WHERE id = ?";
 
