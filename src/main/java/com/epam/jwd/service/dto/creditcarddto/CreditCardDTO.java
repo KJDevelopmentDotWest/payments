@@ -7,19 +7,19 @@ import java.util.Date;
 import java.util.Objects;
 
 public class CreditCardDTO extends EntityDTO<Integer> {
-    private BankAccount bankAccount;
+    private BankAccountDTO bankAccount;
     private String name;
     private Date expireDate;
     private Integer accountId;
 
-    public CreditCardDTO(BankAccount bankAccount, String name, Date expireDate, Integer accountId) {
+    public CreditCardDTO(BankAccountDTO bankAccount, String name, Date expireDate, Integer accountId) {
         this.bankAccount = bankAccount;
         this.name = name;
         this.expireDate = expireDate;
         this.accountId = accountId;
     }
 
-    public CreditCardDTO(Integer id, BankAccount bankAccount, String name, Date expireDate, Integer accountId) {
+    public CreditCardDTO(Integer id, BankAccountDTO bankAccount, String name, Date expireDate, Integer accountId) {
         this.bankAccount = bankAccount;
         this.name = name;
         this.expireDate = expireDate;
@@ -27,11 +27,11 @@ public class CreditCardDTO extends EntityDTO<Integer> {
         this.id = id;
     }
 
-    public BankAccount getBankAccount() {
+    public BankAccountDTO getBankAccount() {
         return bankAccount;
     }
 
-    public void setBankAccount(BankAccount bankAccount) {
+    public void setBankAccount(BankAccountDTO bankAccount) {
         this.bankAccount = bankAccount;
     }
 

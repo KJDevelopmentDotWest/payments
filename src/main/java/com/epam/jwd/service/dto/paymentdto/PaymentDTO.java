@@ -6,15 +6,15 @@ import java.util.Date;
 import java.util.Objects;
 
 public class PaymentDTO extends EntityDTO<Integer> {
-    private Integer accountId;
+    private Integer userId;
     private String destinationAddress;
     private Integer price;
     private Boolean committed;
     private Date time;
     private String name;
 
-    public PaymentDTO(Integer accountId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
-        this.accountId = accountId;
+    public PaymentDTO(Integer userId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
+        this.userId = userId;
         this.destinationAddress = destinationAddress;
         this.price = price;
         this.committed = committed;
@@ -22,8 +22,8 @@ public class PaymentDTO extends EntityDTO<Integer> {
         this.name = name;
     }
 
-    public PaymentDTO(Integer id, Integer accountId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
-        this.accountId = accountId;
+    public PaymentDTO(Integer id, Integer userId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
+        this.userId = userId;
         this.destinationAddress = destinationAddress;
         this.price = price;
         this.committed = committed;
@@ -32,12 +32,12 @@ public class PaymentDTO extends EntityDTO<Integer> {
         this.id = id;
     }
 
-    public Integer getAccountId() {
-        return accountId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getDestinationAddress() {
@@ -85,7 +85,7 @@ public class PaymentDTO extends EntityDTO<Integer> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PaymentDTO paymentDTO = (PaymentDTO) o;
-        return Objects.equals(accountId, paymentDTO.getAccountId())
+        return Objects.equals(userId, paymentDTO.getUserId())
                 && Objects.equals(destinationAddress, paymentDTO.getDestinationAddress())
                 && Objects.equals(price, paymentDTO.getPrice())
                 && Objects.equals(committed, paymentDTO.getCommitted())
@@ -96,14 +96,14 @@ public class PaymentDTO extends EntityDTO<Integer> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountId, destinationAddress, price, committed, time, name, id);
+        return Objects.hash(userId, destinationAddress, price, committed, time, name, id);
     }
 
     @Override
     public String toString() {
         return "PaymentDTO{" +
                 "id=" + id +
-                ", accountId=" + accountId +
+                ", accountId=" + userId +
                 ", destinationAddress='" + destinationAddress + '\'' +
                 ", price=" + price +
                 ", committed=" + committed +

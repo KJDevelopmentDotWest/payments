@@ -7,11 +7,13 @@ import com.epam.jwd.service.dto.userdto.RoleDTO;
 public class RoleConverter implements Converter<Role, RoleDTO, Integer> {
     @Override
     public Role convert(RoleDTO value) {
-        return null;
+        Role role = new Role(value.getName());
+        return role;
     }
 
     @Override
     public RoleDTO convert(Role value) {
-        return null;
+        RoleDTO roleDTO = new RoleDTO(value.getId(), value.getName());
+        return roleDTO;
     }
 }

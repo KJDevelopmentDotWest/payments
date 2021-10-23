@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Payment extends Entity<Integer> {
-    private Integer accountId;
+    private Integer userId;
     private String destinationAddress;
     private Integer price;
     private Boolean committed;
@@ -16,7 +16,7 @@ public class Payment extends Entity<Integer> {
     public Payment() {}
 
     public Payment(Integer userId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
-        this.accountId = userId;
+        this.userId = userId;
         this.destinationAddress = destinationAddress;
         this.price = price;
         this.committed = committed;
@@ -25,7 +25,7 @@ public class Payment extends Entity<Integer> {
     }
 
     public Payment(Integer id, Integer userId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
-        this.accountId = userId;
+        this.userId = userId;
         this.destinationAddress = destinationAddress;
         this.price = price;
         this.committed = committed;
@@ -42,12 +42,12 @@ public class Payment extends Entity<Integer> {
         this.name = name;
     }
 
-    public Integer getAccountId() {
-        return accountId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getDestinationAddress() {
@@ -87,7 +87,7 @@ public class Payment extends Entity<Integer> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return Objects.equals(accountId, payment.getAccountId())
+        return Objects.equals(userId, payment.getUserId())
                 && Objects.equals(destinationAddress, payment.getDestinationAddress())
                 && Objects.equals(price, payment.getPrice())
                 && Objects.equals(committed, payment.isCommitted())
@@ -98,14 +98,14 @@ public class Payment extends Entity<Integer> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountId, destinationAddress, price, committed, time, name, id);
+        return Objects.hash(userId, destinationAddress, price, committed, time, name, id);
     }
 
     @Override
     public String toString() {
         return "Payment{" +
                 "id=" + id +
-                ", accountId=" + accountId +
+                ", accountId=" + userId +
                 ", destinationAddress='" + destinationAddress + '\'' +
                 ", price=" + price +
                 ", committed=" + committed +

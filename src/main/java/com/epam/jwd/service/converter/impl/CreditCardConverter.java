@@ -9,12 +9,21 @@ import com.epam.jwd.service.dto.creditcarddto.CreditCardDTO;
 public class CreditCardConverter implements Converter<CreditCard, CreditCardDTO, Integer> {
     @Override
     public CreditCard convert(CreditCardDTO value) {
-        return null;
+        CreditCard creditCard = new CreditCard(convertBankAccount(value.getBankAccount()),
+                value.getName(),
+                value.getExpireDate(),
+                value.getAccountId());
+        return creditCard;
     }
 
     @Override
     public CreditCardDTO convert(CreditCard value) {
-        return null;
+        CreditCardDTO creditCardDTO = new CreditCardDTO(value.getId(),
+                convertBankAccount(value.getBankAccount()),
+                value.getName(),
+                value.getExpireDate(),
+                value.getAccountId());
+        return creditCardDTO;
     }
 
     private BankAccount convertBankAccount(BankAccountDTO bankAccountDTO){

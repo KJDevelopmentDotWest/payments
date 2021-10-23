@@ -7,11 +7,24 @@ import com.epam.jwd.service.dto.paymentdto.PaymentDTO;
 public class PaymentConverter implements Converter<Payment, PaymentDTO, Integer> {
     @Override
     public Payment convert(PaymentDTO value) {
-        return null;
+        Payment payment = new Payment(value.getUserId(),
+                value.getDestinationAddress(),
+                value.getPrice(),
+                value.getCommitted(),
+                value.getTime(),
+                value.getName());
+        return payment;
     }
 
     @Override
     public PaymentDTO convert(Payment value) {
-        return null;
+        PaymentDTO paymentDTO = new PaymentDTO(value.getId(),
+                value.getUserId(),
+                value.getDestinationAddress(),
+                value.getPrice(),
+                value.isCommitted(),
+                value.getTime(),
+                value.getName());
+        return paymentDTO;
     }
 }
