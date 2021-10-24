@@ -22,7 +22,6 @@ public class UserService implements Service<UserDTO, Integer> {
     private final Converter<User, UserDTO, Integer> converter = new UserConverter();
 
     private static final String THERE_IS_NO_SUCH_USER_EXCEPTION = "there is no user with provided id";
-    private static final String USER_REPOSITORY_IS_EMPTY_EXCEPTION = "there is no user with provided id";
 
     @Override
     public UserDTO create(UserDTO value) throws ServiceException {
@@ -34,13 +33,15 @@ public class UserService implements Service<UserDTO, Integer> {
     public Boolean update(UserDTO value) throws ServiceException {
         validator.validate(value);
         validator.validateIdNotNull(value);
+        validator.validateIdNotNull(value.getAccount().getId());
         return dao.update(converter.convert(value));
     }
 
     @Override
-    public Boolean delete(UserDTO value) throws ServiceException{
+    public Boolean delete(UserDTO value) throws ServiceException {
         validator.validate(value);
         validator.validateIdNotNull(value);
+        validator.validateIdNotNull(value.getAccount().getId());
         return dao.delete(converter.convert(value));
     }
 
@@ -59,7 +60,7 @@ public class UserService implements Service<UserDTO, Integer> {
         List<UserDTO> result = new ArrayList<>();
         List<User> daoResult = dao.findAll();
         if (daoResult.isEmpty()){
-            throw new ServiceException(USER_REPOSITORY_IS_EMPTY_EXCEPTION);
+            throw new ServiceException(REPOSITORY_IS_EMPTY_EXCEPTION);
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;

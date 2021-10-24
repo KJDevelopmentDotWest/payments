@@ -17,8 +17,8 @@ public class RoleDAO implements DAO<Role, Integer> {
 
     private static final String SQL_SAVE_ROLE = "INSERT INTO roles (name) VALUES (?)";
 
-    private static final String SQL_FIND_ALL_ROLE = "SELECT id name FROM roles";
-    private static final String SQL_FIND_ROLE_BY_ID = "SELECT id name FROM roles WHERE id = ?";
+    private static final String SQL_FIND_ALL_ROLE = "SELECT id, name FROM roles";
+    private static final String SQL_FIND_ROLE_BY_ID = "SELECT id, name FROM roles WHERE id = ?";
 
     private static final String SQL_UPDATE_ROLE_BY_ID = "UPDATE roles SET name = ? WHERE id = ?";
 

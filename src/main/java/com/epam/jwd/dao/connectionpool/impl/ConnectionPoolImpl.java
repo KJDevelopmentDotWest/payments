@@ -16,6 +16,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     private static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/payments";
     private static final String USER = "postgres";
     private static final String PASS = "1234";
+    private static final String DRIVER = "org.postgresql.Driver";
     private static final int MAX_CONNECTIONS = 8;
     private static final int PREFERRED_CONNECTIONS = 4;
 
@@ -103,6 +104,12 @@ public class ConnectionPoolImpl implements ConnectionPool {
     @Override
     public void initialize() {
         if (!initialized){
+            try {
+                Class.forName(DRIVER);
+            } catch (ClassNotFoundException e) {
+                //todo implement logger and custom exception
+                e.printStackTrace();
+            }
             try{
                 for (int i = 0; i < PREFERRED_CONNECTIONS; i++) {
                     createConnectionAndAddToPool();
