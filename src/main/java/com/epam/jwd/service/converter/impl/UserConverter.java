@@ -9,7 +9,8 @@ import com.epam.jwd.service.dto.userdto.UserDTO;
 public class UserConverter implements Converter<User, UserDTO, Integer> {
     @Override
     public User convert(UserDTO value) {
-        User user = new User(value.getLogin(),
+        User user = new User(value.getId(),
+                value.getLogin(),
                 value.getPassword(),
                 convertAccount(value.getAccount()));
         return user;
@@ -25,7 +26,8 @@ public class UserConverter implements Converter<User, UserDTO, Integer> {
     }
 
     private Account convertAccount(AccountDTO accountDTO){
-        Account account = new Account(accountDTO.getName(),
+        Account account = new Account(accountDTO.getId(),
+                accountDTO.getName(),
                 accountDTO.getSurname(),
                 accountDTO.getRoleId());
         return account;

@@ -9,7 +9,8 @@ import com.epam.jwd.service.dto.creditcarddto.CreditCardDTO;
 public class CreditCardConverter implements Converter<CreditCard, CreditCardDTO, Integer> {
     @Override
     public CreditCard convert(CreditCardDTO value) {
-        CreditCard creditCard = new CreditCard(convertBankAccount(value.getBankAccount()),
+        CreditCard creditCard = new CreditCard(value.getId(),
+                convertBankAccount(value.getBankAccount()),
                 value.getName(),
                 value.getExpireDate(),
                 value.getAccountId());
@@ -27,7 +28,8 @@ public class CreditCardConverter implements Converter<CreditCard, CreditCardDTO,
     }
 
     private BankAccount convertBankAccount(BankAccountDTO bankAccountDTO){
-        BankAccount bankAccount = new BankAccount(bankAccountDTO.getBalance(),
+        BankAccount bankAccount = new BankAccount(bankAccountDTO.getId(),
+                bankAccountDTO.getBalance(),
                 bankAccountDTO.getBlocked());
         return bankAccount;
     }

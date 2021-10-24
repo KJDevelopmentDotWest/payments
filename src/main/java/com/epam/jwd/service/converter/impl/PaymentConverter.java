@@ -7,7 +7,8 @@ import com.epam.jwd.service.dto.paymentdto.PaymentDTO;
 public class PaymentConverter implements Converter<Payment, PaymentDTO, Integer> {
     @Override
     public Payment convert(PaymentDTO value) {
-        Payment payment = new Payment(value.getUserId(),
+        Payment payment = new Payment(value.getId(),
+                value.getUserId(),
                 value.getDestinationAddress(),
                 value.getPrice(),
                 value.getCommitted(),
