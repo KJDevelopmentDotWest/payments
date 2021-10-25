@@ -1,6 +1,7 @@
 package com.epam.jwd.service.validator.impl;
 
 import com.epam.jwd.service.dto.paymentdto.PaymentDTO;
+import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 
@@ -11,18 +12,13 @@ public class PaymentValidator implements Validator<PaymentDTO, Integer> {
 
     private static final Integer NAME_MIN_LENGTH = 2;
 
-    private static final String PAYMENT_IS_NULL_EXCEPTION = "payment cannot be null";
-    private static final String PAYMENT_ADDRESS_IS_NULL_EXCEPTION = "payment address cannot be null";
-    private static final String PAYMENT_PRICE_IS_NULL_EXCEPTION = "payment price cannot be null";
-    private static final String PAYMENT_PRICE_IS_NEGATIVE_EXCEPTION = "payment price cannot be negative";
-    private static final String PAYMENT_COMMITTED_IS_NULL_EXCEPTION = "payment committed cannot be null";
-    private static final String PAYMENT_DATE_IS_NULL_EXCEPTION = "payment date cannot be null";
-    private static final String NAME_MIN_LENGTH_EXCEPTION = "name length is less then" + NAME_MIN_LENGTH;
-
     @Override
-    public void validate(PaymentDTO value) throws ServiceException {
+    public void validate(PaymentDTO value, Boolean checkId) throws ServiceException {
         if (Objects.isNull(value)){
-            throw new ServiceException(PAYMENT_IS_NULL_EXCEPTION);
+            throw new ServiceException(ExceptionCode.PAYMENT_IS_NULL_EXCEPTION_CODE);
+        }
+        if (checkId){
+            validateId(value.getId());
         }
         validateUserId(value.getUserId());
         validateAddress(value.getDestinationAddress());
@@ -32,43 +28,49 @@ public class PaymentValidator implements Validator<PaymentDTO, Integer> {
         validateName(value.getName());
     }
 
+    private void validateId(Integer id) throws ServiceException{
+        if (Objects.isNull(id)) {
+            throw new ServiceException(ExceptionCode.PAYMENT_ID_IS_NULL_EXCEPTION_CODE);
+        }
+    }
+
     private void validateUserId(Integer id) throws ServiceException {
         if (Objects.isNull(id)){
-            throw new ServiceException(ID_IS_NULL_EXCEPTION);
+            throw new ServiceException(ExceptionCode.PAYMENT_USER_ID_IS_NULL_EXCEPTION_CODE);
         }
     }
 
     private void validateAddress(String address) throws ServiceException {
         if (Objects.isNull(address)){
-            throw new ServiceException(PAYMENT_ADDRESS_IS_NULL_EXCEPTION);
+            throw new ServiceException(ExceptionCode.PAYMENT_ADDRESS_IS_NULL_EXCEPTION_CODE);
         }
     }
 
     private void validatePrice(Integer price) throws ServiceException {
         if (Objects.isNull(price)){
-            throw new ServiceException(PAYMENT_PRICE_IS_NULL_EXCEPTION);
+            throw new ServiceException(ExceptionCode.PAYMENT_PRICE_IS_NULL_EXCEPTION_CODE);
         }
         if (price < 0){
-            throw new ServiceException(PAYMENT_PRICE_IS_NEGATIVE_EXCEPTION);
+            throw new ServiceException(ExceptionCode.PAYMENT_PRICE_IS_NEGATIVE_EXCEPTION_CODE);
         }
     }
 
     private void validateCommitted(Boolean committed) throws ServiceException {
         if (Objects.isNull(committed)){
-            throw new ServiceException(PAYMENT_COMMITTED_IS_NULL_EXCEPTION);
+            throw new ServiceException(ExceptionCode.PAYMENT_COMMITTED_IS_NULL_EXCEPTION_CODE);
         }
     }
 
     private void validateTime(Date time) throws ServiceException {
         if (Objects.isNull(time)){
-            throw new ServiceException(PAYMENT_DATE_IS_NULL_EXCEPTION);
+            throw new ServiceException(ExceptionCode.PAYMENT_TIME_IS_NULL_EXCEPTION_CODE);
         }
     }
 
     private void validateName(String name) throws ServiceException {
         if (Objects.isNull(name)
                 || name.length() < NAME_MIN_LENGTH) {
-            throw new ServiceException(NAME_MIN_LENGTH_EXCEPTION);
+            throw new ServiceException(ExceptionCode.PAYMENT_NAME_TOO_SHORT_EXCEPTION_CODE);
         }
     }
 

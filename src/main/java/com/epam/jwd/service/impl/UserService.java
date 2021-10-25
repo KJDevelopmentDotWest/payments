@@ -7,6 +7,7 @@ import com.epam.jwd.service.api.Service;
 import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.UserConverter;
 import com.epam.jwd.service.dto.userdto.UserDTO;
+import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 import com.epam.jwd.service.validator.impl.UserValidator;
@@ -21,27 +22,21 @@ public class UserService implements Service<UserDTO, Integer> {
     private final Validator<UserDTO, Integer> validator = new UserValidator();
     private final Converter<User, UserDTO, Integer> converter = new UserConverter();
 
-    private static final String THERE_IS_NO_SUCH_USER_EXCEPTION = "there is no user with provided id";
-
     @Override
     public UserDTO create(UserDTO value) throws ServiceException {
-        validator.validate(value);
+        validator.validate(value, false);
         return converter.convert(dao.save(converter.convert(value)));
     }
 
     @Override
     public Boolean update(UserDTO value) throws ServiceException {
-        validator.validate(value);
-        validator.validateIdNotNull(value);
-        validator.validateIdNotNull(value.getAccount().getId());
+        validator.validate(value, true);
         return dao.update(converter.convert(value));
     }
 
     @Override
     public Boolean delete(UserDTO value) throws ServiceException {
-        validator.validate(value);
-        validator.validateIdNotNull(value);
-        validator.validateIdNotNull(value.getAccount().getId());
+        validator.validate(value, true);
         return dao.delete(converter.convert(value));
     }
 
@@ -50,7 +45,7 @@ public class UserService implements Service<UserDTO, Integer> {
         validator.validateIdNotNull(id);
         User result = dao.findById(id);
         if (Objects.isNull(result)){
-            throw new ServiceException(THERE_IS_NO_SUCH_USER_EXCEPTION);
+            throw new ServiceException(ExceptionCode.USER_IS_NOT_FOUND_EXCEPTION_CODE);
         }
         return converter.convert(result);
     }
@@ -60,7 +55,7 @@ public class UserService implements Service<UserDTO, Integer> {
         List<UserDTO> result = new ArrayList<>();
         List<User> daoResult = dao.findAll();
         if (daoResult.isEmpty()){
-            throw new ServiceException(REPOSITORY_IS_EMPTY_EXCEPTION);
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;

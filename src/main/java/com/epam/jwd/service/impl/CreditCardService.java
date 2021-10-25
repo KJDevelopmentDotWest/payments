@@ -7,6 +7,7 @@ import com.epam.jwd.service.api.Service;
 import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.CreditCardConverter;
 import com.epam.jwd.service.dto.creditcarddto.CreditCardDTO;
+import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 import com.epam.jwd.service.validator.impl.CreditCardValidator;
@@ -21,26 +22,21 @@ public class CreditCardService implements Service<CreditCardDTO, Integer> {
     private final Validator<CreditCardDTO, Integer> validator = new CreditCardValidator();
     private final Converter<CreditCard, CreditCardDTO, Integer> converter = new CreditCardConverter();
 
-    private static final String THERE_IS_NO_SUCH_CREDIT_CARD_EXCEPTION = "there is no credit card with provided id";
-
     @Override
     public CreditCardDTO create(CreditCardDTO value) throws ServiceException {
-        validator.validate(value);
+        validator.validate(value, false);
         return converter.convert(dao.save(converter.convert(value)));
     }
 
     @Override
     public Boolean update(CreditCardDTO value) throws ServiceException {
-        validator.validate(value);
-        validator.validateIdNotNull(value);
-        validator.validateIdNotNull(value.getBankAccount().getId());
+        validator.validate(value, true);
         return dao.update(converter.convert(value));
     }
 
     @Override
     public Boolean delete(CreditCardDTO value) throws ServiceException {
-        validator.validate(value);
-        validator.validateIdNotNull(value);
+        validator.validate(value, true);
         validator.validateIdNotNull(value.getBankAccount().getId());
         return dao.delete(converter.convert(value));
     }
@@ -50,7 +46,7 @@ public class CreditCardService implements Service<CreditCardDTO, Integer> {
         validator.validateIdNotNull(id);
         CreditCard result = dao.findById(id);
         if (Objects.isNull(result)){
-            throw new ServiceException(THERE_IS_NO_SUCH_CREDIT_CARD_EXCEPTION);
+            throw new ServiceException(ExceptionCode.CREDIT_CARD_IS_NOT_FOUND_EXCEPTION_CODE);
         }
         return converter.convert(result);
     }
@@ -60,7 +56,7 @@ public class CreditCardService implements Service<CreditCardDTO, Integer> {
         List<CreditCardDTO> result = new ArrayList<>();
         List<CreditCard> daoResult = dao.findAll();
         if (daoResult.isEmpty()){
-            throw new ServiceException(REPOSITORY_IS_EMPTY_EXCEPTION);
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;
@@ -71,7 +67,7 @@ public class CreditCardService implements Service<CreditCardDTO, Integer> {
         List<CreditCardDTO> result = new ArrayList<>();
         List<CreditCard> daoResult = ((CreditCardDAO) dao).findByUserId(id);
         if (daoResult.isEmpty()){
-            throw new ServiceException(REPOSITORY_IS_EMPTY_EXCEPTION);
+            throw new ServiceException(ExceptionCode.CREDIT_CARD_IS_NOT_FOUND_EXCEPTION_CODE);
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;

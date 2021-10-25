@@ -7,6 +7,7 @@ import com.epam.jwd.service.api.Service;
 import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.PaymentConverter;
 import com.epam.jwd.service.dto.paymentdto.PaymentDTO;
+import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 import com.epam.jwd.service.validator.impl.PaymentValidator;
@@ -21,25 +22,21 @@ public class PaymentService implements Service<PaymentDTO, Integer> {
     private final Validator<PaymentDTO, Integer> validator = new PaymentValidator();
     private final Converter<Payment, PaymentDTO, Integer> converter = new PaymentConverter();
 
-    private static final String THERE_IS_NO_SUCH_PAYMENT_EXCEPTION = "there is no payment with provided id";
-
     @Override
     public PaymentDTO create(PaymentDTO value) throws ServiceException {
-        validator.validate(value);
+        validator.validate(value, false);
         return converter.convert(dao.save(converter.convert(value)));
     }
 
     @Override
     public Boolean update(PaymentDTO value) throws ServiceException {
-        validator.validate(value);
-        validator.validateIdNotNull(value);
+        validator.validate(value, true);
         return dao.update(converter.convert(value));
     }
 
     @Override
     public Boolean delete(PaymentDTO value) throws ServiceException {
-        validator.validate(value);
-        validator.validateIdNotNull(value);
+        validator.validate(value, true);
         return dao.delete(converter.convert(value));
     }
 
@@ -48,7 +45,7 @@ public class PaymentService implements Service<PaymentDTO, Integer> {
         validator.validateIdNotNull(id);
         Payment result = dao.findById(id);
         if (Objects.isNull(result)){
-            throw new ServiceException(THERE_IS_NO_SUCH_PAYMENT_EXCEPTION);
+            throw new ServiceException(ExceptionCode.PAYMENT_IS_NOT_FOUND_EXCEPTION_CODE);
         }
         return converter.convert(result);
     }
@@ -58,7 +55,7 @@ public class PaymentService implements Service<PaymentDTO, Integer> {
         List<PaymentDTO> result = new ArrayList<>();
         List<Payment> daoResult = dao.findAll();
         if (daoResult.isEmpty()){
-            throw new ServiceException(REPOSITORY_IS_EMPTY_EXCEPTION);
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;
