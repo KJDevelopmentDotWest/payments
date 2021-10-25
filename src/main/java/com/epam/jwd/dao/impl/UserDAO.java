@@ -129,6 +129,7 @@ public class UserDAO implements DAO<User, Integer> {
         resultSet.next();
         Integer id = resultSet.getInt(1);
         user.setId(id);
+        preparedStatement.close();
         return user;
     }
 
@@ -142,6 +143,8 @@ public class UserDAO implements DAO<User, Integer> {
         resultSet.next();
         Integer id = resultSet.getInt(1);
         account.setId(id);
+        resultSet.close();
+        preparedStatement.close();
     }
 
     private List<User> findAllUser(Connection connection) throws SQLException{
@@ -155,6 +158,8 @@ public class UserDAO implements DAO<User, Integer> {
                     findAccountById(connection, resultSet.getInt(1)));
             result.add(user);
         }
+        resultSet.close();
+        preparedStatement.close();
         return result;
     }
 
@@ -162,12 +167,16 @@ public class UserDAO implements DAO<User, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_ID);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
         if (resultSet.next()){
-            return new User(resultSet.getInt(1),
+            User user = new User(resultSet.getInt(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     findAccountById(connection, resultSet.getInt(1)));
+            resultSet.close();
+            return user;
         } else {
+            resultSet.close();
             return null;
         }
     }
@@ -176,12 +185,16 @@ public class UserDAO implements DAO<User, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ACCOUNT_BY_ID);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
         if (resultSet.next()){
-            return new Account(resultSet.getInt(1),
+            Account account = new Account(resultSet.getInt(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getInt(4));
+            resultSet.close();
+            return account;
         } else {
+            resultSet.close();
             return null;
         }
     }
@@ -189,14 +202,18 @@ public class UserDAO implements DAO<User, Integer> {
     private Boolean deleteUserById(Connection connection, Integer id) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_USER_BY_ID);
         preparedStatement.setInt(1, id);
-        return Objects.equals(preparedStatement.executeUpdate(), 1)
+        Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1)
                 && deleteAccountById(connection, id);
+        preparedStatement.close();
+        return result;
     }
 
     private Boolean deleteAccountById(Connection connection, Integer id) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ACCOUNT_BY_ID);
         preparedStatement.setInt(1, id);
-        return Objects.equals(preparedStatement.executeUpdate(), 1);
+        Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);
+        preparedStatement.close();
+        return result;
     }
 
     private Boolean updateUserById(Connection connection, User user) throws SQLException{
@@ -204,8 +221,10 @@ public class UserDAO implements DAO<User, Integer> {
         preparedStatement.setString(1, user.getLogin());
         preparedStatement.setString(2, user.getPassword());
         preparedStatement.setInt(3, user.getId());
-        return Objects.equals(preparedStatement.executeUpdate(), 1)
+        Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1)
                 && updateAccountById(connection, user.getAccount());
+        preparedStatement.close();
+        return result;
     }
 
     private Boolean updateAccountById(Connection connection, Account account) throws SQLException{
@@ -214,6 +233,8 @@ public class UserDAO implements DAO<User, Integer> {
         preparedStatement.setString(2, account.getSurname());
         preparedStatement.setInt(3, account.getRoleId());
         preparedStatement.setInt(4, account.getId());
-        return Objects.equals(preparedStatement.executeUpdate(), 1);
+        Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);
+        preparedStatement.close();
+        return result;
     }
 }

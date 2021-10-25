@@ -114,6 +114,8 @@ public class PaymentDAO implements DAO<Payment, Integer> {
         resultSet.next();
         Integer id = resultSet.getInt(1);
         payment.setId(id);
+        preparedStatement.close();
+        resultSet.close();
         return payment;
     }
 
@@ -144,6 +146,8 @@ public class PaymentDAO implements DAO<Payment, Integer> {
             }
             result.add(payment);
         }
+        preparedStatement.close();
+        resultSet.close();
         return result;
     }
 
@@ -151,6 +155,7 @@ public class PaymentDAO implements DAO<Payment, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_PAYMENT_BY_ID);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
         if (resultSet.next()){
             Payment payment;
             try {
@@ -172,8 +177,10 @@ public class PaymentDAO implements DAO<Payment, Integer> {
                 //todo implement logger and custom exception
                 e.printStackTrace();
             }
+            resultSet.close();
             return payment;
         } else {
+            resultSet.close();
             return null;
         }
     }
@@ -187,12 +194,16 @@ public class PaymentDAO implements DAO<Payment, Integer> {
         preparedStatement.setString(5, payment.getTime().toString());
         preparedStatement.setString(6, payment.getName());
         preparedStatement.setInt(7, payment.getId());
-        return Objects.equals(preparedStatement.executeUpdate(), 1);
+        Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);
+        preparedStatement.close();
+        return result;
     }
 
     private Boolean deletePaymentById(Connection connection, Integer id) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_PAYMENT_BY_ID);
         preparedStatement.setInt(1, id);
-        return Objects.equals(preparedStatement.executeUpdate(), 1);
+        Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);
+        preparedStatement.close();
+        return result;
     }
 }

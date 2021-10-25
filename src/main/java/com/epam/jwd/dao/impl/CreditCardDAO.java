@@ -147,6 +147,7 @@ public class CreditCardDAO implements DAO<CreditCard, Integer> {
         resultSet.next();
         Integer id = resultSet.getInt(1);
         card.setId(id);
+        preparedStatement.close();
         return card;
     }
 
@@ -159,6 +160,7 @@ public class CreditCardDAO implements DAO<CreditCard, Integer> {
         resultSet.next();
         Integer id = resultSet.getInt(1);
         account.setId(id);
+        preparedStatement.close();
     }
 
     private List<CreditCard> findAllCreditCard(Connection connection) throws SQLException{
@@ -183,6 +185,8 @@ public class CreditCardDAO implements DAO<CreditCard, Integer> {
                 e.printStackTrace();
             }
         }
+        resultSet.close();
+        preparedStatement.close();
         return result;
     }
 
@@ -191,6 +195,7 @@ public class CreditCardDAO implements DAO<CreditCard, Integer> {
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
+        preparedStatement.close();
         if (resultSet.next()){
             CreditCard creditCard;
             try {
@@ -207,8 +212,10 @@ public class CreditCardDAO implements DAO<CreditCard, Integer> {
                 //todo and logger
                 e.printStackTrace();
             }
+            resultSet.close();
             return creditCard;
         } else {
+            resultSet.close();
             return null;
         }
     }
@@ -217,11 +224,15 @@ public class CreditCardDAO implements DAO<CreditCard, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BANK_ACCOUNT_BY_ID);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
         if (resultSet.next()){
-            return new BankAccount(resultSet.getInt(1),
+            BankAccount bankAccount = new BankAccount(resultSet.getInt(1),
                     resultSet.getInt(2),
                     resultSet.getBoolean(3));
+            resultSet.close();
+            return bankAccount;
         } else {
+            resultSet.close();
             return null;
         }
     }
@@ -249,6 +260,8 @@ public class CreditCardDAO implements DAO<CreditCard, Integer> {
                 e.printStackTrace();
             }
         }
+        resultSet.close();
+        preparedStatement.close();
         return result;
     }
 
@@ -258,8 +271,10 @@ public class CreditCardDAO implements DAO<CreditCard, Integer> {
         preparedStatement.setString(2, creditCard.getExpireDate().toString());
         preparedStatement.setInt(3, creditCard.getAccountId());
         preparedStatement.setInt(4, creditCard.getId());
-        return Objects.equals(preparedStatement.executeUpdate(), 1)
+        Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1)
                 && updateBankAccountById(connection, creditCard.getBankAccount());
+        preparedStatement.close();
+        return result;
     }
 
     private Boolean updateBankAccountById(Connection connection, BankAccount bankAccount) throws  SQLException{
@@ -267,19 +282,25 @@ public class CreditCardDAO implements DAO<CreditCard, Integer> {
         preparedStatement.setInt(1, bankAccount.getBalance());
         preparedStatement.setBoolean(2, bankAccount.getBlocked());
         preparedStatement.setInt(3, bankAccount.getId());
-        return  Objects.equals(preparedStatement.executeUpdate(), 1);
+        Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);
+        preparedStatement.close();
+        return result;
     }
 
     private Boolean deleteCreditCardById(Connection connection, Integer id) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_CREDIT_CARD_BY_ID);
         preparedStatement.setInt(1, id);
-        return Objects.equals(preparedStatement.executeUpdate(), 1)
+        Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1)
                 && deleteBankAccountById(connection, id);
+        preparedStatement.close();
+        return result;
     }
 
     private Boolean deleteBankAccountById(Connection connection, Integer id) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_BANK_ACCOUNT_BY_ID);
         preparedStatement.setInt(1, id);
-        return Objects.equals(preparedStatement.executeUpdate(), 1);
+        Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);
+        preparedStatement.close();
+        return result;
     }
 }

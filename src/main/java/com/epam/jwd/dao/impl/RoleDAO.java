@@ -102,6 +102,8 @@ public class RoleDAO implements DAO<Role, Integer> {
         resultSet.next();
         Integer id = resultSet.getInt(1);
         role.setId(id);
+        preparedStatement.close();
+        resultSet.close();
         return role;
     }
 
@@ -114,6 +116,8 @@ public class RoleDAO implements DAO<Role, Integer> {
                     resultSet.getString(2));
             result.add(role);
         }
+        preparedStatement.close();
+        resultSet.close();
         return result;
     }
 
@@ -121,10 +125,14 @@ public class RoleDAO implements DAO<Role, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ROLE_BY_ID);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
         if (resultSet.next()){
-            return new Role(resultSet.getInt(1),
+            Role role = new Role(resultSet.getInt(1),
                     resultSet.getString(2));
+            resultSet.close();
+            return role;
         } else {
+            resultSet.close();
             return null;
         }
     }
@@ -133,12 +141,16 @@ public class RoleDAO implements DAO<Role, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ROLE_BY_ID);
         preparedStatement.setString(1, role.getName());
         preparedStatement.setInt(2, role.getId());
-        return Objects.equals(preparedStatement.executeUpdate(), 1);
+        Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);
+        preparedStatement.close();
+        return result;
     }
 
     private Boolean deleteRoleById(Connection connection, Integer id) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ROLE_BY_ID);
         preparedStatement.setInt(1, id);
-        return Objects.equals(preparedStatement.executeUpdate(), 1);
+        Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);
+        preparedStatement.close();
+        return result;
     }
 }
