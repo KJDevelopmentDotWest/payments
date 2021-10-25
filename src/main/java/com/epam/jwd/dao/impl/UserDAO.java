@@ -19,8 +19,9 @@ public class UserDAO implements DAO<User, Integer> {
     private static final String SQL_SAVE_USER = "INSERT INTO users (login, password) VALUES (?, ?)";
     private static final String SQL_SAVE_ACCOUNT = "INSERT INTO accounts (name, surname, role_id) VALUES (?, ?, ?)";
 
-    private static final String SQL_FIND_ALL_USER = "SELECT id, login, password FROM users";
+    private static final String SQL_FIND_ALL_USERS = "SELECT id, login, password FROM users";
     private static final String SQL_FIND_USER_BY_ID = "SELECT id, login, password FROM users WHERE id = ?";
+    private static final String SQL_FIND_USER_BY_LOGIN = "SELECT id, login, password FROM users WHERE login = ?";
     private static final String SQL_FIND_ACCOUNT_BY_ID = "SELECT id, name, surname, role_id FROM accounts WHERE id = ?";
 
     private static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?";
@@ -119,6 +120,20 @@ public class UserDAO implements DAO<User, Integer> {
         return user;
     }
 
+    public User findByLogin(String login) {
+        Connection connection = connectionPool.takeConnection();
+        User user = null;
+        try {
+            user = findUserByLogin(connection, login);
+        } catch (SQLException e) {
+            //todo implement logger and custom exception
+            e.printStackTrace();
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return user;
+    }
+
     private User saveUser(Connection connection, User user) throws SQLException{
         saveAccount(connection, user.getAccount());
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_USER);
@@ -149,7 +164,7 @@ public class UserDAO implements DAO<User, Integer> {
 
     private List<User> findAllUser(Connection connection) throws SQLException{
         List<User> result = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_USER);
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_USERS);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
             User user = new User(resultSet.getInt(1),
@@ -161,6 +176,24 @@ public class UserDAO implements DAO<User, Integer> {
         resultSet.close();
         preparedStatement.close();
         return result;
+    }
+
+    private User findUserByLogin(Connection connection, String login) throws SQLException{
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
+        preparedStatement.setString(1, login);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
+        if (resultSet.next()){
+            User user = new User(resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    findAccountById(connection, resultSet.getInt(1)));
+            resultSet.close();
+            return user;
+        } else {
+            resultSet.close();
+            return null;
+        }
     }
 
     private User findUserById(Connection connection, Integer id) throws SQLException{

@@ -25,7 +25,12 @@ public class UserService implements Service<UserDTO, Integer> {
     @Override
     public UserDTO create(UserDTO value) throws ServiceException {
         validator.validate(value, false);
-        return converter.convert(dao.save(converter.convert(value)));
+
+        User checkUser = ((UserDAO)dao).findByLogin(value.getLogin());
+        ((UserValidator)validator).validateLoginUnique(checkUser);
+
+        User createdUser = converter.convert(value);
+        return converter.convert(dao.save(createdUser));
     }
 
     @Override
@@ -59,5 +64,14 @@ public class UserService implements Service<UserDTO, Integer> {
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;
+    }
+
+    public UserDTO getByLogin(String login) throws ServiceException {
+        ((UserValidator)validator).validateLoginNotNull(login);
+        User result = ((UserDAO)dao).findByLogin(login);
+        if (Objects.isNull(result)){
+            throw new ServiceException(ExceptionCode.USER_IS_NOT_FOUND_EXCEPTION_CODE);
+        }
+        return converter.convert(result);
     }
 }
