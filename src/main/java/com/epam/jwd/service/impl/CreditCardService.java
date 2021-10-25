@@ -7,7 +7,6 @@ import com.epam.jwd.service.api.Service;
 import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.CreditCardConverter;
 import com.epam.jwd.service.dto.creditcarddto.CreditCardDTO;
-import com.epam.jwd.service.exception.EntityNotFoundException;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 import com.epam.jwd.service.validator.impl.CreditCardValidator;
@@ -51,17 +50,17 @@ public class CreditCardService implements Service<CreditCardDTO, Integer> {
         validator.validateIdNotNull(id);
         CreditCard result = dao.findById(id);
         if (Objects.isNull(result)){
-            throw new EntityNotFoundException(THERE_IS_NO_SUCH_CREDIT_CARD_EXCEPTION);
+            throw new ServiceException(THERE_IS_NO_SUCH_CREDIT_CARD_EXCEPTION);
         }
         return converter.convert(result);
     }
 
     @Override
-    public List<CreditCardDTO> getAll() {
+    public List<CreditCardDTO> getAll() throws ServiceException {
         List<CreditCardDTO> result = new ArrayList<>();
         List<CreditCard> daoResult = dao.findAll();
         if (daoResult.isEmpty()){
-            throw new EntityNotFoundException(REPOSITORY_IS_EMPTY_EXCEPTION);
+            throw new ServiceException(REPOSITORY_IS_EMPTY_EXCEPTION);
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;
@@ -72,7 +71,7 @@ public class CreditCardService implements Service<CreditCardDTO, Integer> {
         List<CreditCardDTO> result = new ArrayList<>();
         List<CreditCard> daoResult = ((CreditCardDAO) dao).findByUserId(id);
         if (daoResult.isEmpty()){
-            throw new EntityNotFoundException(REPOSITORY_IS_EMPTY_EXCEPTION);
+            throw new ServiceException(REPOSITORY_IS_EMPTY_EXCEPTION);
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;

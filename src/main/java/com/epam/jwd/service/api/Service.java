@@ -12,5 +12,5 @@ public interface Service<T extends EntityDTO<K>, K> {
     Boolean update(T value) throws ServiceException;
     Boolean delete(T value) throws ServiceException;
     T getById(K id) throws ServiceException;
-    List<T> getAll();
+    List<T> getAll() throws ServiceException;
 }

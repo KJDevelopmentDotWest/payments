@@ -2,14 +2,11 @@ package com.epam.jwd.service.impl;
 
 import com.epam.jwd.dao.api.DAO;
 import com.epam.jwd.dao.impl.RoleDAO;
-import com.epam.jwd.dao.model.payment.Payment;
 import com.epam.jwd.dao.model.user.Role;
 import com.epam.jwd.service.api.Service;
 import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.RoleConverter;
-import com.epam.jwd.service.dto.paymentdto.PaymentDTO;
 import com.epam.jwd.service.dto.userdto.RoleDTO;
-import com.epam.jwd.service.exception.EntityNotFoundException;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 import com.epam.jwd.service.validator.impl.RoleValidator;
@@ -51,17 +48,17 @@ public class RoleService implements Service<RoleDTO, Integer> {
         validator.validateIdNotNull(id);
         Role result = dao.findById(id);
         if (Objects.isNull(result)){
-            throw new EntityNotFoundException(THERE_IS_NO_SUCH_ROLE_EXCEPTION);
+            throw new ServiceException(THERE_IS_NO_SUCH_ROLE_EXCEPTION);
         }
         return converter.convert(result);
     }
 
     @Override
-    public List<RoleDTO> getAll() {
+    public List<RoleDTO> getAll() throws ServiceException {
         List<RoleDTO> result = new ArrayList<>();
         List<Role> daoResult = dao.findAll();
         if (daoResult.isEmpty()){
-            throw new EntityNotFoundException(REPOSITORY_IS_EMPTY_EXCEPTION);
+            throw new ServiceException(REPOSITORY_IS_EMPTY_EXCEPTION);
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;
