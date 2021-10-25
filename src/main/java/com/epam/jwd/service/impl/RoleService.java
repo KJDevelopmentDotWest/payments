@@ -9,6 +9,7 @@ import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.RoleConverter;
 import com.epam.jwd.service.dto.paymentdto.PaymentDTO;
 import com.epam.jwd.service.dto.userdto.RoleDTO;
+import com.epam.jwd.service.exception.EntityNotFoundException;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 import com.epam.jwd.service.validator.impl.RoleValidator;
@@ -50,17 +51,17 @@ public class RoleService implements Service<RoleDTO, Integer> {
         validator.validateIdNotNull(id);
         Role result = dao.findById(id);
         if (Objects.isNull(result)){
-            throw new ServiceException(THERE_IS_NO_SUCH_ROLE_EXCEPTION);
+            throw new EntityNotFoundException(THERE_IS_NO_SUCH_ROLE_EXCEPTION);
         }
         return converter.convert(result);
     }
 
     @Override
-    public List<RoleDTO> getAll() throws ServiceException {
+    public List<RoleDTO> getAll() {
         List<RoleDTO> result = new ArrayList<>();
         List<Role> daoResult = dao.findAll();
         if (daoResult.isEmpty()){
-            throw new ServiceException(REPOSITORY_IS_EMPTY_EXCEPTION);
+            throw new EntityNotFoundException(REPOSITORY_IS_EMPTY_EXCEPTION);
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;

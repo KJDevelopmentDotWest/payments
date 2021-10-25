@@ -124,7 +124,7 @@ public class CreditCardDAO implements DAO<CreditCard, Integer> {
         return creditCard;
     }
 
-    public List<CreditCard> findByAccountId(Integer id){
+    public List<CreditCard> findByUserId(Integer id){
         Connection connection = connectionPool.takeConnection();
         List<CreditCard> creditCards = new ArrayList<>();
         try {

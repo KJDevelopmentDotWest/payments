@@ -7,6 +7,7 @@ import com.epam.jwd.service.api.Service;
 import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.PaymentConverter;
 import com.epam.jwd.service.dto.paymentdto.PaymentDTO;
+import com.epam.jwd.service.exception.EntityNotFoundException;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 import com.epam.jwd.service.validator.impl.PaymentValidator;
@@ -48,17 +49,17 @@ public class PaymentService implements Service<PaymentDTO, Integer> {
         validator.validateIdNotNull(id);
         Payment result = dao.findById(id);
         if (Objects.isNull(result)){
-            throw new ServiceException(THERE_IS_NO_SUCH_PAYMENT_EXCEPTION);
+            throw new EntityNotFoundException(THERE_IS_NO_SUCH_PAYMENT_EXCEPTION);
         }
         return converter.convert(result);
     }
 
     @Override
-    public List<PaymentDTO> getAll() throws ServiceException {
+    public List<PaymentDTO> getAll() {
         List<PaymentDTO> result = new ArrayList<>();
         List<Payment> daoResult = dao.findAll();
         if (daoResult.isEmpty()){
-            throw new ServiceException(REPOSITORY_IS_EMPTY_EXCEPTION);
+            throw new EntityNotFoundException(REPOSITORY_IS_EMPTY_EXCEPTION);
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;

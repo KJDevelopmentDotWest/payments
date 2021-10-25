@@ -7,6 +7,7 @@ import com.epam.jwd.service.api.Service;
 import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.UserConverter;
 import com.epam.jwd.service.dto.userdto.UserDTO;
+import com.epam.jwd.service.exception.EntityNotFoundException;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 import com.epam.jwd.service.validator.impl.UserValidator;
@@ -50,17 +51,17 @@ public class UserService implements Service<UserDTO, Integer> {
         validator.validateIdNotNull(id);
         User result = dao.findById(id);
         if (Objects.isNull(result)){
-            throw new ServiceException(THERE_IS_NO_SUCH_USER_EXCEPTION);
+            throw new EntityNotFoundException(THERE_IS_NO_SUCH_USER_EXCEPTION);
         }
         return converter.convert(result);
     }
 
     @Override
-    public List<UserDTO> getAll() throws ServiceException {
+    public List<UserDTO> getAll() {
         List<UserDTO> result = new ArrayList<>();
         List<User> daoResult = dao.findAll();
         if (daoResult.isEmpty()){
-            throw new ServiceException(REPOSITORY_IS_EMPTY_EXCEPTION);
+            throw new EntityNotFoundException(REPOSITORY_IS_EMPTY_EXCEPTION);
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;
