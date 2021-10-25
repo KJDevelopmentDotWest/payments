@@ -34,7 +34,7 @@ public class PaymentValidator implements Validator<PaymentDTO, Integer> {
         }
     }
 
-    private void validateUserId(Integer id) throws ServiceException {
+    public void validateUserId(Integer id) throws ServiceException {
         if (Objects.isNull(id)){
             throw new ServiceException(ExceptionCode.PAYMENT_USER_ID_IS_NULL_EXCEPTION_CODE);
         }

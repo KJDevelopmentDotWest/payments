@@ -60,4 +60,15 @@ public class PaymentService implements Service<PaymentDTO, Integer> {
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;
     }
+
+    public List<PaymentDTO> getByUserId(Integer id) throws ServiceException {
+        ((PaymentValidator)validator).validateUserId(id);
+        List<PaymentDTO> result = new ArrayList<>();
+        List<Payment> daoResult = ((PaymentDAO)dao).findByUserId(id);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
 }
