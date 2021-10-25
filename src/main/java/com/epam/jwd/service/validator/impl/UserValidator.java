@@ -1,6 +1,5 @@
 package com.epam.jwd.service.validator.impl;
 
-import com.epam.jwd.dao.impl.UserDAO;
 import com.epam.jwd.dao.model.user.User;
 import com.epam.jwd.service.dto.userdto.AccountDTO;
 import com.epam.jwd.service.dto.userdto.UserDTO;
@@ -8,7 +7,6 @@ import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 
-import java.util.List;
 import java.util.Objects;
 
 public class UserValidator implements Validator<UserDTO, Integer> {
