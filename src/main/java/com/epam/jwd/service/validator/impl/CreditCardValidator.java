@@ -24,7 +24,7 @@ public class CreditCardValidator implements Validator<CreditCardDTO, Integer> {
         validateBankAccount(value.getBankAccount(), checkId);
         validateName(value.getName());
         validateDate(value.getExpireDate());
-        validateAccountId(value.getAccountId());
+        validateAccountId(value.getUserId());
     }
 
     private void validateId(Integer id) throws ServiceException {

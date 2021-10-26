@@ -1,10 +1,10 @@
 package com.epam.jwd.service.dto.userdto;
 
-import com.epam.jwd.service.dto.EntityDTO;
+import com.epam.jwd.service.dto.AbstractDTO;
 
 import java.util.Objects;
 
-public class RoleDTO extends EntityDTO<Integer> {
+public class RoleDTO extends AbstractDTO<Integer> {
     private String name;
 
     public RoleDTO(String name) {

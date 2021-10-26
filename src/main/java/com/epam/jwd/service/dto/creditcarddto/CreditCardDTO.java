@@ -1,29 +1,28 @@
 package com.epam.jwd.service.dto.creditcarddto;
 
-import com.epam.jwd.dao.model.creditcard.BankAccount;
-import com.epam.jwd.service.dto.EntityDTO;
+import com.epam.jwd.service.dto.AbstractDTO;
 
 import java.util.Date;
 import java.util.Objects;
 
-public class CreditCardDTO extends EntityDTO<Integer> {
+public class CreditCardDTO extends AbstractDTO<Integer> {
     private BankAccountDTO bankAccount;
     private String name;
     private Date expireDate;
-    private Integer accountId;
+    private Integer userId;
 
     public CreditCardDTO(BankAccountDTO bankAccount, String name, Date expireDate, Integer accountId) {
         this.bankAccount = bankAccount;
         this.name = name;
         this.expireDate = expireDate;
-        this.accountId = accountId;
+        this.userId = accountId;
     }
 
-    public CreditCardDTO(Integer id, BankAccountDTO bankAccount, String name, Date expireDate, Integer accountId) {
+    public CreditCardDTO(Integer id, BankAccountDTO bankAccount, String name, Date expireDate, Integer userId) {
         this.bankAccount = bankAccount;
         this.name = name;
         this.expireDate = expireDate;
-        this.accountId = accountId;
+        this.userId = userId;
         this.id = id;
     }
 
@@ -51,12 +50,12 @@ public class CreditCardDTO extends EntityDTO<Integer> {
         this.expireDate = expireDate;
     }
 
-    public Integer getAccountId() {
-        return accountId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -67,13 +66,13 @@ public class CreditCardDTO extends EntityDTO<Integer> {
         return Objects.equals(bankAccount, creditCardDTO.bankAccount)
                 && Objects.equals(name, creditCardDTO.name)
                 && Objects.equals(expireDate, creditCardDTO.expireDate)
-                && Objects.equals(accountId, creditCardDTO.accountId)
+                && Objects.equals(userId, creditCardDTO.userId)
                 && Objects.equals(id, creditCardDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bankAccount, name, expireDate, accountId, id);
+        return Objects.hash(bankAccount, name, expireDate, userId, id);
     }
 
     @Override
@@ -83,7 +82,7 @@ public class CreditCardDTO extends EntityDTO<Integer> {
                 ", bankAccount=" + bankAccount +
                 ", name='" + name + '\'' +
                 ", expireDate=" + expireDate +
-                ", accountId=" + accountId +
+                ", accountId=" + userId +
                 '}';
     }
 }

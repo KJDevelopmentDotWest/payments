@@ -4,6 +4,9 @@ import com.epam.jwd.dao.api.DAO;
 import com.epam.jwd.dao.impl.CreditCardDAO;
 import com.epam.jwd.dao.model.creditcard.CreditCard;
 import com.epam.jwd.service.api.Service;
+import com.epam.jwd.service.comparator.creditcardcomparator.BalanceSortingComparator;
+import com.epam.jwd.service.comparator.creditcardcomparator.BlockedSortingComparator;
+import com.epam.jwd.service.comparator.creditcardcomparator.UserIdSortingComparator;
 import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.CreditCardConverter;
 import com.epam.jwd.service.dto.creditcarddto.CreditCardDTO;
@@ -71,5 +74,20 @@ public class CreditCardService implements Service<CreditCardDTO, Integer> {
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;
+    }
+
+    public List<CreditCardDTO> sortByUserId(List<CreditCardDTO> creditCards) {
+        creditCards.sort(new UserIdSortingComparator());
+        return creditCards;
+    }
+
+    public List<CreditCardDTO> sortByBalance(List<CreditCardDTO> creditCards) {
+        creditCards.sort(new BalanceSortingComparator());
+        return creditCards;
+    }
+
+    public List<CreditCardDTO> sortByBlocked(List<CreditCardDTO> creditCards) {
+        creditCards.sort(new BlockedSortingComparator());
+        return creditCards;
     }
 }

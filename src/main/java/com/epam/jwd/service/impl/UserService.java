@@ -4,6 +4,8 @@ import com.epam.jwd.dao.api.DAO;
 import com.epam.jwd.dao.impl.UserDAO;
 import com.epam.jwd.dao.model.user.User;
 import com.epam.jwd.service.api.Service;
+import com.epam.jwd.service.comparator.usercomparator.AccountSurnameSortingComparator;
+import com.epam.jwd.service.comparator.usercomparator.RoleSortingComparator;
 import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.UserConverter;
 import com.epam.jwd.service.dto.userdto.UserDTO;
@@ -73,5 +75,15 @@ public class UserService implements Service<UserDTO, Integer> {
             throw new ServiceException(ExceptionCode.USER_IS_NOT_FOUND_EXCEPTION_CODE);
         }
         return converter.convert(result);
+    }
+
+    public List<UserDTO> sortByAccountSurname (List<UserDTO> users){
+        users.sort(new AccountSurnameSortingComparator());
+        return users;
+    }
+
+    public List<UserDTO> sortByRole (List<UserDTO> users){
+        users.sort(new RoleSortingComparator());
+        return users;
     }
 }

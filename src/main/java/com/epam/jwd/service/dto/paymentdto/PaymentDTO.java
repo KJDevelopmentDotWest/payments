@@ -1,11 +1,11 @@
 package com.epam.jwd.service.dto.paymentdto;
 
-import com.epam.jwd.service.dto.EntityDTO;
+import com.epam.jwd.service.dto.AbstractDTO;
 
 import java.util.Date;
 import java.util.Objects;
 
-public class PaymentDTO extends EntityDTO<Integer> {
+public class PaymentDTO extends AbstractDTO<Integer> {
     private Integer userId;
     private String destinationAddress;
     private Integer price;

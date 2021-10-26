@@ -1,10 +1,10 @@
 package com.epam.jwd.service.dto.userdto;
 
-import com.epam.jwd.service.dto.EntityDTO;
+import com.epam.jwd.service.dto.AbstractDTO;
 
 import java.util.Objects;
 
-public class UserDTO extends EntityDTO<Integer> {
+public class UserDTO extends AbstractDTO<Integer> {
     private String login;
     private String password;
     private AccountDTO account;

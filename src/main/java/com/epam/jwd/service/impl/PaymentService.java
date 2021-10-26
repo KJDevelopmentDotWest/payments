@@ -4,6 +4,10 @@ import com.epam.jwd.dao.api.DAO;
 import com.epam.jwd.dao.impl.PaymentDAO;
 import com.epam.jwd.dao.model.payment.Payment;
 import com.epam.jwd.service.api.Service;
+import com.epam.jwd.service.comparator.paymentcomparator.CommittedSortingComparator;
+import com.epam.jwd.service.comparator.paymentcomparator.NameSortingComparator;
+import com.epam.jwd.service.comparator.paymentcomparator.TimeSortingComparator;
+import com.epam.jwd.service.comparator.paymentcomparator.UserIdSortingComparator;
 import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.PaymentConverter;
 import com.epam.jwd.service.dto.paymentdto.PaymentDTO;
@@ -13,6 +17,7 @@ import com.epam.jwd.service.validator.api.Validator;
 import com.epam.jwd.service.validator.impl.PaymentValidator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -70,5 +75,25 @@ public class PaymentService implements Service<PaymentDTO, Integer> {
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;
+    }
+
+    public List<PaymentDTO> sortByUserId(List<PaymentDTO> payments) {
+        payments.sort(new UserIdSortingComparator());
+        return payments;
+    }
+
+    public List<PaymentDTO> sortByName(List<PaymentDTO> payments){
+        payments.sort(new NameSortingComparator());
+        return payments;
+    }
+
+    public List<PaymentDTO> sortByTime(List<PaymentDTO> payments){
+        payments.sort(new TimeSortingComparator());
+        return payments;
+    }
+
+    public List<PaymentDTO> sortByCommitted(List<PaymentDTO> payments){
+        payments.sort(new CommittedSortingComparator());
+        return payments;
     }
 }

@@ -141,7 +141,7 @@ public class CreditCardDAO implements DAO<CreditCard, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_CREDIT_CARD);
         preparedStatement.setString(1, card.getName());
         preparedStatement.setString(2, card.getExpireDate().toString());
-        preparedStatement.setInt(3, card.getAccountId());
+        preparedStatement.setInt(3, card.getUserId());
         preparedStatement.executeUpdate();
         ResultSet resultSet = preparedStatement.getGeneratedKeys();
         resultSet.next();
@@ -269,7 +269,7 @@ public class CreditCardDAO implements DAO<CreditCard, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_CREDIT_CARD_BY_ID);
         preparedStatement.setString(1, creditCard.getName());
         preparedStatement.setString(2, creditCard.getExpireDate().toString());
-        preparedStatement.setInt(3, creditCard.getAccountId());
+        preparedStatement.setInt(3, creditCard.getUserId());
         preparedStatement.setInt(4, creditCard.getId());
         Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1)
                 && updateBankAccountById(connection, creditCard.getBankAccount());

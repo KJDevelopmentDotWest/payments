@@ -9,31 +9,31 @@ public class CreditCard extends Entity<Integer> {
     private BankAccount bankAccount;
     private String name;
     private Date expireDate;
-    private Integer accountId;
+    private Integer userId;
 
     public CreditCard() {}
 
-    public CreditCard(BankAccount bankAccount, String name, Date expireDate, Integer accountId) {
+    public CreditCard(BankAccount bankAccount, String name, Date expireDate, Integer userId) {
         this.bankAccount = bankAccount;
         this.name = name;
         this.expireDate = expireDate;
-        this.accountId = accountId;
+        this.userId = userId;
     }
 
-    public CreditCard(Integer id, BankAccount bankAccount, String name, Date expireDate, Integer accountId) {
+    public CreditCard(Integer id, BankAccount bankAccount, String name, Date expireDate, Integer userId) {
         this.bankAccount = bankAccount;
         this.name = name;
         this.expireDate = expireDate;
-        this.accountId = accountId;
+        this.userId = userId;
         this.id = id;
     }
 
-    public Integer getAccountId() {
-        return accountId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public BankAccount getBankAccount() {
@@ -68,13 +68,13 @@ public class CreditCard extends Entity<Integer> {
         return Objects.equals(bankAccount, creditCard.bankAccount)
                 && Objects.equals(name, creditCard.name)
                 && Objects.equals(expireDate, creditCard.expireDate)
-                && Objects.equals(accountId, creditCard.accountId)
+                && Objects.equals(userId, creditCard.userId)
                 && Objects.equals(id, creditCard.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bankAccount, name, expireDate, accountId, id);
+        return Objects.hash(bankAccount, name, expireDate, userId, id);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class CreditCard extends Entity<Integer> {
                 ", bankAccount=" + bankAccount +
                 ", name='" + name + '\'' +
                 ", expireDate=" + expireDate +
-                ", accountId=" + accountId +
+                ", accountId=" + userId +
                 '}';
     }
 }

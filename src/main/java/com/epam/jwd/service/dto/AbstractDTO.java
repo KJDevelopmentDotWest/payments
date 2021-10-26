@@ -1,6 +1,6 @@
 package com.epam.jwd.service.dto;
 
-public class EntityDTO<T> {
+public class AbstractDTO<T> {
     protected T id;
 
     public T getId() {
