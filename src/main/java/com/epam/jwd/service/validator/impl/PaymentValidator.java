@@ -1,6 +1,6 @@
 package com.epam.jwd.service.validator.impl;
 
-import com.epam.jwd.service.dto.paymentdto.PaymentDTO;
+import com.epam.jwd.service.dto.paymentdto.PaymentDto;
 import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
@@ -8,12 +8,12 @@ import com.epam.jwd.service.validator.api.Validator;
 import java.util.Date;
 import java.util.Objects;
 
-public class PaymentValidator implements Validator<PaymentDTO, Integer> {
+public class PaymentValidator implements Validator<PaymentDto, Integer> {
 
     private static final Integer NAME_MIN_LENGTH = 2;
 
     @Override
-    public void validate(PaymentDTO value, Boolean checkId) throws ServiceException {
+    public void validate(PaymentDto value, Boolean checkId) throws ServiceException {
         if (Objects.isNull(value)){
             throw new ServiceException(ExceptionCode.PAYMENT_IS_NULL_EXCEPTION_CODE);
         }

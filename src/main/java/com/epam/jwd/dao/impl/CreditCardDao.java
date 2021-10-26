@@ -1,6 +1,6 @@
 package com.epam.jwd.dao.impl;
 
-import com.epam.jwd.dao.api.DAO;
+import com.epam.jwd.dao.api.Dao;
 import com.epam.jwd.dao.connectionpool.api.ConnectionPool;
 import com.epam.jwd.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.jwd.dao.model.creditcard.BankAccount;
@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class CreditCardDAO implements DAO<CreditCard, Integer> {
+public class CreditCardDao implements Dao<CreditCard, Integer> {
 
     private static final String SQL_SAVE_CREDIT_CARD = "INSERT INTO credit_cards (name, expire_date, user_id) VALUES (?, ?, ?)";
     private static final String SQL_SAVE_BANK_ACCOUNT = "INSERT INTO bank_accounts (balance, blocked) VALUES (?, ?)";

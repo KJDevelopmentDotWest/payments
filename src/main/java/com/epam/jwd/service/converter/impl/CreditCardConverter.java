@@ -3,12 +3,12 @@ package com.epam.jwd.service.converter.impl;
 import com.epam.jwd.dao.model.creditcard.BankAccount;
 import com.epam.jwd.dao.model.creditcard.CreditCard;
 import com.epam.jwd.service.converter.api.Converter;
-import com.epam.jwd.service.dto.creditcarddto.BankAccountDTO;
-import com.epam.jwd.service.dto.creditcarddto.CreditCardDTO;
+import com.epam.jwd.service.dto.creditcarddto.BankAccountDto;
+import com.epam.jwd.service.dto.creditcarddto.CreditCardDto;
 
-public class CreditCardConverter implements Converter<CreditCard, CreditCardDTO, Integer> {
+public class CreditCardConverter implements Converter<CreditCard, CreditCardDto, Integer> {
     @Override
-    public CreditCard convert(CreditCardDTO value) {
+    public CreditCard convert(CreditCardDto value) {
         CreditCard creditCard = new CreditCard(value.getId(),
                 convertBankAccount(value.getBankAccount()),
                 value.getName(),
@@ -18,8 +18,8 @@ public class CreditCardConverter implements Converter<CreditCard, CreditCardDTO,
     }
 
     @Override
-    public CreditCardDTO convert(CreditCard value) {
-        CreditCardDTO creditCardDTO = new CreditCardDTO(value.getId(),
+    public CreditCardDto convert(CreditCard value) {
+        CreditCardDto creditCardDTO = new CreditCardDto(value.getId(),
                 convertBankAccount(value.getBankAccount()),
                 value.getName(),
                 value.getExpireDate(),
@@ -27,15 +27,15 @@ public class CreditCardConverter implements Converter<CreditCard, CreditCardDTO,
         return creditCardDTO;
     }
 
-    private BankAccount convertBankAccount(BankAccountDTO bankAccountDTO){
+    private BankAccount convertBankAccount(BankAccountDto bankAccountDTO){
         BankAccount bankAccount = new BankAccount(bankAccountDTO.getId(),
                 bankAccountDTO.getBalance(),
                 bankAccountDTO.getBlocked());
         return bankAccount;
     }
 
-    private BankAccountDTO convertBankAccount(BankAccount bankAccount){
-        BankAccountDTO bankAccountDTO = new BankAccountDTO(bankAccount.getId(),
+    private BankAccountDto convertBankAccount(BankAccount bankAccount){
+        BankAccountDto bankAccountDTO = new BankAccountDto(bankAccount.getId(),
                 bankAccount.getBalance(),
                 bankAccount.getBlocked());
         return bankAccountDTO;

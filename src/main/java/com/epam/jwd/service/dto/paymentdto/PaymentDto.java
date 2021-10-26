@@ -1,11 +1,11 @@
 package com.epam.jwd.service.dto.paymentdto;
 
-import com.epam.jwd.service.dto.AbstractDTO;
+import com.epam.jwd.service.dto.AbstractDto;
 
 import java.util.Date;
 import java.util.Objects;
 
-public class PaymentDTO extends AbstractDTO<Integer> {
+public class PaymentDto extends AbstractDto<Integer> {
     private Integer userId;
     private String destinationAddress;
     private Integer price;
@@ -13,7 +13,7 @@ public class PaymentDTO extends AbstractDTO<Integer> {
     private Date time;
     private String name;
 
-    public PaymentDTO(Integer userId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
+    public PaymentDto(Integer userId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
         this.userId = userId;
         this.destinationAddress = destinationAddress;
         this.price = price;
@@ -22,7 +22,7 @@ public class PaymentDTO extends AbstractDTO<Integer> {
         this.name = name;
     }
 
-    public PaymentDTO(Integer id, Integer userId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
+    public PaymentDto(Integer id, Integer userId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
         this.userId = userId;
         this.destinationAddress = destinationAddress;
         this.price = price;
@@ -84,7 +84,7 @@ public class PaymentDTO extends AbstractDTO<Integer> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PaymentDTO paymentDTO = (PaymentDTO) o;
+        PaymentDto paymentDTO = (PaymentDto) o;
         return Objects.equals(userId, paymentDTO.getUserId())
                 && Objects.equals(destinationAddress, paymentDTO.getDestinationAddress())
                 && Objects.equals(price, paymentDTO.getPrice())

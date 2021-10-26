@@ -1,6 +1,6 @@
 package com.epam.jwd.dao.impl;
 
-import com.epam.jwd.dao.api.DAO;
+import com.epam.jwd.dao.api.Dao;
 import com.epam.jwd.dao.connectionpool.api.ConnectionPool;
 import com.epam.jwd.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.jwd.dao.model.user.Role;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RoleDAO implements DAO<Role, Integer> {
+public class RoleDao implements Dao<Role, Integer> {
 
     private static final String SQL_SAVE_ROLE = "INSERT INTO roles (name) VALUES (?)";
 

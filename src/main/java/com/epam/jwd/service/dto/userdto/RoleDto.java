@@ -1,17 +1,17 @@
 package com.epam.jwd.service.dto.userdto;
 
-import com.epam.jwd.service.dto.AbstractDTO;
+import com.epam.jwd.service.dto.AbstractDto;
 
 import java.util.Objects;
 
-public class RoleDTO extends AbstractDTO<Integer> {
+public class RoleDto extends AbstractDto<Integer> {
     private String name;
 
-    public RoleDTO(String name) {
+    public RoleDto(String name) {
         this.name = name;
     }
 
-    public RoleDTO(Integer id, String name) {
+    public RoleDto(Integer id, String name) {
         this.name = name;
         this.id = id;
     }
@@ -28,7 +28,7 @@ public class RoleDTO extends AbstractDTO<Integer> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RoleDTO roleDTO = (RoleDTO) o;
+        RoleDto roleDTO = (RoleDto) o;
         return Objects.equals(name, roleDTO.getName())
                 && Objects.equals(id, roleDTO.getId());
     }

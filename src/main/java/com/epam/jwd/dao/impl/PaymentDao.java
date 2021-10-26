@@ -1,6 +1,6 @@
 package com.epam.jwd.dao.impl;
 
-import com.epam.jwd.dao.api.DAO;
+import com.epam.jwd.dao.api.Dao;
 import com.epam.jwd.dao.connectionpool.api.ConnectionPool;
 import com.epam.jwd.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.jwd.dao.model.payment.Payment;
@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class PaymentDAO implements DAO<Payment, Integer> {
+public class PaymentDao implements Dao<Payment, Integer> {
 
     private static final String SQL_SAVE_PAYMENT = "INSERT INTO payments (user_id, destination_address, price, committed, time, name) VALUES (?, ?, ?, ?, ?, ?)";
 

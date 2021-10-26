@@ -3,12 +3,12 @@ package com.epam.jwd.service.converter.impl;
 import com.epam.jwd.dao.model.user.Account;
 import com.epam.jwd.dao.model.user.User;
 import com.epam.jwd.service.converter.api.Converter;
-import com.epam.jwd.service.dto.userdto.AccountDTO;
-import com.epam.jwd.service.dto.userdto.UserDTO;
+import com.epam.jwd.service.dto.userdto.AccountDto;
+import com.epam.jwd.service.dto.userdto.UserDto;
 
-public class UserConverter implements Converter<User, UserDTO, Integer> {
+public class UserConverter implements Converter<User, UserDto, Integer> {
     @Override
-    public User convert(UserDTO value) {
+    public User convert(UserDto value) {
         User user = new User(value.getId(),
                 value.getLogin(),
                 value.getPassword(),
@@ -17,15 +17,15 @@ public class UserConverter implements Converter<User, UserDTO, Integer> {
     }
 
     @Override
-    public UserDTO convert(User value) {
-        UserDTO userDTO = new UserDTO(value.getId(),
+    public UserDto convert(User value) {
+        UserDto userDTO = new UserDto(value.getId(),
                 value.getLogin(),
                 value.getPassword(),
                 convertAccount(value.getAccount()));
         return userDTO;
     }
 
-    private Account convertAccount(AccountDTO accountDTO){
+    private Account convertAccount(AccountDto accountDTO){
         Account account = new Account(accountDTO.getId(),
                 accountDTO.getName(),
                 accountDTO.getSurname(),
@@ -33,8 +33,8 @@ public class UserConverter implements Converter<User, UserDTO, Integer> {
         return account;
     }
 
-    private AccountDTO convertAccount(Account account){
-        AccountDTO accountDTO = new AccountDTO(account.getId(),
+    private AccountDto convertAccount(Account account){
+        AccountDto accountDTO = new AccountDto(account.getId(),
                 account.getName(),
                 account.getSurname(),
                 account.getRoleId());

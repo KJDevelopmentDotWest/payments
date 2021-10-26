@@ -1,7 +1,7 @@
 package com.epam.jwd.service.validator.impl;
 
-import com.epam.jwd.service.dto.creditcarddto.BankAccountDTO;
-import com.epam.jwd.service.dto.creditcarddto.CreditCardDTO;
+import com.epam.jwd.service.dto.creditcarddto.BankAccountDto;
+import com.epam.jwd.service.dto.creditcarddto.CreditCardDto;
 import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
@@ -9,12 +9,12 @@ import com.epam.jwd.service.validator.api.Validator;
 import java.util.Date;
 import java.util.Objects;
 
-public class CreditCardValidator implements Validator<CreditCardDTO, Integer> {
+public class CreditCardValidator implements Validator<CreditCardDto, Integer> {
 
     private static final Integer NAME_MIN_LENGTH = 2;
 
     @Override
-    public void validate(CreditCardDTO value, Boolean checkId) throws ServiceException {
+    public void validate(CreditCardDto value, Boolean checkId) throws ServiceException {
         if (Objects.isNull(value)){
             throw new ServiceException(ExceptionCode.CREDIT_CARD_IS_NULL_EXCEPTION_CODE);
         }
@@ -52,7 +52,7 @@ public class CreditCardValidator implements Validator<CreditCardDTO, Integer> {
         }
     }
 
-    private void validateBankAccount(BankAccountDTO bankAccountDTO, Boolean checkId) throws ServiceException {
+    private void validateBankAccount(BankAccountDto bankAccountDTO, Boolean checkId) throws ServiceException {
         if (Objects.isNull(bankAccountDTO)){
             throw new ServiceException(ExceptionCode.BANK_ACCOUNT_IS_NULL_EXCEPTION_CODE);
         }

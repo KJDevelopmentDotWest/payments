@@ -1,10 +1,10 @@
 package com.epam.jwd.controller;
 
 import com.epam.jwd.service.api.Service;
-import com.epam.jwd.service.dto.creditcarddto.CreditCardDTO;
-import com.epam.jwd.service.dto.paymentdto.PaymentDTO;
-import com.epam.jwd.service.dto.userdto.RoleDTO;
-import com.epam.jwd.service.dto.userdto.UserDTO;
+import com.epam.jwd.service.dto.creditcarddto.CreditCardDto;
+import com.epam.jwd.service.dto.paymentdto.PaymentDto;
+import com.epam.jwd.service.dto.userdto.RoleDto;
+import com.epam.jwd.service.dto.userdto.UserDto;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.impl.CreditCardService;
 import com.epam.jwd.service.impl.PaymentService;
@@ -26,15 +26,15 @@ public class Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter printWriter = resp.getWriter();
-        Service<UserDTO, Integer> userService = new UserService();
-        Service<RoleDTO, Integer> roleService = new RoleService();
-        Service<CreditCardDTO, Integer> creditCardService = new CreditCardService();
-        Service<PaymentDTO, Integer> paymentService = new PaymentService();
+        Service<UserDto, Integer> userService = new UserService();
+        Service<RoleDto, Integer> roleService = new RoleService();
+        Service<CreditCardDto, Integer> creditCardService = new CreditCardService();
+        Service<PaymentDto, Integer> paymentService = new PaymentService();
         try {
-            List<UserDTO> resultUsers = userService.getAll();
-            List<RoleDTO> resultRoles = roleService.getAll();
-            List<CreditCardDTO> resultCreditCards = creditCardService.getAll();
-            List<PaymentDTO> resultPayments = paymentService.getAll();
+            List<UserDto> resultUsers = userService.getAll();
+            List<RoleDto> resultRoles = roleService.getAll();
+            List<CreditCardDto> resultCreditCards = creditCardService.getAll();
+            List<PaymentDto> resultPayments = paymentService.getAll();
             printWriter.print("works\n");
             resultUsers.forEach(userDTO -> printWriter.print(userDTO.toString()));
             printWriter.print("works\n");

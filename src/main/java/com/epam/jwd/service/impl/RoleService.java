@@ -1,12 +1,12 @@
 package com.epam.jwd.service.impl;
 
-import com.epam.jwd.dao.api.DAO;
-import com.epam.jwd.dao.impl.RoleDAO;
+import com.epam.jwd.dao.api.Dao;
+import com.epam.jwd.dao.impl.RoleDao;
 import com.epam.jwd.dao.model.user.Role;
 import com.epam.jwd.service.api.Service;
 import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.RoleConverter;
-import com.epam.jwd.service.dto.userdto.RoleDTO;
+import com.epam.jwd.service.dto.userdto.RoleDto;
 import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
@@ -16,32 +16,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RoleService implements Service<RoleDTO, Integer> {
+public class RoleService implements Service<RoleDto, Integer> {
 
-    private final DAO<Role, Integer> dao = new RoleDAO();
-    private final Validator<RoleDTO, Integer> validator = new RoleValidator();
-    private final Converter<Role, RoleDTO, Integer> converter = new RoleConverter();
+    private final Dao<Role, Integer> dao = new RoleDao();
+    private final Validator<RoleDto, Integer> validator = new RoleValidator();
+    private final Converter<Role, RoleDto, Integer> converter = new RoleConverter();
 
     @Override
-    public RoleDTO create(RoleDTO value) throws ServiceException {
+    public RoleDto create(RoleDto value) throws ServiceException {
         validator.validate(value, false);
         return converter.convert(dao.save(converter.convert(value)));
     }
 
     @Override
-    public Boolean update(RoleDTO value) throws ServiceException {
+    public Boolean update(RoleDto value) throws ServiceException {
         validator.validate(value, true);
         return dao.update(converter.convert(value));
     }
 
     @Override
-    public Boolean delete(RoleDTO value) throws ServiceException {
+    public Boolean delete(RoleDto value) throws ServiceException {
         validator.validate(value, true);
         return dao.delete(converter.convert(value));
     }
 
     @Override
-    public RoleDTO getById(Integer id) throws ServiceException {
+    public RoleDto getById(Integer id) throws ServiceException {
         validator.validateIdNotNull(id);
         Role result = dao.findById(id);
         if (Objects.isNull(result)){
@@ -51,8 +51,8 @@ public class RoleService implements Service<RoleDTO, Integer> {
     }
 
     @Override
-    public List<RoleDTO> getAll() throws ServiceException {
-        List<RoleDTO> result = new ArrayList<>();
+    public List<RoleDto> getAll() throws ServiceException {
+        List<RoleDto> result = new ArrayList<>();
         List<Role> daoResult = dao.findAll();
         if (daoResult.isEmpty()){
             throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);

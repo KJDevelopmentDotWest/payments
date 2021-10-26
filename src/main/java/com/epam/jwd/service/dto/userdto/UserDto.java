@@ -1,21 +1,21 @@
 package com.epam.jwd.service.dto.userdto;
 
-import com.epam.jwd.service.dto.AbstractDTO;
+import com.epam.jwd.service.dto.AbstractDto;
 
 import java.util.Objects;
 
-public class UserDTO extends AbstractDTO<Integer> {
+public class UserDto extends AbstractDto<Integer> {
     private String login;
     private String password;
-    private AccountDTO account;
+    private AccountDto account;
 
-    public UserDTO(String login, String password, AccountDTO account) {
+    public UserDto(String login, String password, AccountDto account) {
         this.login = login;
         this.password = password;
         this.account = account;
     }
 
-    public UserDTO(Integer id, String login, String password, AccountDTO account) {
+    public UserDto(Integer id, String login, String password, AccountDto account) {
         this.login = login;
         this.password = password;
         this.account = account;
@@ -38,11 +38,11 @@ public class UserDTO extends AbstractDTO<Integer> {
         this.password = password;
     }
 
-    public AccountDTO getAccount() {
+    public AccountDto getAccount() {
         return account;
     }
 
-    public void setAccount(AccountDTO account) {
+    public void setAccount(AccountDto account) {
         this.account = account;
     }
 
@@ -50,7 +50,7 @@ public class UserDTO extends AbstractDTO<Integer> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserDTO userDTO = (UserDTO) o;
+        UserDto userDTO = (UserDto) o;
         return Objects.equals(login, userDTO.getLogin())
                 && Objects.equals(password, userDTO.getPassword())
                 && Objects.equals(account, userDTO.getAccount())

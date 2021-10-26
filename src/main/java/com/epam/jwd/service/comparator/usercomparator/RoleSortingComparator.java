@@ -1,12 +1,12 @@
 package com.epam.jwd.service.comparator.usercomparator;
 
-import com.epam.jwd.service.dto.userdto.UserDTO;
+import com.epam.jwd.service.dto.userdto.UserDto;
 
 import java.util.Comparator;
 
-public class RoleSortingComparator implements Comparator<UserDTO> {
+public class RoleSortingComparator implements Comparator<UserDto> {
     @Override
-    public int compare(UserDTO o1, UserDTO o2) {
+    public int compare(UserDto o1, UserDto o2) {
         int roleCompare = o1.getAccount().getRoleId().compareTo(o2.getAccount().getRoleId());
         int idCompare = o1.getId().compareTo(o2.getId());
 

@@ -1,18 +1,18 @@
 package com.epam.jwd.service.validator.impl;
 
-import com.epam.jwd.service.dto.userdto.RoleDTO;
+import com.epam.jwd.service.dto.userdto.RoleDto;
 import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 
 import java.util.Objects;
 
-public class RoleValidator implements Validator<RoleDTO, Integer> {
+public class RoleValidator implements Validator<RoleDto, Integer> {
 
     private static final Integer NAME_MIN_LENGTH = 2;
 
     @Override
-    public void validate(RoleDTO value, Boolean checkId) throws ServiceException {
+    public void validate(RoleDto value, Boolean checkId) throws ServiceException {
         if (Objects.isNull(value)){
             throw new ServiceException(ExceptionCode.ROLE_IS_NULL_EXCEPTION_CODE);
         }

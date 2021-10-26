@@ -1,24 +1,24 @@
 package com.epam.jwd.service.dto.creditcarddto;
 
-import com.epam.jwd.service.dto.AbstractDTO;
+import com.epam.jwd.service.dto.AbstractDto;
 
 import java.util.Date;
 import java.util.Objects;
 
-public class CreditCardDTO extends AbstractDTO<Integer> {
-    private BankAccountDTO bankAccount;
+public class CreditCardDto extends AbstractDto<Integer> {
+    private BankAccountDto bankAccount;
     private String name;
     private Date expireDate;
     private Integer userId;
 
-    public CreditCardDTO(BankAccountDTO bankAccount, String name, Date expireDate, Integer accountId) {
+    public CreditCardDto(BankAccountDto bankAccount, String name, Date expireDate, Integer accountId) {
         this.bankAccount = bankAccount;
         this.name = name;
         this.expireDate = expireDate;
         this.userId = accountId;
     }
 
-    public CreditCardDTO(Integer id, BankAccountDTO bankAccount, String name, Date expireDate, Integer userId) {
+    public CreditCardDto(Integer id, BankAccountDto bankAccount, String name, Date expireDate, Integer userId) {
         this.bankAccount = bankAccount;
         this.name = name;
         this.expireDate = expireDate;
@@ -26,11 +26,11 @@ public class CreditCardDTO extends AbstractDTO<Integer> {
         this.id = id;
     }
 
-    public BankAccountDTO getBankAccount() {
+    public BankAccountDto getBankAccount() {
         return bankAccount;
     }
 
-    public void setBankAccount(BankAccountDTO bankAccount) {
+    public void setBankAccount(BankAccountDto bankAccount) {
         this.bankAccount = bankAccount;
     }
 
@@ -62,7 +62,7 @@ public class CreditCardDTO extends AbstractDTO<Integer> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CreditCardDTO creditCardDTO = (CreditCardDTO) o;
+        CreditCardDto creditCardDTO = (CreditCardDto) o;
         return Objects.equals(bankAccount, creditCardDTO.bankAccount)
                 && Objects.equals(name, creditCardDTO.name)
                 && Objects.equals(expireDate, creditCardDTO.expireDate)

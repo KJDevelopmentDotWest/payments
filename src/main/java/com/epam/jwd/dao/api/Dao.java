@@ -4,7 +4,7 @@ import com.epam.jwd.dao.model.Entity;
 
 import java.util.List;
 
-public interface DAO<T extends Entity<K>, K> {
+public interface Dao<T extends Entity<K>, K> {
     T save(T entity);
     Boolean update(T entity);
     Boolean delete(T entity);

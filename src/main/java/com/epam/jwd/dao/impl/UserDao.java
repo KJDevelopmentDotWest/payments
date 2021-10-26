@@ -1,6 +1,6 @@
 package com.epam.jwd.dao.impl;
 
-import com.epam.jwd.dao.api.DAO;
+import com.epam.jwd.dao.api.Dao;
 import com.epam.jwd.dao.connectionpool.api.ConnectionPool;
 import com.epam.jwd.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.jwd.dao.model.user.Account;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class UserDAO implements DAO<User, Integer> {
+public class UserDao implements Dao<User, Integer> {
 
     private static final String SQL_SAVE_USER = "INSERT INTO users (login, password) VALUES (?, ?)";
     private static final String SQL_SAVE_ACCOUNT = "INSERT INTO accounts (name, surname, role_id) VALUES (?, ?, ?)";

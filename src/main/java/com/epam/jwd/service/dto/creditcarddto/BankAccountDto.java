@@ -1,19 +1,19 @@
 package com.epam.jwd.service.dto.creditcarddto;
 
-import com.epam.jwd.service.dto.AbstractDTO;
+import com.epam.jwd.service.dto.AbstractDto;
 
 import java.util.Objects;
 
-public class BankAccountDTO extends AbstractDTO<Integer> {
+public class BankAccountDto extends AbstractDto<Integer> {
     private Integer balance;
     private Boolean blocked;
 
-    public BankAccountDTO(Integer balance, Boolean blocked) {
+    public BankAccountDto(Integer balance, Boolean blocked) {
         this.balance = balance;
         this.blocked = blocked;
     }
 
-    public BankAccountDTO(Integer id, Integer balance, Boolean blocked) {
+    public BankAccountDto(Integer id, Integer balance, Boolean blocked) {
         this.balance = balance;
         this.blocked = blocked;
         this.id = id;
@@ -39,7 +39,7 @@ public class BankAccountDTO extends AbstractDTO<Integer> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BankAccountDTO bankAccountDTO = (BankAccountDTO) o;
+        BankAccountDto bankAccountDTO = (BankAccountDto) o;
         return Objects.equals(balance, bankAccountDTO.getBalance())
                 && Objects.equals(blocked, bankAccountDTO.getBlocked())
                 && Objects.equals(id, bankAccountDTO.getId());
