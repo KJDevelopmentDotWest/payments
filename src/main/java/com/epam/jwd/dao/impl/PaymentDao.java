@@ -20,7 +20,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
 
     private static final String SQL_SAVE_PAYMENT = "INSERT INTO payments (user_id, destination_address, price, committed, time, name) VALUES (?, ?, ?, ?, ?, ?)";
 
-    private static final String SQL_FIND_ALL_PAYMENT = "select id, user_id, destination_address, price, committed, time, name FROM payments";
+    private static final String SQL_FIND_ALL_PAYMENTS = "select id, user_id, destination_address, price, committed, time, name FROM payments";
     private static final String SQL_FIND_PAYMENT_BY_ID = "select id, user_id, destination_address, price, committed, time, name FROM payments WHERE id = ?";
     private static final String SQL_FIND_PAYMENTS_BY_USER_ID = "select id, user_id, destination_address, price, committed, time, name FROM payments WHERE user_id = ?";
 
@@ -136,7 +136,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
 
     private List<Payment> findAllPayment(Connection connection) throws SQLException{
         List<Payment> result = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_PAYMENT);
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_PAYMENTS);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
             Payment payment;
