@@ -8,19 +8,17 @@ public class AccountConverter implements Converter<Account, AccountDto, Integer>
 
     @Override
     public Account convert(AccountDto accountDTO){
-        Account account = new Account(accountDTO.getId(),
+        return new Account(accountDTO.getId(),
                 accountDTO.getName(),
                 accountDTO.getSurname(),
                 accountDTO.getProfilePictureIId());
-        return account;
     }
 
     @Override
     public AccountDto convert(Account account){
-        AccountDto accountDTO = new AccountDto(account.getId(),
+        return new AccountDto(account.getId(),
                 account.getName(),
                 account.getSurname(),
                 account.getProfilePictureId());
-        return accountDTO;
     }
 }

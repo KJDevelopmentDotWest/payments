@@ -1,21 +1,21 @@
-package com.epam.jwd.dao.model.profilepicture;
+package com.epam.jwd.service.dto.profilepicturedto;
 
-import com.epam.jwd.dao.model.Entity;
+import com.epam.jwd.service.dto.AbstractDto;
 
 import java.util.Objects;
 
-public class ProfilePicture extends Entity<Integer> {
+public class ProfilePictureDto extends AbstractDto<Integer> {
 
     private final String name;
     private final String path;
 
-    public ProfilePicture(String name, String path) {
+    public ProfilePictureDto(String name, String path) {
         this.name = name;
         this.path = path;
     }
 
 
-    public ProfilePicture(Integer id, String name, String path) {
+    public ProfilePictureDto(Integer id, String name, String path) {
         this.name = name;
         this.path = path;
         this.id = id;
@@ -33,10 +33,10 @@ public class ProfilePicture extends Entity<Integer> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProfilePicture profilePicture = (ProfilePicture) o;
-        return Objects.equals(name, profilePicture.getName())
-                && Objects.equals(path, profilePicture.getPath())
-                && Objects.equals(id, profilePicture.getId());
+        ProfilePictureDto profilePictureDto = (ProfilePictureDto) o;
+        return Objects.equals(name, profilePictureDto.getName())
+                && Objects.equals(path, profilePictureDto.getPath())
+                && Objects.equals(id, profilePictureDto.getId());
     }
 
     @Override
@@ -46,9 +46,8 @@ public class ProfilePicture extends Entity<Integer> {
 
     @Override
     public String toString() {
-        return "ProfilePicture{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+        return "ProfilePictureDto{" +
+                "name='" + name + '\'' +
                 ", path='" + path + '\'' +
                 '}';
     }
