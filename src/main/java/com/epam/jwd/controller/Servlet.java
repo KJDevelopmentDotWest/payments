@@ -25,18 +25,18 @@ public class Servlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter printWriter = resp.getWriter();
         Service<UserDto, Integer> userService = new UserService();
-        Service<CreditCardDto, Integer> creditCardService = new CreditCardService();
-        Service<PaymentDto, Integer> paymentService = new PaymentService();
+        //Service<CreditCardDto, Integer> creditCardService = new CreditCardService();
+        //Service<PaymentDto, Integer> paymentService = new PaymentService();
         try {
             List<UserDto> resultUsers = userService.getAll();
-            List<CreditCardDto> resultCreditCards = creditCardService.getAll();
-            List<PaymentDto> resultPayments = paymentService.getAll();
+            //List<CreditCardDto> resultCreditCards = creditCardService.getAll();
+            //List<PaymentDto> resultPayments = paymentService.getAll();
             printWriter.print("works\n");
             resultUsers.forEach(userDTO -> printWriter.print(userDTO.toString()));
-            printWriter.print("works\n");
-            resultCreditCards.forEach(creditCardDTO -> printWriter.print(creditCardDTO.toString()));
-            printWriter.print("works\n");
-            resultPayments.forEach(paymentDTO -> printWriter.print(paymentDTO.toString()));
+//            printWriter.print("works\n");
+//            resultCreditCards.forEach(creditCardDTO -> printWriter.print(creditCardDTO.toString()));
+//            printWriter.print("works\n");
+//            resultPayments.forEach(paymentDTO -> printWriter.print(paymentDTO.toString()));
         } catch (ServiceException e) {
             e.printStackTrace();
         }
