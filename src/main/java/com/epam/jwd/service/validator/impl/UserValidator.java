@@ -1,7 +1,7 @@
 package com.epam.jwd.service.validator.impl;
 
+import com.epam.jwd.dao.model.user.Role;
 import com.epam.jwd.dao.model.user.User;
-import com.epam.jwd.service.dto.userdto.AccountDto;
 import com.epam.jwd.service.dto.userdto.UserDto;
 import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
@@ -13,9 +13,6 @@ public class UserValidator implements Validator<UserDto, Integer> {
 
     private static final Integer LOGIN_MIN_LENGTH = 3;
     private static final Integer PASSWORD_MIN_LENGTH = 5;
-    private static final Integer NAME_MIN_LENGTH = 2;
-    private static final Integer SURNAME_MIN_LENGTH = 2;
-    private static final Integer MAX_ROLES = 2;
 
     @Override
     public void validate(UserDto value, Boolean checkId) throws ServiceException {
@@ -27,7 +24,7 @@ public class UserValidator implements Validator<UserDto, Integer> {
         }
         validateLogin(value.getLogin());
         validatePassword(value.getPassword());
-        validateAccount(value.getAccount(), checkId);
+        validateRole(value.getRole());
     }
 
     public void validateLoginNotNull(String login) throws ServiceException{
@@ -56,36 +53,9 @@ public class UserValidator implements Validator<UserDto, Integer> {
         }
     }
 
-    private void validateAccount(AccountDto accountDTO, Boolean checkId) throws ServiceException {
-        if (Objects.isNull(accountDTO)){
-            throw new ServiceException(ExceptionCode.ACCOUNT_IS_NULL_EXCEPTION_CODE);
-        }
-        if (checkId){
-            validateId(accountDTO.getId());
-        }
-        validateName(accountDTO.getName());
-        validateSurname(accountDTO.getSurname());
-        validateRoleId(accountDTO.getRoleId());
-    }
-
-    private void validateName(String name) throws ServiceException {
-        if (Objects.isNull(name)
-                || name.length() < NAME_MIN_LENGTH) {
-            throw new ServiceException(ExceptionCode.ACCOUNT_NAME_TOO_SHORT_EXCEPTION_CODE);
-        }
-    }
-
-    private void validateSurname(String surname) throws ServiceException {
-        if (Objects.isNull(surname)
-                || surname.length() < SURNAME_MIN_LENGTH) {
-            throw new ServiceException(ExceptionCode.ACCOUNT_SURNAME_TOO_SHORT_EXCEPTION_CODE);
-        }
-    }
-
-    private void validateRoleId(Integer id) throws ServiceException {
-        if (Objects.isNull(id)
-                || id > MAX_ROLES) {
-            throw new ServiceException(ExceptionCode.ACCOUNT_ROLE_ID_IS_WRONG_EXCEPTION_CODE);
+    private void validateRole(Role role) throws ServiceException {
+        if (Objects.isNull(role)) {
+            throw new ServiceException(ExceptionCode.USER_ROLE_ID_IS_WRONG_EXCEPTION_CODE);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.epam.jwd.service.dto.userdto;
 
+import com.epam.jwd.dao.model.user.Role;
 import com.epam.jwd.service.dto.AbstractDto;
 
 import java.util.Objects;
@@ -7,19 +8,49 @@ import java.util.Objects;
 public class UserDto extends AbstractDto<Integer> {
     private String login;
     private String password;
-    private AccountDto account;
+    private Role role;
+    private Integer accountId;
+    private Boolean isActive;
 
-    public UserDto(String login, String password, AccountDto account) {
+    public UserDto(String login, String password, Integer accountId, Boolean isActive, Role role) {
         this.login = login;
         this.password = password;
-        this.account = account;
+        this.role = role;
+        this.accountId = accountId;
+        this.isActive = isActive;
     }
 
-    public UserDto(Integer id, String login, String password, AccountDto account) {
+    public UserDto(Integer id, String login, String password, Integer accountId, Boolean isActive, Role role) {
         this.login = login;
         this.password = password;
-        this.account = account;
+        this.role = role;
+        this.accountId = accountId;
+        this.isActive = isActive;
         this.id = id;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Integer getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public String getLogin() {
@@ -38,14 +69,6 @@ public class UserDto extends AbstractDto<Integer> {
         this.password = password;
     }
 
-    public AccountDto getAccount() {
-        return account;
-    }
-
-    public void setAccount(AccountDto account) {
-        this.account = account;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,13 +76,13 @@ public class UserDto extends AbstractDto<Integer> {
         UserDto userDTO = (UserDto) o;
         return Objects.equals(login, userDTO.getLogin())
                 && Objects.equals(password, userDTO.getPassword())
-                && Objects.equals(account, userDTO.getAccount())
+                && Objects.equals(accountId, userDTO.getAccountId())
                 && Objects.equals(id, userDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, account, id);
+        return Objects.hash(login, password, accountId, id);
     }
 
     @Override
@@ -68,7 +91,7 @@ public class UserDto extends AbstractDto<Integer> {
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", account=" + account +
+                ", account=" + accountId +
                 '}';
     }
 }

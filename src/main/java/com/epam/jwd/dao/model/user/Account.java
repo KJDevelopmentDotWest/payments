@@ -7,21 +7,29 @@ import java.util.Objects;
 public class Account extends Entity<Integer> {
     private String name;
     private String surname;
-    private Integer roleId;
+    private Integer profilePictureId;
 
     public Account() {}
 
-    public Account(String name, String surname, Integer roleId) {
+    public Account(String name, String surname, Integer profilePictureId) {
         this.name = name;
         this.surname = surname;
-        this.roleId = roleId;
+        this.profilePictureId = profilePictureId;
     }
 
-    public Account(Integer id, String name, String surname, Integer roleId) {
+    public Account(Integer id, String name, String surname, Integer profilePictureId) {
         this.name = name;
         this.surname = surname;
-        this.roleId = roleId;
+        this.profilePictureId = profilePictureId;
         this.id = id;
+    }
+
+    public Integer getProfilePictureId() {
+        return profilePictureId;
+    }
+
+    public void setProfilePictureId(Integer profilePictureId) {
+        this.profilePictureId = profilePictureId;
     }
 
     public String getName() {
@@ -40,14 +48,6 @@ public class Account extends Entity<Integer> {
         this.surname = surname;
     }
 
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,13 +55,12 @@ public class Account extends Entity<Integer> {
         Account account = (Account) o;
         return Objects.equals(name, account.getName())
                 && Objects.equals(surname, account.getSurname())
-                && Objects.equals(roleId, account.getRoleId())
                 && Objects.equals(id, account.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, roleId, id);
+        return Objects.hash(name, surname,id);
     }
 
     @Override
@@ -70,7 +69,6 @@ public class Account extends Entity<Integer> {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", roleId=" + roleId +
                 '}';
     }
 }
