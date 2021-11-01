@@ -141,7 +141,9 @@ public class UserDao implements Dao<User, java.lang.Integer> {
             User user = new User(resultSet.getInt(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
-                    resultSet.getInt(4),
+                    resultSet.getInt(4) != 0
+                            ? resultSet.getInt(4)
+                            : null,
                     resultSet.getBoolean(5),
                     Role.getById(resultSet.getInt(6)));
             result.add(user);
@@ -160,7 +162,9 @@ public class UserDao implements Dao<User, java.lang.Integer> {
             User user = new User(resultSet.getInt(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
-                    resultSet.getInt(4),
+                    resultSet.getInt(4) != 0
+                            ? resultSet.getInt(4)
+                            : null,
                     resultSet.getBoolean(5),
                     Role.getById(resultSet.getInt(6)));
             resultSet.close();
@@ -180,7 +184,9 @@ public class UserDao implements Dao<User, java.lang.Integer> {
             User user = new User(resultSet.getInt(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
-                    resultSet.getInt(4),
+                    resultSet.getInt(4) != 0
+                            ? resultSet.getInt(4)
+                            : null,
                     resultSet.getBoolean(5),
                     Role.getById(resultSet.getInt(6)));
             resultSet.close();

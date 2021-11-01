@@ -87,11 +87,13 @@ public class UserDto extends AbstractDto<Integer> {
 
     @Override
     public String toString() {
-        return "UserDTO{" +
+        return "UserDto{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", account=" + accountId +
+                ", role=" + role +
+                ", accountId=" + accountId +
+                ", isActive=" + isActive +
                 '}';
     }
 }
