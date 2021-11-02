@@ -23,6 +23,6 @@ public class LoginCommandImpl implements Command {
         } catch (ServiceException | IOException e) {
             //todo
         }
-        return new CommandResponse(request.getRequestURI(), false);
+        return new CommandResponse("http://localhost:8080/", false);
     }
 }

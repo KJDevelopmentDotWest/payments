@@ -60,6 +60,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
             try {
                 createConnectionAndAddToPool();
                 ProxyConnection connection = availableConnections.poll();
+                assert connection != null;
                 givenAwayConnections.add(connection);
                 return connection;
             } catch (SQLException e) {
@@ -99,7 +100,6 @@ public class ConnectionPoolImpl implements ConnectionPool {
             if (availableConnections.size() + givenAwayConnections.size() < PREFERRED_CONNECTIONS
                     || (availableConnections.isEmpty() && givenAwayConnections.size() < MAX_CONNECTIONS)){
                 availableConnections.add((ProxyConnection) connection);
-                logger.info(availableConnections.size() + "lkj");
             } else {
                 closeConnection((ProxyConnection) connection);
             }
