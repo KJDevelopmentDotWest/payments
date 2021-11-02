@@ -10,14 +10,18 @@ import java.util.Objects;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.locks.ReentrantLock;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ConnectionPoolImpl implements ConnectionPool {
+
+    private static final Logger logger = LogManager.getLogger();
 
     private static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/payments";
     private static final String USER = "postgres";
     private static final String PASS = "1234";
     private static final String DRIVER = "org.postgresql.Driver";
-    private static final int MAX_CONNECTIONS = 8;
+    private static final int MAX_CONNECTIONS = 6;
     private static final int PREFERRED_CONNECTIONS = 4;
 
     private boolean initialized = false;
@@ -46,16 +50,22 @@ public class ConnectionPoolImpl implements ConnectionPool {
     @Override
     public synchronized Connection takeConnection() {
 
+        logger.info("Connection taken");
+
         if (!availableConnections.isEmpty()){
-            return availableConnections.poll();
+            ProxyConnection connection = availableConnections.poll();
+            givenAwayConnections.add(connection);
+            return connection;
         } else if (givenAwayConnections.size() < MAX_CONNECTIONS){
             try {
                 createConnectionAndAddToPool();
+                ProxyConnection connection = availableConnections.poll();
+                givenAwayConnections.add(connection);
+                return connection;
             } catch (SQLException e) {
                 //todo implement logger and custom exception
                 e.printStackTrace();
             }
-            return availableConnections.poll();
         }
 
         while (availableConnections.isEmpty()){
@@ -67,24 +77,29 @@ public class ConnectionPoolImpl implements ConnectionPool {
                 e.printStackTrace();
             }
         }
-        return availableConnections.poll();
+        ProxyConnection connection = availableConnections.poll();
+        givenAwayConnections.add(connection);
+        return connection;
     }
 
     @Override
     public synchronized void returnConnection(Connection connection) {
         if (givenAwayConnections.remove((ProxyConnection) connection)){
-
+            logger.info("Connection returned");
             try {
-                connection.rollback();
-                connection.setAutoCommit(true);
+                if (!connection.getAutoCommit()){
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                }
             } catch (SQLException e) {
                 //todo implement logger and custom exception
                 e.printStackTrace();
             }
 
             if (availableConnections.size() + givenAwayConnections.size() < PREFERRED_CONNECTIONS
-                    || availableConnections.isEmpty()){
+                    || (availableConnections.isEmpty() && givenAwayConnections.size() < MAX_CONNECTIONS)){
                 availableConnections.add((ProxyConnection) connection);
+                logger.info(availableConnections.size() + "lkj");
             } else {
                 closeConnection((ProxyConnection) connection);
             }
@@ -133,11 +148,18 @@ public class ConnectionPoolImpl implements ConnectionPool {
     }
 
     private void closeConnection(ProxyConnection connection){
+        logger.info("Connection closed");
         try {
             connection.realClose();
         } catch (SQLException e) {
             //todo implement logger and custom exception
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        shutdown();
+        super.finalize();
     }
 }

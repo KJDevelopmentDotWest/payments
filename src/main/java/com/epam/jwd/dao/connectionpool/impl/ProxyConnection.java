@@ -4,6 +4,7 @@ import com.epam.jwd.dao.connectionpool.api.ConnectionPool;
 
 import java.sql.*;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
@@ -19,6 +20,19 @@ public class ProxyConnection implements Connection {
 
     void realClose() throws SQLException {
         connection.close();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProxyConnection that = (ProxyConnection) o;
+        return Objects.equals(connection, that.connection) && Objects.equals(pool, that.pool);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(connection, pool);
     }
 
     @Override
