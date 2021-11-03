@@ -3,20 +3,24 @@ package com.epam.jwd.controller.command;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.controller.command.impl.LoginCommandImpl;
+import com.epam.jwd.dao.model.user.Role;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.List;
 
 public enum ApplicationCommand {
 
-    LOGIN(new LoginCommandImpl()),
+    SIGNIN(new LoginCommandImpl()),
     DEFAULT(defaultCommandImpl());
 
     private final Command command;
+    private final List<Role> allowedRoles;
 
-    ApplicationCommand(Command command){
+    ApplicationCommand(Command command, Role... roles){
         this.command = command;
+        this.allowedRoles = List.of(roles);
     }
 
     public Command getCommand(){
@@ -29,6 +33,10 @@ public enum ApplicationCommand {
                         .equalsIgnoreCase(commandString))
                 .findFirst()
                 .orElse(DEFAULT);
+    }
+
+    private List<Role> getAllowedRoles(){
+        return allowedRoles;
     }
 
     private static Command defaultCommandImpl(){

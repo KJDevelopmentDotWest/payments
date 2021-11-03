@@ -50,8 +50,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     @Override
     public synchronized Connection takeConnection() {
 
-        logger.info("Connection taken");
-
+        //todo refactor (same code)
         if (!availableConnections.isEmpty()){
             ProxyConnection connection = availableConnections.poll();
             givenAwayConnections.add(connection);

@@ -20,6 +20,8 @@ public class LoginCommandImpl implements Command {
             PrintWriter printWriter = response.getWriter();
             printWriter.print(service.getAll().toString());
             printWriter.print(request.getRequestURI());
+            printWriter.print(request.getParameter("login"));
+            printWriter.print(request.getParameter("password"));
         } catch (ServiceException | IOException e) {
             //todo
         }

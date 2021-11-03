@@ -1,3 +1,4 @@
+
 package com.epam.jwd.controller.servlet;
 
 import com.epam.jwd.controller.command.ApplicationCommand;
@@ -14,21 +15,27 @@ import java.io.IOException;
 @WebServlet("/payments")
 public class Servlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        CommandResponse commandResponse = ApplicationCommand.getByString(req.getParameter("command"))
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        CommandResponse commandResponse = ApplicationCommand.getByString(request.getParameter("command"))
                 .getCommand()
-                .execute(req, resp);
-
-        resp.setStatus(200);
+                .execute(request, response);
 
         if (commandResponse.getRedirect()) {
-            resp.sendRedirect(commandResponse.getURL());
+            response.sendRedirect(commandResponse.getURL());
         } else {
             RequestDispatcher dispatcher = getServletContext()
                     .getRequestDispatcher(commandResponse.getURL());
-            dispatcher.forward(req, resp);
+            dispatcher.forward(request, response);
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
     }
 }
