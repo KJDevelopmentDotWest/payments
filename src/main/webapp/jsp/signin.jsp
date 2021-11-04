@@ -9,9 +9,8 @@
     <style><%@include file="/WEB-INF/css/signin.css"%></style>
     <style><%@include file="/WEB-INF/css/bootstrap.min.css"%></style>
   </head>
-  <body class="text-center" align="center">
+  <body class="text-center">
 
-<div align="center">
 <main class="form-signin" align="center">
   <form action="/payments?command=signin" method="post">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
@@ -33,9 +32,5 @@
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
   </form>
 </main>
-</div>
-
-
-
-  </body>
+</body>
 </html>

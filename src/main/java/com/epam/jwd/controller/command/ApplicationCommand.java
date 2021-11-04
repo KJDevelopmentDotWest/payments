@@ -3,6 +3,7 @@ package com.epam.jwd.controller.command;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.controller.command.impl.LoginCommandImpl;
+import com.epam.jwd.controller.command.impl.UserMainCommand;
 import com.epam.jwd.dao.model.user.Role;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.List;
 public enum ApplicationCommand {
 
     SIGNIN(new LoginCommandImpl()),
+    USERMAIN(new UserMainCommand()),
     DEFAULT(defaultCommandImpl());
 
     private final Command command;

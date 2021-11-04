@@ -130,6 +130,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
         Integer id = resultSet.getInt(1);
         user.setId(id);
         preparedStatement.close();
+        resultSet.close();
         return user;
     }
 
@@ -148,8 +149,8 @@ public class UserDao implements Dao<User, java.lang.Integer> {
                     Role.getById(resultSet.getInt(6)));
             result.add(user);
         }
-        resultSet.close();
         preparedStatement.close();
+        resultSet.close();
         return result;
     }
 
@@ -157,9 +158,9 @@ public class UserDao implements Dao<User, java.lang.Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
         preparedStatement.setString(1, login);
         ResultSet resultSet = preparedStatement.executeQuery();
-        preparedStatement.close();
+        User user;
         if (resultSet.next()){
-            User user = new User(resultSet.getInt(1),
+            user = new User(resultSet.getInt(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getInt(4) != 0
@@ -167,21 +168,21 @@ public class UserDao implements Dao<User, java.lang.Integer> {
                             : null,
                     resultSet.getBoolean(5),
                     Role.getById(resultSet.getInt(6)));
-            resultSet.close();
-            return user;
         } else {
-            resultSet.close();
-            return null;
+            user = null;
         }
+        preparedStatement.close();
+        resultSet.close();
+        return user;
     }
 
     private User findUserById(Connection connection, java.lang.Integer id) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_ID);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
-        preparedStatement.close();
+        User user;
         if (resultSet.next()){
-            User user = new User(resultSet.getInt(1),
+            user = new User(resultSet.getInt(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getInt(4) != 0
@@ -189,12 +190,12 @@ public class UserDao implements Dao<User, java.lang.Integer> {
                             : null,
                     resultSet.getBoolean(5),
                     Role.getById(resultSet.getInt(6)));
-            resultSet.close();
-            return user;
         } else {
-            resultSet.close();
-            return null;
+            user = null;
         }
+        preparedStatement.close();
+        resultSet.close();
+        return user;
     }
 
     private Boolean deleteUserById(Connection connection, java.lang.Integer id) throws SQLException{
