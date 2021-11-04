@@ -161,6 +161,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         Integer id = resultSet.getInt(1);
         account.setId(id);
         preparedStatement.close();
+        resultSet.close();
     }
 
     private List<CreditCard> findAllCreditCard(Connection connection) throws SQLException{
@@ -185,8 +186,8 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
                 e.printStackTrace();
             }
         }
-        resultSet.close();
         preparedStatement.close();
+        resultSet.close();
         return result;
     }
 
@@ -195,9 +196,8 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
-        preparedStatement.close();
+        CreditCard creditCard;
         if (resultSet.next()){
-            CreditCard creditCard;
             try {
                 creditCard = new CreditCard(resultSet.getInt(1),
                         findBankAccountById(connection, resultSet.getInt(1)),
@@ -212,29 +212,29 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
                 //todo and logger
                 e.printStackTrace();
             }
-            resultSet.close();
-            return creditCard;
         } else {
-            resultSet.close();
-            return null;
+            creditCard =  null;
         }
+        preparedStatement.close();
+        resultSet.close();
+        return creditCard;
     }
 
     private BankAccount findBankAccountById(Connection connection, Integer id) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BANK_ACCOUNT_BY_ID);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
-        preparedStatement.close();
+        BankAccount bankAccount;
         if (resultSet.next()){
-            BankAccount bankAccount = new BankAccount(resultSet.getInt(1),
+            bankAccount = new BankAccount(resultSet.getInt(1),
                     resultSet.getInt(2),
                     resultSet.getBoolean(3));
-            resultSet.close();
-            return bankAccount;
         } else {
-            resultSet.close();
-            return null;
+            bankAccount = null;
         }
+        preparedStatement.close();
+        resultSet.close();
+        return bankAccount;
     }
 
     private List<CreditCard> findCreditCardByAccountId(Connection connection, Integer accountId)throws SQLException{
@@ -260,8 +260,8 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
                 e.printStackTrace();
             }
         }
-        resultSet.close();
         preparedStatement.close();
+        resultSet.close();
         return result;
     }
 

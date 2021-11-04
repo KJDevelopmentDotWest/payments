@@ -106,7 +106,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
         Connection connection = connectionPool.takeConnection();
         List<Payment> payments = new ArrayList<>();
         try {
-            payments = findPaymentByUserId(connection, id);
+            payments = findPaymentsByUserId(connection, id);
         } catch (SQLException e){
             //todo implement logger and custom exception
             e.printStackTrace();
@@ -166,7 +166,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
         return result;
     }
 
-    private List<Payment> findPaymentByUserId(Connection connection, Integer id) throws SQLException{
+    private List<Payment> findPaymentsByUserId(Connection connection, Integer id) throws SQLException{
         List<Payment> result = new ArrayList<>();
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_PAYMENTS_BY_USER_ID);
         preparedStatement.setInt(1, id);
@@ -203,9 +203,8 @@ public class PaymentDao implements Dao<Payment, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_PAYMENT_BY_ID);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
-        preparedStatement.close();
+        Payment payment;
         if (resultSet.next()){
-            Payment payment;
             try {
                 payment = new Payment(resultSet.getInt(1),
                         resultSet.getInt(2),
@@ -225,12 +224,12 @@ public class PaymentDao implements Dao<Payment, Integer> {
                 //todo implement logger and custom exception
                 e.printStackTrace();
             }
-            resultSet.close();
-            return payment;
         } else {
-            resultSet.close();
-            return null;
+            payment = null;
         }
+        preparedStatement.close();
+        resultSet.close();
+        return payment;
     }
 
     private Boolean updatePaymentById(Connection connection, Payment payment) throws SQLException{

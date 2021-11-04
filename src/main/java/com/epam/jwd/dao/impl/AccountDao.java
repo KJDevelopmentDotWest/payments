@@ -110,8 +110,8 @@ public class AccountDao implements Dao<Account, Integer> {
         resultSet.next();
         Integer id = resultSet.getInt(1);
         account.setId(id);
-        resultSet.close();
         preparedStatement.close();
+        resultSet.close();
         return account;
     }
 
@@ -119,13 +119,13 @@ public class AccountDao implements Dao<Account, Integer> {
         List<Account> result = new ArrayList<>();
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_ACCOUNTS);
         ResultSet resultSet = preparedStatement.executeQuery();
-        preparedStatement.close();
         while (resultSet.next()){
             result.add(new Account(resultSet.getInt(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getInt(4)));
         }
+        preparedStatement.close();
         resultSet.close();
         return result;
     }
@@ -134,18 +134,18 @@ public class AccountDao implements Dao<Account, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ACCOUNT_BY_ID);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
-        preparedStatement.close();
+        Account account;
         if (resultSet.next()){
-            Account account = new Account(resultSet.getInt(1),
+            account = new Account(resultSet.getInt(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getInt(4));
-            resultSet.close();
-            return account;
         } else {
-            resultSet.close();
-            return null;
+            account = null;
         }
+        preparedStatement.close();
+        resultSet.close();
+        return account;
     }
 
     private Boolean deleteAccountById(Connection connection, Integer id) throws SQLException{

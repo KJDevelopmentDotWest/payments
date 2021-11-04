@@ -122,8 +122,8 @@ public class ProfilePictureDao implements Dao<ProfilePicture, Integer> {
                     resultSet.getString(2),
                     resultSet.getString(3)));
         }
-        resultSet.close();
         preparedStatement.close();
+        resultSet.close();
         return result;
     }
 
@@ -137,8 +137,8 @@ public class ProfilePictureDao implements Dao<ProfilePicture, Integer> {
                     resultSet.getString(2),
                     resultSet.getString(3));
         }
-        resultSet.close();
         preparedStatement.close();
+        resultSet.close();
         return result;
     }
 
