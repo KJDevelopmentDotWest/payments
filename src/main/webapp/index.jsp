@@ -1,6 +1,12 @@
 <html>
+    <head>
+
+        <meta http-equiv="refresh" content="0; url=/jsp/signin.jsp">
+
+
+      </head>
     <body>
         <h2>Hello Worldasdfasf!</h2>
-        <a href=/payments?command=login> click me </a>
+
     </body>
 </html>

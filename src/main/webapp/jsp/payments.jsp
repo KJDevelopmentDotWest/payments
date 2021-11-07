@@ -1,11 +1,9 @@
-        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-        <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-        <%@ page import="com.epam.jwd.service.impl.UserService" %>
+<%@ page import="com.epam.jwd.service.impl.UserService" %>
 
 <html>
 
     <head>
-        <title>Account</title>
+        <title>Payments</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <meta charset="utf-8">
         <style><%@include file="/css/bootstrap.min.css"%></style>
@@ -26,7 +24,7 @@
                   <a class="nav-link" href="#">Credit Cards</a>
                 </li>
                 <li class="nav-item ">
-                  <a class="nav-link" href="/payments?command=payments">Payments</a>
+                  <a class="nav-link" href="#">Payments</a>
                 </li>
                 <li class="nav-item ">
                   <a class="nav-link" href="/payments?command=signout">Log Out</a>
@@ -46,11 +44,5 @@
         <%= java.util.Calendar.getInstance().getTime() %>
         <%= session.getAttribute("id") %>
         <%= session.getAttribute("role") %>
-        <c:set var="user" scope="page" value="${UserService().getById(sessionScope.id)}"/>
-        <c:if test="${user.accountId == null}">
-           <p>My income is: <c:out value="${id}"/><p>
-           <p>User: <c:out value="${user}"/><p>
-        </c:if>
-
     </body>
 </html>
