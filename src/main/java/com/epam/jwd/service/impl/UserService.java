@@ -12,6 +12,8 @@ import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 import com.epam.jwd.service.validator.impl.UserValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,35 +21,43 @@ import java.util.Objects;
 
 public class UserService implements Service<UserDto, Integer> {
 
+    private static final Logger logger = LogManager.getLogger(UserService.class);
+
     private final Dao<User, Integer> dao = new UserDao();
     private final Validator<UserDto, Integer> validator = new UserValidator();
     private final Converter<User, UserDto, Integer> converter = new UserConverter();
 
     @Override
     public UserDto create(UserDto value) throws ServiceException {
+        logger.info("create method " + UserService.class);
+
         validator.validate(value, false);
 
         User checkUser = ((UserDao)dao).findByLogin(value.getLogin());
         ((UserValidator)validator).validateLoginUnique(checkUser);
 
         User createdUser = converter.convert(value);
+
         return converter.convert(dao.save(createdUser));
     }
 
     @Override
     public Boolean update(UserDto value) throws ServiceException {
+        logger.info("update method " + UserService.class);
         validator.validate(value, true);
         return dao.update(converter.convert(value));
     }
 
     @Override
     public Boolean delete(UserDto value) throws ServiceException {
+        logger.info("delete method " + UserService.class);
         validator.validate(value, true);
         return dao.delete(converter.convert(value));
     }
 
     @Override
     public UserDto getById(Integer id) throws ServiceException {
+        logger.info("get by id method " + UserService.class);
         validator.validateIdNotNull(id);
         User result = dao.findById(id);
         if (Objects.isNull(result)){
@@ -58,6 +68,7 @@ public class UserService implements Service<UserDto, Integer> {
 
     @Override
     public List<UserDto> getAll() throws ServiceException {
+        logger.info("get all method " + UserService.class);
         List<UserDto> result = new ArrayList<>();
         List<User> daoResult = dao.findAll();
         if (daoResult.isEmpty()){
@@ -67,7 +78,14 @@ public class UserService implements Service<UserDto, Integer> {
         return result;
     }
 
+    @Override
+    public Integer getAmount() {
+        logger.info("get amount method " + UserService.class);
+        return dao.getRowsNumber();
+    }
+
     public UserDto getByLogin(String login) throws ServiceException {
+        logger.info("get login method " + UserService.class);
         ((UserValidator)validator).validateLoginNotNull(login);
         User result = ((UserDao)dao).findByLogin(login);
         if (Objects.isNull(result)){
@@ -77,6 +95,7 @@ public class UserService implements Service<UserDto, Integer> {
     }
 
     public List<UserDto> sortByRole (List<UserDto> users){
+        logger.info("sorted by role " + UserService.class);
         users.sort(new RoleSortingComparator());
         return users;
     }

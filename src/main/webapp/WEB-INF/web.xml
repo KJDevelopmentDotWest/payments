@@ -4,6 +4,11 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-
+    <jsp-config>
+        <taglib>
+            <taglib-uri>tags</taglib-uri>
+            <taglib-location>/tag/tags.tld</taglib-location>
+        </taglib>
+    </jsp-config>
 
 </web-app>

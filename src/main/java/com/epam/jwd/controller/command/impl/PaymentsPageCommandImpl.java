@@ -2,15 +2,53 @@ package com.epam.jwd.controller.command.impl;
 
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
+import com.epam.jwd.service.dto.paymentdto.PaymentDto;
+import com.epam.jwd.service.exception.ServiceException;
+import com.epam.jwd.service.impl.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.List;
+import java.util.Objects;
 
 public class PaymentsPageCommandImpl implements Command {
 
+    private static final Logger logger = LogManager.getLogger(PaymentsPageCommandImpl.class);
+
     private static final String USER_PAYMENTS_PAGE_URL = "/jsp/payments.jsp";
+    private static final Integer MAX_ITEMS_IN_PAGE = 5;
+
+    private final PaymentService service = new PaymentService();
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
-        return new CommandResponse(request.getContextPath() + USER_PAYMENTS_PAGE_URL, true);
+
+        logger.info("" + PaymentsPageCommandImpl.class);
+        Integer pageNumber = Integer.valueOf(request.getParameter("currentPage"));
+        logger.info(pageNumber);
+        HttpSession session = request.getSession();
+        List<PaymentDto> payments;
+        try {
+            payments = service.getByUserIdWithinRange((Integer) session.getAttribute("id"),
+                    MAX_ITEMS_IN_PAGE,
+                    (pageNumber -1) * MAX_ITEMS_IN_PAGE);
+            logger.info("worked");
+        } catch (ServiceException e) {
+            logger.error(e);
+            payments = null;
+        }
+
+        request.setAttribute("payments", payments);
+        request.setAttribute("currentPage", pageNumber);
+
+        if (Objects.isNull(request.getAttribute("maxPage"))){
+            Integer maxPage = service.getAmount()/MAX_ITEMS_IN_PAGE + 1;
+            request.setAttribute("maxPage", maxPage);
+        }
+
+        return new CommandResponse(request.getContextPath() + USER_PAYMENTS_PAGE_URL, false);
     }
 }

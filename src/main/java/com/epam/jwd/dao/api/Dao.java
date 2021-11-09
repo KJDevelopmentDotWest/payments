@@ -10,4 +10,5 @@ public interface Dao<T extends Entity<K>, K> {
     Boolean delete(T entity);
     List<T> findAll();
     T findById(K id);
+    Integer getRowsNumber();
 }

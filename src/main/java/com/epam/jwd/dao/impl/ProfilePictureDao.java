@@ -3,8 +3,9 @@ package com.epam.jwd.dao.impl;
 import com.epam.jwd.dao.api.Dao;
 import com.epam.jwd.dao.connectionpool.api.ConnectionPool;
 import com.epam.jwd.dao.connectionpool.impl.ConnectionPoolImpl;
-import com.epam.jwd.dao.model.payment.Payment;
 import com.epam.jwd.dao.model.profilepicture.ProfilePicture;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +17,8 @@ import java.util.Objects;
 
 public class ProfilePictureDao implements Dao<ProfilePicture, Integer> {
 
+    private static final Logger logger = LogManager.getLogger(ProfilePictureDao.class);
+
     private static final String SQL_SAVE_PROFILE_PICTURE = "INSERT_INTO profile_pictures (name, path) VALUES (?, ?)";
 
     private static final String SQL_FIND_ALL_PROFILE_PICTURES = "SELECT id, name, path FROM profile_pictures";
@@ -25,16 +28,20 @@ public class ProfilePictureDao implements Dao<ProfilePicture, Integer> {
 
     private static final String SQL_DELETE_PROFILE_PICTURE_BY_ID = "DELETE FROM profile_pictures WHERE id = ?";
 
+    private static final String SQL_COUNT_USERS = "SELECT COUNT(id) as pictures_number FROM profile_pictures";
+
+
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
 
     @Override
     public ProfilePicture save(ProfilePicture entity) {
+        logger.info("save method " + ProfilePictureDao.class);
         Connection connection = connectionPool.takeConnection();
         try {
             return saveProfilePicture(connection, entity);
         } catch (SQLException e) {
             //todo implement logger and custom exception
-            e.printStackTrace();
+            logger.error(e);
             return null;
         } finally {
             connectionPool.returnConnection(connection);
@@ -43,12 +50,13 @@ public class ProfilePictureDao implements Dao<ProfilePicture, Integer> {
 
     @Override
     public Boolean update(ProfilePicture entity) {
+        logger.info("update method " + ProfilePictureDao.class);
         Connection connection = connectionPool.takeConnection();
         try {
             return updateProfilePictureById(connection, entity);
-        } catch (SQLException throwables) {
+        } catch (SQLException e) {
             //todo implement logger and custom exception
-            throwables.printStackTrace();
+            logger.error(e);
             return false;
         } finally {
             connectionPool.returnConnection(connection);
@@ -57,12 +65,13 @@ public class ProfilePictureDao implements Dao<ProfilePicture, Integer> {
 
     @Override
     public Boolean delete(ProfilePicture entity) {
+        logger.info("delete method " + ProfilePictureDao.class);
         Connection connection = connectionPool.takeConnection();
         try {
             return deleteProfilePictureById(connection, entity.getId());
-        } catch (SQLException throwables) {
+        } catch (SQLException e) {
             //todo implement logger and custom exception
-            throwables.printStackTrace();
+            logger.error(e);
             return false;
         } finally {
             connectionPool.returnConnection(connection);
@@ -71,13 +80,14 @@ public class ProfilePictureDao implements Dao<ProfilePicture, Integer> {
 
     @Override
     public List<ProfilePicture> findAll() {
+        logger.info("find all method " + ProfilePictureDao.class);
         Connection connection = connectionPool.takeConnection();
         List<ProfilePicture> profilePictures = new ArrayList<>();
         try {
             profilePictures = findAllProfilePictures(connection);
         } catch (SQLException e){
             //todo implement logger and custom exception
-            e.printStackTrace();
+            logger.error(e);
         } finally {
             connectionPool.returnConnection(connection);
         }
@@ -86,17 +96,34 @@ public class ProfilePictureDao implements Dao<ProfilePicture, Integer> {
 
     @Override
     public ProfilePicture findById(Integer id) {
+        logger.info("find by id method " + ProfilePictureDao.class);
         Connection connection = connectionPool.takeConnection();
         ProfilePicture profilePicture = null;
         try {
             profilePicture = findProfilePictureById(connection, id);
         } catch (SQLException e){
             //todo implement logger and custom exception
-            e.printStackTrace();
+            logger.error(e);
         } finally {
             connectionPool.returnConnection(connection);
         }
         return profilePicture;
+    }
+
+    @Override
+    public Integer getRowsNumber() {
+        logger.info("get row number method " + ProfilePictureDao.class);
+        Connection connection = connectionPool.takeConnection();
+        Integer result = null;
+        try {
+            result = getRowNumber(connection);
+        } catch (SQLException e) {
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return result;
     }
 
     private ProfilePicture saveProfilePicture(Connection connection, ProfilePicture profilePicture) throws SQLException {
@@ -157,6 +184,20 @@ public class ProfilePictureDao implements Dao<ProfilePicture, Integer> {
         preparedStatement.setInt(1, id);
         Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);
         preparedStatement.close();
+        return result;
+    }
+
+    private Integer getRowNumber(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_COUNT_USERS);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Integer result;
+        if (resultSet.next()){
+            result = resultSet.getInt(1);
+        } else {
+            result = 0;
+        }
+        preparedStatement.close();
+        resultSet.close();
         return result;
     }
 }

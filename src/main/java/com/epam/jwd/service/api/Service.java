@@ -11,4 +11,5 @@ public interface Service<T extends AbstractDto<K>, K> {
     Boolean delete(T value) throws ServiceException;
     T getById(K id) throws ServiceException;
     List<T> getAll() throws ServiceException;
+    Integer getAmount() throws ServiceException;
 }

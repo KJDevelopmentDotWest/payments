@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ConnectionPoolImpl implements ConnectionPool {
 
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(ConnectionPoolImpl.class);
 
     private static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/payments";
     private static final String USER = "postgres";

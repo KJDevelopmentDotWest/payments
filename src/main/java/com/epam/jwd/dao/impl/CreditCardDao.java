@@ -5,6 +5,8 @@ import com.epam.jwd.dao.connectionpool.api.ConnectionPool;
 import com.epam.jwd.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.jwd.dao.model.creditcard.BankAccount;
 import com.epam.jwd.dao.model.creditcard.CreditCard;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +20,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class CreditCardDao implements Dao<CreditCard, Integer> {
+
+    private static final Logger logger = LogManager.getLogger(CreditCardDao.class);
 
     private static final String SQL_SAVE_CREDIT_CARD = "INSERT INTO credit_cards (name, expire_date, user_id) VALUES (?, ?, ?)";
     private static final String SQL_SAVE_BANK_ACCOUNT = "INSERT INTO bank_accounts (balance, blocked) VALUES (?, ?)";
@@ -34,11 +38,14 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
     private static final String SQL_DELETE_CREDIT_CARD_BY_ID = "DELETE FROM credit_cards WHERE id = ?";
     private static final String SQL_DELETE_BANK_ACCOUNT_BY_ID = "DELETE FROM bank_accounts WHERE id = ?";
 
+    private static final String SQL_COUNT_USERS = "SELECT COUNT(id) as credit_cards_number FROM credit_cards";
+
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
 
     @Override
     public CreditCard save(CreditCard entity) {
+        logger.info("save method " + CreditCardDao.class);
         Connection connection = connectionPool.takeConnection();
         try {
             CreditCard creditCard;
@@ -49,7 +56,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
             return creditCard;
         } catch (SQLException e) {
             //todo implement logger and custom exception
-            e.printStackTrace();
+            logger.error(e);
             return null;
         } finally {
             connectionPool.returnConnection(connection);
@@ -58,6 +65,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
 
     @Override
     public Boolean update(CreditCard entity) {
+        logger.info("update method " + CreditCardDao.class);
         Connection connection = connectionPool.takeConnection();
         try {
             connection.setAutoCommit(false);
@@ -65,9 +73,9 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
             connection.commit();
             connection.setAutoCommit(true);
             return result;
-        } catch (SQLException throwables) {
+        } catch (SQLException e) {
             //todo implement logger and custom exception
-            throwables.printStackTrace();
+            logger.error(e);
             return false;
         } finally {
             connectionPool.returnConnection(connection);
@@ -76,6 +84,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
 
     @Override
     public Boolean delete(CreditCard entity) {
+        logger.info("delete method " + CreditCardDao.class);
         Connection connection = connectionPool.takeConnection();
         try {
             connection.setAutoCommit(false);
@@ -83,9 +92,9 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
             connection.commit();
             connection.setAutoCommit(true);
             return result;
-        } catch (SQLException throwables) {
+        } catch (SQLException e) {
             //todo implement logger and custom exception
-            throwables.printStackTrace();
+            logger.error(e);
             return false;
         } finally {
             connectionPool.returnConnection(connection);
@@ -94,6 +103,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
 
     @Override
     public List<CreditCard> findAll() {
+        logger.info("find all method " + CreditCardDao.class);
         Connection connection = connectionPool.takeConnection();
         List<CreditCard> creditCards = new ArrayList<>();
 
@@ -101,7 +111,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
             creditCards = findAllCreditCard(connection);
         } catch (SQLException e){
             //todo implement logger and custom exception
-            e.printStackTrace();
+            logger.error(e);
         } finally {
             connectionPool.returnConnection(connection);
         }
@@ -110,14 +120,31 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
     }
 
     @Override
+    public Integer getRowsNumber() {
+        logger.info("get row number method " + CreditCardDao.class);
+        Connection connection = connectionPool.takeConnection();
+        Integer result = null;
+        try {
+            result = getRowNumber(connection);
+        } catch (SQLException e) {
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return result;
+    }
+
+    @Override
     public CreditCard findById(Integer id) {
+        logger.info("find by id method " + CreditCardDao.class);
         Connection connection = connectionPool.takeConnection();
         CreditCard creditCard = null;
         try {
             creditCard = findCreditCardById(connection, id);
         } catch (SQLException e) {
             //todo implement logger and custom exception
-            e.printStackTrace();
+            logger.error(e);
         } finally {
             connectionPool.returnConnection(connection);
         }
@@ -125,13 +152,14 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
     }
 
     public List<CreditCard> findByUserId(Integer id){
+        logger.info("find by user id method " + CreditCardDao.class);
         Connection connection = connectionPool.takeConnection();
         List<CreditCard> creditCards = new ArrayList<>();
         try {
             creditCards = findCreditCardByAccountId(connection, id);
         } catch (SQLException e){
             //todo implement logger and custom exception
-            e.printStackTrace();
+            logger.error(e);
         }
         return creditCards;
     }
@@ -301,6 +329,20 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         preparedStatement.setInt(1, id);
         Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);
         preparedStatement.close();
+        return result;
+    }
+
+    private Integer getRowNumber(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_COUNT_USERS);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Integer result;
+        if (resultSet.next()){
+            result = resultSet.getInt(1);
+        } else {
+            result = 0;
+        }
+        preparedStatement.close();
+        resultSet.close();
         return result;
     }
 }

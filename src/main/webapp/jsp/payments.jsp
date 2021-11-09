@@ -1,4 +1,7 @@
-<%@ page import="com.epam.jwd.service.impl.UserService" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="com.epam.jwd.service.impl.PaymentService" %>
+<%@ taglib uri = "tags" prefix = "m" %>
 
 <html>
 
@@ -8,7 +11,7 @@
         <meta charset="utf-8">
         <style><%@include file="/css/bootstrap.min.css"%></style>
         <style><%@include file="/css/navbar.css"%></style>
-
+        <style><%@include file="/css/grid.css"%></style>
 
       </head>
 
@@ -42,7 +45,112 @@
           </div>
         </nav>
         <%= java.util.Calendar.getInstance().getTime() %>
-        <%= session.getAttribute("id") %>
-        <%= session.getAttribute("role") %>
+
+        <c:out value="${requestScope.payments}"/>
+        <c:if test="${requestScope.payments == null}">
+           <c:out value="asfagsg"/>
+
+        </c:if>
+
+        <c:out value="${requestScope.currentPage}"/>
+
+        <m:paymentoutput paymentDto="${sessionScope.id}"/>
+
+        <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">First</th>
+                  <th scope="col">Last</th>
+                  <th scope="col">Handle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td colspan="2">Larry the Bird</td>
+                  <td>@twitter</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <c:if test="${requestScope.currentPage == 1}">
+
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link">First</a>
+                    </li>
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="/payments?command=payments&currentPage=2">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="/payments?command=payments&currentPage=3">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.maxPage}">Last</a>
+                    </li>
+                </ul>
+            </nav>
+        </c:if>
+        <c:if test="${requestScope.currentPage == requestScope.maxPage}">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="/payments?command=payments&currentPage=1">First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.maxPage-2}">${requestScope.maxPage-2}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.maxPage-1}">${requestScope.maxPage-1}</a>
+                    </li>
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.maxPage}">${requestScope.maxPage}</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link">Last</a>
+                    </li>
+                </ul>
+            </nav>
+        </c:if>
+        <c:if test="${requestScope.currentPage > 1 && requestScope.currentPage < requestScope.maxPage}">
+
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="/payments?command=payments&currentPage=1">First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.currentPage-1}">${requestScope.currentPage-1}</a>
+
+                    </li>
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.currentPage}">${requestScope.currentPage}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.maxPage}">Last</a>
+                    </li>
+                </ul>
+            </nav>
+        </c:if>
     </body>
 </html>

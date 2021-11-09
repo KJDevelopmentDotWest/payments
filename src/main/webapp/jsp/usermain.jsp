@@ -1,6 +1,7 @@
-        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-        <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-        <%@ page import="com.epam.jwd.service.impl.UserService" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ page import="com.epam.jwd.service.impl.UserService" %>
+<%@ page import="com.epam.jwd.service.dto.paymentdto.PaymentDto" %>
 
 <html>
 
@@ -26,7 +27,7 @@
                   <a class="nav-link" href="#">Credit Cards</a>
                 </li>
                 <li class="nav-item ">
-                  <a class="nav-link" href="/payments?command=payments">Payments</a>
+                  <a class="nav-link" href="/payments?command=payments&currentPage=1">Payments</a>
                 </li>
                 <li class="nav-item ">
                   <a class="nav-link" href="/payments?command=signout">Log Out</a>
