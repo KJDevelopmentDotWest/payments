@@ -12,11 +12,11 @@ import java.util.List;
 
 public enum ApplicationCommand {
 
-    SIGNIN(new SigninCommandImpl()),
-    SIGNOUT(new SignoutCommandImpl()),
-    PAYMENTS(new PaymentsCommandImpl(), Role.CUSTOMER),
-    EDIT_PAYMENT(new EditPaymentCommandImpl()),
-    COMMIT_PAYMENT_CHANGES(new CommitPaymentChangesImpl()),
+    SIGNIN(new SigninCommand()),
+    SIGNOUT(new SignoutCommand()),
+    PAYMENTS(new PaymentsCommand(), Role.CUSTOMER),
+    EDIT_PAYMENT(new EditPaymentCommand()),
+    COMMIT_PAYMENT_CHANGES(new CommitPaymentChangesCommand()),
     DEFAULT(defaultCommandImpl());
 
     private final Command command;

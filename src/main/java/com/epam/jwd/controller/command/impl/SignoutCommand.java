@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
 
-public class SignoutCommandImpl implements Command {
+public class SignoutCommand implements Command {
 
     private static final String SIGNIN_PAGE_URL = "/jsp/signin.jsp";
 

@@ -14,9 +14,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Objects;
 
-public class PaymentsCommandImpl implements Command {
+public class PaymentsCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger(PaymentsCommandImpl.class);
+    private static final Logger logger = LogManager.getLogger(PaymentsCommand.class);
 
     private static final String USER_PAYMENTS_PAGE_URL = "/jsp/payments.jsp";
     private static final Integer MAX_ITEMS_IN_PAGE = 5;
@@ -25,7 +25,7 @@ public class PaymentsCommandImpl implements Command {
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
-        logger.info("" + PaymentsCommandImpl.class);
+        logger.info("" + PaymentsCommand.class);
 
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute("id");

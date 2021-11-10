@@ -13,9 +13,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.Date;
 import java.util.Objects;
 
-public class CommitPaymentChangesImpl implements Command {
+public class CommitPaymentChangesCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger(EditPaymentCommandImpl.class);
+    private static final Logger logger = LogManager.getLogger(EditPaymentCommand.class);
 
     private static final String USER_PAYMENTS_PAGE_URL = "/payments?command=payments&currentPage=1";
     private static final String SAVE_ACTION = "save";

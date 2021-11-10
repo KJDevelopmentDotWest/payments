@@ -43,7 +43,7 @@
             </div>
         </nav>
 
-
+        <a href="#" class="btn btn-primary">Create Payment</a>
 
         <table class="table">
             <thead>
