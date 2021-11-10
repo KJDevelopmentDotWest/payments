@@ -21,6 +21,7 @@ public class SigninCommandImpl implements Command {
     private static final Logger logger = LogManager.getLogger(SigninCommandImpl.class);
 
     private static final String USER_MAIN_PAGE_URL = "/jsp/usermain.jsp";
+    private static final String ERROR_PAGE_URL = "/jsp/errorpage.jsp";
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
@@ -40,7 +41,7 @@ public class SigninCommandImpl implements Command {
                 logger.info("something else is wrong");
             }
         }
-        return new CommandResponse(request.getContextPath() + "/jsp/errorpage.jsp", true);
+        return new CommandResponse(request.getContextPath() + ERROR_PAGE_URL, true);
     }
 
     private CommandResponse actionDataCorrect(HttpServletRequest request, UserDto userDto){

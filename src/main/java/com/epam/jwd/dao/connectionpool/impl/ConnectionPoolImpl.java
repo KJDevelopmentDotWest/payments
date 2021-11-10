@@ -21,7 +21,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     private static final String USER = "postgres";
     private static final String PASS = "1234";
     private static final String DRIVER = "org.postgresql.Driver";
-    private static final int MAX_CONNECTIONS = 6;
+    private static final int MAX_CONNECTIONS = 8;
     private static final int PREFERRED_CONNECTIONS = 4;
 
     private boolean initialized = false;
@@ -33,8 +33,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
 
     private static ConnectionPoolImpl instance;
 
-    private ConnectionPoolImpl(){
-    }
+    private ConnectionPoolImpl(){}
 
     public static ConnectionPool getInstance(){
         getInstanceLock.lock();
@@ -54,6 +53,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
         if (!availableConnections.isEmpty()){
             ProxyConnection connection = availableConnections.poll();
             givenAwayConnections.add(connection);
+            logger.info("Connection taken");
             return connection;
         } else if (givenAwayConnections.size() < MAX_CONNECTIONS){
             try {
@@ -61,10 +61,11 @@ public class ConnectionPoolImpl implements ConnectionPool {
                 ProxyConnection connection = availableConnections.poll();
                 assert connection != null;
                 givenAwayConnections.add(connection);
+                logger.info("Connection taken");
                 return connection;
             } catch (SQLException e) {
                 //todo implement logger and custom exception
-                e.printStackTrace();
+                logger.error(e);
             }
         }
 
@@ -74,11 +75,12 @@ public class ConnectionPoolImpl implements ConnectionPool {
             } catch (InterruptedException e) {
                 //todo implement logger and custom exception
                 Thread.currentThread().interrupt();
-                e.printStackTrace();
+                logger.error(e);
             }
         }
         ProxyConnection connection = availableConnections.poll();
         givenAwayConnections.add(connection);
+        logger.info("Connection taken");
         return connection;
     }
 
@@ -129,6 +131,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
                     createConnectionAndAddToPool();
                 }
                 initialized = true;
+                logger.info("ConnectionPool initialized");
             } catch (SQLException throwables) {
                 //todo implement logger and custom exception
                 throwables.printStackTrace();
@@ -154,11 +157,5 @@ public class ConnectionPoolImpl implements ConnectionPool {
             //todo implement logger and custom exception
             e.printStackTrace();
         }
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        shutdown();
-        super.finalize();
     }
 }

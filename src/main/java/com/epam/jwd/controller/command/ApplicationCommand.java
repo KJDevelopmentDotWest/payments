@@ -2,9 +2,7 @@ package com.epam.jwd.controller.command;
 
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
-import com.epam.jwd.controller.command.impl.PaymentsPageCommandImpl;
-import com.epam.jwd.controller.command.impl.SigninCommandImpl;
-import com.epam.jwd.controller.command.impl.SignoutCommandImpl;
+import com.epam.jwd.controller.command.impl.*;
 import com.epam.jwd.dao.model.user.Role;
 
 import java.io.IOException;
@@ -16,7 +14,9 @@ public enum ApplicationCommand {
 
     SIGNIN(new SigninCommandImpl()),
     SIGNOUT(new SignoutCommandImpl()),
-    PAYMENTS(new PaymentsPageCommandImpl(), Role.CUSTOMER),
+    PAYMENTS(new PaymentsCommandImpl(), Role.CUSTOMER),
+    EDIT_PAYMENT(new EditPaymentCommandImpl()),
+    COMMIT_PAYMENT_CHANGES(new CommitPaymentChangesImpl()),
     DEFAULT(defaultCommandImpl());
 
     private final Command command;

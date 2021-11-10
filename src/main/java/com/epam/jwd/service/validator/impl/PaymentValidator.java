@@ -24,7 +24,6 @@ public class PaymentValidator implements Validator<PaymentDto, Integer> {
         validateAddress(value.getDestinationAddress());
         validatePrice(value.getPrice());
         validateCommitted(value.getCommitted());
-        validateTime(value.getTime());
         validateName(value.getName());
     }
 
@@ -58,12 +57,6 @@ public class PaymentValidator implements Validator<PaymentDto, Integer> {
     private void validateCommitted(Boolean committed) throws ServiceException {
         if (Objects.isNull(committed)){
             throw new ServiceException(ExceptionCode.PAYMENT_COMMITTED_IS_NULL_EXCEPTION_CODE);
-        }
-    }
-
-    private void validateTime(Date time) throws ServiceException {
-        if (Objects.isNull(time)){
-            throw new ServiceException(ExceptionCode.PAYMENT_TIME_IS_NULL_EXCEPTION_CODE);
         }
     }
 
