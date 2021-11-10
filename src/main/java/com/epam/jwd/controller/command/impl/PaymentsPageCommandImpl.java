@@ -45,7 +45,7 @@ public class PaymentsPageCommandImpl implements Command {
         request.setAttribute("currentPage", pageNumber);
 
         if (Objects.isNull(request.getAttribute("maxPage"))){
-            Integer paymentsAmount = null;
+            Integer paymentsAmount;
             try {
                 paymentsAmount = service.getAmountWithUserId(userId);
             } catch (ServiceException e) {
@@ -53,10 +53,10 @@ public class PaymentsPageCommandImpl implements Command {
                 logger.error(e);
             }
             Integer maxPage;
-            if (paymentsAmount / MAX_ITEMS_IN_PAGE.doubleValue() == paymentsAmount / MAX_ITEMS_IN_PAGE){
-                maxPage = paymentsAmount/MAX_ITEMS_IN_PAGE;
+            if (Double.compare(paymentsAmount / MAX_ITEMS_IN_PAGE.doubleValue(), paymentsAmount / MAX_ITEMS_IN_PAGE) == 0){
+                maxPage = paymentsAmount / MAX_ITEMS_IN_PAGE;
             } else {
-                maxPage = paymentsAmount/MAX_ITEMS_IN_PAGE + 1;
+                maxPage = paymentsAmount / MAX_ITEMS_IN_PAGE + 1;
             }
             request.setAttribute("maxPage", maxPage);
         }

@@ -53,7 +53,7 @@
                   <th scope="col">Price</th>
                   <th scope="col">Destination</th>
                   <th scope="col">Transaction Time</th>
-                  <th scope="col">Confirmed</th>
+                  <th scope="col">Committed</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,9 +66,9 @@
             </tbody>
         </table>
 
-        <c:if test="${requestScope.currentPage == 1}">
+        <c:if test="${requestScope.currentPage == 1 && requestScope.maxPage != 1}">
             <nav>
-                <ul class="pagination">
+                <ul class="pagination justify-content-center">
                     <li class="page-item disabled">
                         <a class="page-link">First</a>
                     </li>
@@ -85,9 +85,9 @@
             </nav>
         </c:if>
 
-        <c:if test="${requestScope.currentPage == requestScope.maxPage}">
+        <c:if test="${requestScope.currentPage == requestScope.maxPage && requestScope.maxPage != 1}">
             <nav>
-                <ul class="pagination">
+                <ul class="pagination justify-content-center">
                     <li class="page-item">
                         <a class="page-link" href="/payments?command=payments&currentPage=1">First</a>
                     </li>
@@ -104,9 +104,25 @@
             </nav>
         </c:if>
 
+        <c:if test="${requestScope.maxPage == 1}">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link">First</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link">1</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link">Last</a>
+                    </li>
+                </ul>
+            </nav>
+        </c:if>
+
         <c:if test="${requestScope.currentPage > 1 && requestScope.currentPage < requestScope.maxPage}">
             <nav>
-                <ul class="pagination">
+                <ul class="pagination justify-content-center">
                     <li class="page-item">
                         <a class="page-link" href="/payments?command=payments&currentPage=1">First</a>
                     </li>
