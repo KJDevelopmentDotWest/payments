@@ -21,12 +21,12 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Account</a>
+                  <a class="nav-link" href="/jsp/signin.jsp">Account</a>
                 </li>
                 <li class="nav-item ">
                   <a class="nav-link" href="#">Credit Cards</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item disabled">
                   <a class="nav-link" href="#">Payments</a>
                 </li>
                 <li class="nav-item ">
@@ -44,50 +44,29 @@
             </div>
           </div>
         </nav>
-        <%= java.util.Calendar.getInstance().getTime() %>
-
-        <c:out value="${requestScope.payments}"/>
-        <c:if test="${requestScope.payments == null}">
-           <c:out value="asfagsg"/>
-
-        </c:if>
-
-        <c:out value="${requestScope.currentPage}"/>
-
-        <m:paymentoutput paymentDto="${sessionScope.id}"/>
 
         <table class="table">
             <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
-                  <th scope="col">Handle</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Destination</th>
+                  <th scope="col">Transaction Time</th>
+                  <th scope="col">Confirmed</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td colspan="2">Larry the Bird</td>
-                  <td>@twitter</td>
-                </tr>
+                <c:forEach var="i" begin="0" end="${requestScope.payments.size()-1}">
+                    <tr>
+                        <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
+                        <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
 
         <c:if test="${requestScope.currentPage == 1}">
-
             <nav>
                 <ul class="pagination">
                     <li class="page-item disabled">
@@ -100,22 +79,17 @@
                         <a class="page-link" href="/payments?command=payments&currentPage=2">2</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="/payments?command=payments&currentPage=3">3</a>
-                    </li>
-                    <li class="page-item">
                         <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.maxPage}">Last</a>
                     </li>
                 </ul>
             </nav>
         </c:if>
+
         <c:if test="${requestScope.currentPage == requestScope.maxPage}">
             <nav>
                 <ul class="pagination">
                     <li class="page-item">
                         <a class="page-link" href="/payments?command=payments&currentPage=1">First</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.maxPage-2}">${requestScope.maxPage-2}</a>
                     </li>
                     <li class="page-item">
                         <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.maxPage-1}">${requestScope.maxPage-1}</a>
@@ -129,8 +103,8 @@
                 </ul>
             </nav>
         </c:if>
-        <c:if test="${requestScope.currentPage > 1 && requestScope.currentPage < requestScope.maxPage}">
 
+        <c:if test="${requestScope.currentPage > 1 && requestScope.currentPage < requestScope.maxPage}">
             <nav>
                 <ul class="pagination">
                     <li class="page-item">

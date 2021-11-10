@@ -25,14 +25,15 @@ public class PaymentsPageCommandImpl implements Command {
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("id");
 
         logger.info("" + PaymentsPageCommandImpl.class);
         Integer pageNumber = Integer.valueOf(request.getParameter("currentPage"));
         logger.info(pageNumber);
-        HttpSession session = request.getSession();
         List<PaymentDto> payments;
         try {
-            payments = service.getByUserIdWithinRange((Integer) session.getAttribute("id"),
+            payments = service.getByUserIdWithinRange(userId,
                     MAX_ITEMS_IN_PAGE,
                     (pageNumber -1) * MAX_ITEMS_IN_PAGE);
             logger.info("worked");
@@ -40,12 +41,23 @@ public class PaymentsPageCommandImpl implements Command {
             logger.error(e);
             payments = null;
         }
-
         request.setAttribute("payments", payments);
         request.setAttribute("currentPage", pageNumber);
 
         if (Objects.isNull(request.getAttribute("maxPage"))){
-            Integer maxPage = service.getAmount()/MAX_ITEMS_IN_PAGE + 1;
+            Integer paymentsAmount = null;
+            try {
+                paymentsAmount = service.getAmountWithUserId(userId);
+            } catch (ServiceException e) {
+                paymentsAmount = 0;
+                logger.error(e);
+            }
+            Integer maxPage;
+            if (paymentsAmount / MAX_ITEMS_IN_PAGE.doubleValue() == paymentsAmount / MAX_ITEMS_IN_PAGE){
+                maxPage = paymentsAmount/MAX_ITEMS_IN_PAGE;
+            } else {
+                maxPage = paymentsAmount/MAX_ITEMS_IN_PAGE + 1;
+            }
             request.setAttribute("maxPage", maxPage);
         }
 

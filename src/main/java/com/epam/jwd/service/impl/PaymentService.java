@@ -80,6 +80,12 @@ public class PaymentService implements Service<PaymentDto, Integer> {
         return dao.getRowsNumber();
     }
 
+    public Integer getAmountWithUserId(Integer id) throws ServiceException {
+        logger.info("get amount with user id method " + PaymentService.class);
+        validator.validateIdNotNull(id);
+        return ((PaymentDao)dao).getRowsNumberWithUserId(id);
+    }
+
     public List<PaymentDto> getByUserId(Integer id) throws ServiceException {
         logger.info("get by user id method " + PaymentService.class);
         ((PaymentValidator)validator).validateUserId(id);

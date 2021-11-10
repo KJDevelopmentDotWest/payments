@@ -11,8 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +33,8 @@ public class PaymentDao implements Dao<Payment, Integer> {
 
     private static final String SQL_DELETE_PAYMENT_BY_ID = "DELETE FROM payments WHERE id = ?";
 
-    private static final String SQL_COUNT_USERS = "SELECT COUNT(id) as payments_number FROM payments";
+    private static final String SQL_COUNT_PAYMENTS = "SELECT COUNT(id) as payments_number FROM payments";
+    private static final String SQL_COUNT_PAYMENTS_WITH_USER_ID = "SELECT COUNT(id) as payments_number FROM payments WHERE user_id = ?";
 
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
@@ -161,6 +162,22 @@ public class PaymentDao implements Dao<Payment, Integer> {
         return result;
     }
 
+
+    public Integer getRowsNumberWithUserId(Integer id) {
+        logger.info("get row number with user id method " + PaymentDao.class);
+        Connection connection = connectionPool.takeConnection();
+        Integer result = null;
+        try {
+            result = getRowNumberWithUserID(connection, id);
+        } catch (SQLException e) {
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return result;
+    }
+
     private Payment savePayment(Connection connection, Payment payment) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_PAYMENT);
         preparedStatement.setInt(1, payment.getUserId());
@@ -191,15 +208,15 @@ public class PaymentDao implements Dao<Payment, Integer> {
                         resultSet.getString(3),
                         resultSet.getInt(4),
                         resultSet.getBoolean(5),
-                        new SimpleDateFormat().parse(resultSet.getString(6)),
+                        Date.from(Instant.parse(resultSet.getString(6))),
                         resultSet.getString(7));
-            } catch (ParseException e) {
+            } catch (DateTimeParseException e) {
                 payment = new Payment(resultSet.getInt(1),
                         resultSet.getInt(2),
                         resultSet.getString(3),
                         resultSet.getInt(4),
                         resultSet.getBoolean(5),
-                        new Date(),
+                        null,
                         resultSet.getString(7));
                 //todo implement logger and custom exception
                 logger.warn(e);
@@ -224,15 +241,15 @@ public class PaymentDao implements Dao<Payment, Integer> {
                         resultSet.getString(3),
                         resultSet.getInt(4),
                         resultSet.getBoolean(5),
-                        new SimpleDateFormat().parse(resultSet.getString(6)),
+                        Date.from(Instant.parse(resultSet.getString(6))),
                         resultSet.getString(7));
-            } catch (ParseException e) {
+            } catch (DateTimeParseException e) {
                 payment = new Payment(resultSet.getInt(1),
                         resultSet.getInt(2),
                         resultSet.getString(3),
                         resultSet.getInt(4),
                         resultSet.getBoolean(5),
-                        new Date(),
+                        null,
                         resultSet.getString(7));
                 //todo implement logger and custom exception
                 logger.warn(e);
@@ -259,15 +276,15 @@ public class PaymentDao implements Dao<Payment, Integer> {
                         resultSet.getString(3),
                         resultSet.getInt(4),
                         resultSet.getBoolean(5),
-                        new SimpleDateFormat().parse(resultSet.getString(6)),
+                        Date.from(Instant.parse(resultSet.getString(6))),
                         resultSet.getString(7));
-            } catch (ParseException e) {
+            } catch (DateTimeParseException e) {
                 payment = new Payment(resultSet.getInt(1),
                         resultSet.getInt(2),
                         resultSet.getString(3),
                         resultSet.getInt(4),
                         resultSet.getBoolean(5),
-                        new Date(),
+                        null,
                         resultSet.getString(7));
                 //todo implement logger and custom exception
                 logger.warn(e);
@@ -291,9 +308,9 @@ public class PaymentDao implements Dao<Payment, Integer> {
                         resultSet.getString(3),
                         resultSet.getInt(4),
                         resultSet.getBoolean(5),
-                        new SimpleDateFormat().parse(resultSet.getString(6)),
+                        Date.from(Instant.parse(resultSet.getString(6))),
                         resultSet.getString(7));
-            } catch (ParseException e) {
+            } catch (DateTimeParseException e) {
                 payment = new Payment(resultSet.getInt(1),
                         resultSet.getInt(2),
                         resultSet.getString(3),
@@ -335,7 +352,22 @@ public class PaymentDao implements Dao<Payment, Integer> {
     }
 
     private Integer getRowNumber(Connection connection) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_COUNT_USERS);
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_COUNT_PAYMENTS);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Integer result;
+        if (resultSet.next()){
+            result = resultSet.getInt(1);
+        } else {
+            result = 0;
+        }
+        preparedStatement.close();
+        resultSet.close();
+        return result;
+    }
+
+    private Integer getRowNumberWithUserID(Connection connection, Integer id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_COUNT_PAYMENTS_WITH_USER_ID);
+        preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         Integer result;
         if (resultSet.next()){
