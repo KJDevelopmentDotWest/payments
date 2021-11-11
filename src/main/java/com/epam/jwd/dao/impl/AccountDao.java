@@ -127,7 +127,7 @@ public class AccountDao implements Dao<Account, Integer> {
 
 
     private Account saveAccount(Connection connection, Account account) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_ACCOUNT);
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_ACCOUNT, new String[] {"id"});
         preparedStatement.setString(1, account.getName());
         preparedStatement.setString(2, account.getSurname());
         preparedStatement.setInt(3, account.getProfilePictureId());

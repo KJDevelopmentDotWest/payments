@@ -127,7 +127,7 @@ public class ProfilePictureDao implements Dao<ProfilePicture, Integer> {
     }
 
     private ProfilePicture saveProfilePicture(Connection connection, ProfilePicture profilePicture) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_PROFILE_PICTURE);
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_PROFILE_PICTURE, new String[] {"id"});
         preparedStatement.setString(1, profilePicture.getName());
         preparedStatement.setString(2, profilePicture.getPath());
         preparedStatement.executeUpdate();

@@ -146,10 +146,10 @@ public class UserDao implements Dao<User, java.lang.Integer> {
     }
 
     private User saveUser(Connection connection, User user) throws SQLException{
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_USER);
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_USER, new String[] {"id"});
         preparedStatement.setString(1, user.getLogin());
         preparedStatement.setString(2, user.getPassword());
-        preparedStatement.setInt(3, user.getAccountId());
+        preparedStatement.setObject(3, user.getAccountId());
         preparedStatement.setBoolean(4, user.getActive());
         preparedStatement.setInt(5, user.getRole().getId());
         preparedStatement.executeUpdate();

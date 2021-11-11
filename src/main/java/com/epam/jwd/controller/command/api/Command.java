@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public interface Command {
 
+    String ERROR_PAGE_URL = "/jsp/errorpage.jsp";
+
     CommandResponse execute(HttpServletRequest request, HttpServletResponse response);
 
 }

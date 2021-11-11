@@ -12,8 +12,6 @@ public class User extends Entity<Integer> {
     private Integer accountId;
     private Boolean isActive;
 
-    public User(){}
-
     public User(String login, String password, Integer accountId, Boolean isActive, Role role) {
         this.login = login;
         this.password = password;

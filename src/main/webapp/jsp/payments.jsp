@@ -43,7 +43,7 @@
             </div>
         </nav>
 
-        <a href="#" class="btn btn-primary">Create Payment</a>
+        <a href="/jsp/createpayment.jsp" class="btn btn-primary">Create Payment</a>
 
         <table class="table">
             <thead>

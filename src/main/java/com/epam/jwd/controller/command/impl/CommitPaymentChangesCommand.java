@@ -32,7 +32,7 @@ public class CommitPaymentChangesCommand implements Command {
             payment = service.getById(paymentId);
         } catch (ServiceException e) {
             payment = null;
-            logger.error(e);
+            logger.error(e.getErrorCode());
         }
         updatePayment(payment, request);
         return new CommandResponse(request.getContextPath() + USER_PAYMENTS_PAGE_URL, true);
@@ -52,14 +52,14 @@ public class CommitPaymentChangesCommand implements Command {
             try {
                 service.update(result);
             } catch (ServiceException e) {
-                logger.info(e + "1");
+                logger.info(e.getErrorCode());
             }
         } else {
             if (!result.equals(paymentDto)){
                 try {
                     service.update(result);
                 } catch (ServiceException e) {
-                    logger.info(e.getErrorCode() + "2");
+                    logger.info(e.getErrorCode());
                 }
             }
         }

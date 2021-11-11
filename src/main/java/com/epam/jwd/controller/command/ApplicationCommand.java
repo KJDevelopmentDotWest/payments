@@ -15,6 +15,7 @@ public enum ApplicationCommand {
     SIGNIN(new SigninCommand()),
     SIGNOUT(new SignoutCommand()),
     PAYMENTS(new PaymentsCommand(), Role.CUSTOMER),
+    COMMIT_PAYMENT_CREATION(new CommitPaymentCreationCommand()),
     EDIT_PAYMENT(new EditPaymentCommand()),
     COMMIT_PAYMENT_CHANGES(new CommitPaymentChangesCommand()),
     DEFAULT(defaultCommandImpl());

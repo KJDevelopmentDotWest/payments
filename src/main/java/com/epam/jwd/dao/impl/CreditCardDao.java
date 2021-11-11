@@ -166,7 +166,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
 
     private CreditCard saveCreditCard(Connection connection, CreditCard card) throws SQLException {
         saveBankAccount(connection, card.getBankAccount());
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_CREDIT_CARD);
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_CREDIT_CARD, new String[] {"id"});
         preparedStatement.setString(1, card.getName());
         preparedStatement.setString(2, card.getExpireDate().toString());
         preparedStatement.setInt(3, card.getUserId());
@@ -180,7 +180,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
     }
 
     private void saveBankAccount(Connection connection, BankAccount account) throws SQLException{
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_BANK_ACCOUNT);
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_BANK_ACCOUNT, new String[] {"id"});
         preparedStatement.setInt(1, account.getBalance());
         preparedStatement.setBoolean(2, account.getBlocked());
         preparedStatement.executeUpdate();

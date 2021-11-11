@@ -13,24 +13,23 @@
 
     <body>
         <main class="form-signin" align="center">
-            <form action="/payments?command=commit_payment_changes" method="post" autocomplete="off">
+            <form action="/payments?command=commit_payment_creation" method="post" autocomplete="off">
                 <h1 class="h3 mb-3">Please edit your payment</h1>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name" value="${requestScope.payment.getName()}">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">
                     <label for="floatingInput">name</label>
                 </div>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="price" value="${requestScope.payment.getPrice()}">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="price">
                     <label for="floatingInput">price</label>
                 </div>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="destination" value="${requestScope.payment.getDestinationAddress()}">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="destination">
                     <label for="floatingPassword">destination</label>
                 </div>
-                <input type="hidden" name="paymentId" value="${requestScope.payment.getId()}">
                 <div class="btn-group" role="group" aria-label="Basic example">
-                  <button type="submit" class="btn btn-primary" name="action" value="saveAndPay">Save changes and send transaction</button>
-                  <button type="submit" class="btn btn-primary" name="action" value="save">Save changes</button>
+                  <button type="submit" class="btn btn-primary" name="action" value="saveAndPay">Save payment and send transaction</button>
+                  <button type="submit" class="btn btn-primary" name="action" value="save">Save payment</button>
                 </div>
             </form>
         </main>

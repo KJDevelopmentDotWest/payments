@@ -176,7 +176,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
     }
 
     private Payment savePayment(Connection connection, Payment payment) throws SQLException{
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_PAYMENT);
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_PAYMENT, new String[] {"id"});
         preparedStatement.setInt(1, payment.getUserId());
         preparedStatement.setString(2, payment.getDestinationAddress());
         preparedStatement.setInt(3, payment.getPrice());
@@ -189,7 +189,10 @@ public class PaymentDao implements Dao<Payment, Integer> {
         preparedStatement.setString(6, payment.getName());
         preparedStatement.executeUpdate();
         ResultSet resultSet = preparedStatement.getGeneratedKeys();
-        resultSet.next();
+        logger.info(resultSet);
+        if (resultSet.next()){
+
+        }
         Integer id = resultSet.getInt(1);
         payment.setId(id);
         preparedStatement.close();
