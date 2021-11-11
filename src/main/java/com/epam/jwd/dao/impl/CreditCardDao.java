@@ -29,6 +29,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
     private static final String SQL_FIND_ALL_CREDIT_CARD = "SELECT id, name, expire_date, user_id FROM credit_cards";
     private static final String SQL_FIND_CREDIT_CARD_BY_ID = "SELECT id, name, expire_date, user_id FROM credit_cards WHERE id = ?";
     private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID = "SELECT id, name, expire_date, user_id FROM credit_cards WHERE user_id = ?";
+    private static final String  SQL_FIND_CREDIT_CARD_BY_USER_ID_WITHIN_RANGE = "SELECT id, name, expire_date, user_id FROM credit_cards WHERE user_id = ? LIMIT ? OFFSET ?";
 
     private static final String SQL_FIND_BANK_ACCOUNT_BY_ID = "SELECT id, balance, blocked FROM bank_accounts WHERE id = ?";
 
@@ -38,7 +39,8 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
     private static final String SQL_DELETE_CREDIT_CARD_BY_ID = "DELETE FROM credit_cards WHERE id = ?";
     private static final String SQL_DELETE_BANK_ACCOUNT_BY_ID = "DELETE FROM bank_accounts WHERE id = ?";
 
-    private static final String SQL_COUNT_USERS = "SELECT COUNT(id) as credit_cards_number FROM credit_cards";
+    private static final String SQL_COUNT_CREDIT_CARDS = "SELECT COUNT(id) as credit_cards_number FROM credit_cards";
+    private static final String SQL_COUNT_CREDIT_CARDS_WITH_USER_ID = "SELECT COUNT(id) as credit_cards_number FROM credit_cards WHERE user_id = ?";
 
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
@@ -135,6 +137,21 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         return result;
     }
 
+    public Integer getRowsNumberWithUserId(Integer id) {
+        logger.info("get row number with user id method " + CreditCardDao.class);
+        Connection connection = connectionPool.takeConnection();
+        Integer result = null;
+        try {
+            result = getRowNumberWithUserID(connection, id);
+        } catch (SQLException e) {
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return result;
+    }
+
     @Override
     public CreditCard findById(Integer id) {
         logger.info("find by id method " + CreditCardDao.class);
@@ -156,10 +173,25 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         Connection connection = connectionPool.takeConnection();
         List<CreditCard> creditCards = new ArrayList<>();
         try {
-            creditCards = findCreditCardByAccountId(connection, id);
+            creditCards = findCreditCardByUserId(connection, id);
         } catch (SQLException e){
             //todo implement logger and custom exception
             logger.error(e);
+        }
+        return creditCards;
+    }
+
+    public List<CreditCard> findByUserIdWithinRange(Integer id, Integer limit, Integer offset) {
+        logger.info("find by user id within range method " + CreditCardDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<CreditCard> creditCards = new ArrayList<>();
+        try {
+            creditCards = findCreditCardByUserIdWithinRange(connection, id, limit, offset);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
         }
         return creditCards;
     }
@@ -211,7 +243,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
                         resultSet.getInt(4));
                 //todo and logger
                 result.add(creditCard);
-                e.printStackTrace();
+                logger.error(e);
             }
         }
         preparedStatement.close();
@@ -238,7 +270,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
                         new Date(),
                         resultSet.getInt(4));
                 //todo and logger
-                e.printStackTrace();
+                logger.error(e);
             }
         } else {
             creditCard =  null;
@@ -265,10 +297,10 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         return bankAccount;
     }
 
-    private List<CreditCard> findCreditCardByAccountId(Connection connection, Integer accountId)throws SQLException{
+    private List<CreditCard> findCreditCardByUserId(Connection connection, Integer userId)throws SQLException{
         List<CreditCard> result = new ArrayList<>();
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_CREDIT_CARD_BY_USER_ID);
-        preparedStatement.setInt(1, accountId);
+        preparedStatement.setInt(1, userId);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
             try {
@@ -285,7 +317,37 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
                         resultSet.getInt(4));
                 //todo and logger
                 result.add(creditCard);
-                e.printStackTrace();
+                logger.error(e);
+            }
+        }
+        preparedStatement.close();
+        resultSet.close();
+        return result;
+    }
+
+    private List<CreditCard> findCreditCardByUserIdWithinRange(Connection connection, Integer userId, Integer limit, Integer offset)throws SQLException{
+        List<CreditCard> result = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_CREDIT_CARD_BY_USER_ID_WITHIN_RANGE);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, limit);
+        preparedStatement.setInt(3, offset);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            try {
+                CreditCard creditCard = new CreditCard(resultSet.getInt(1),
+                        findBankAccountById(connection, resultSet.getInt(1)),
+                        resultSet.getString(2),
+                        new SimpleDateFormat().parse(resultSet.getString(3)),
+                        resultSet.getInt(4));
+                result.add(creditCard);
+            } catch (ParseException e) {
+                CreditCard creditCard = new CreditCard(findBankAccountById(connection, resultSet.getInt(1)),
+                        resultSet.getString(2),
+                        new Date(),
+                        resultSet.getInt(4));
+                //todo and logger
+                result.add(creditCard);
+                logger.error(e);
             }
         }
         preparedStatement.close();
@@ -333,7 +395,22 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
     }
 
     private Integer getRowNumber(Connection connection) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_COUNT_USERS);
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_COUNT_CREDIT_CARDS);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Integer result;
+        if (resultSet.next()){
+            result = resultSet.getInt(1);
+        } else {
+            result = 0;
+        }
+        preparedStatement.close();
+        resultSet.close();
+        return result;
+    }
+
+    private Integer getRowNumberWithUserID(Connection connection, Integer id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_COUNT_CREDIT_CARDS_WITH_USER_ID);
+        preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         Integer result;
         if (resultSet.next()){

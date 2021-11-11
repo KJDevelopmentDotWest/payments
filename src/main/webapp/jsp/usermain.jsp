@@ -21,15 +21,15 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item disabled">
-                  <a class="nav-link" href="#">Account</a>
+                  <a class="nav-link">Account</a>
                 </li>
-                <li class="nav-item ">
-                  <a class="nav-link" href="#">Credit Cards</a>
+                <li class="nav-item">
+                  <a class="nav-link" href="/payments?command=credit_cards&currentPage=1">Credit Cards</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                   <a class="nav-link" href="/payments?command=payments&currentPage=1">Payments</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                   <a class="nav-link" href="/payments?command=signout">Log Out</a>
                 </li>
               </ul>

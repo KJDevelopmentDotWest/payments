@@ -99,7 +99,7 @@ public class PaymentService implements Service<PaymentDto, Integer> {
     }
 
     public List<PaymentDto> getByUserIdWithinRange(Integer id, Integer limit, Integer offset) throws ServiceException {
-        logger.info("get by user id method " + PaymentService.class);
+        logger.info("get by user id within range method " + PaymentService.class);
         ((PaymentValidator)validator).validateUserId(id);
         List<PaymentDto> result = new ArrayList<>();
         List<Payment> daoResult = ((PaymentDao)dao).findByUserIdWithinRange(id, limit, offset);

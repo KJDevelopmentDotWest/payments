@@ -24,7 +24,7 @@ public class CreditCardValidator implements Validator<CreditCardDto, Integer> {
         validateBankAccount(value.getBankAccount(), checkId);
         validateName(value.getName());
         validateDate(value.getExpireDate());
-        validateAccountId(value.getUserId());
+        validateUserId(value.getUserId());
     }
 
     private void validateId(Integer id) throws ServiceException {
@@ -46,7 +46,7 @@ public class CreditCardValidator implements Validator<CreditCardDto, Integer> {
         }
     }
 
-    private void validateAccountId(Integer id) throws ServiceException{
+    public void validateUserId(Integer id) throws ServiceException{
         if (Objects.isNull(id)){
             throw new ServiceException(ExceptionCode.CREDIT_CARD_ID_IS_NULL_EXCEPTION_CODE);
         }

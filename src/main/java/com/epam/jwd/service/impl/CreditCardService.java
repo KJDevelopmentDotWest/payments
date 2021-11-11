@@ -2,7 +2,9 @@ package com.epam.jwd.service.impl;
 
 import com.epam.jwd.dao.api.Dao;
 import com.epam.jwd.dao.impl.CreditCardDao;
+import com.epam.jwd.dao.impl.PaymentDao;
 import com.epam.jwd.dao.model.creditcard.CreditCard;
+import com.epam.jwd.dao.model.payment.Payment;
 import com.epam.jwd.service.api.Service;
 import com.epam.jwd.service.comparator.creditcardcomparator.BalanceSortingComparator;
 import com.epam.jwd.service.comparator.creditcardcomparator.BlockedSortingComparator;
@@ -10,10 +12,12 @@ import com.epam.jwd.service.comparator.creditcardcomparator.UserIdSortingCompara
 import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.CreditCardConverter;
 import com.epam.jwd.service.dto.creditcarddto.CreditCardDto;
+import com.epam.jwd.service.dto.paymentdto.PaymentDto;
 import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 import com.epam.jwd.service.validator.impl.CreditCardValidator;
+import com.epam.jwd.service.validator.impl.PaymentValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -80,6 +84,12 @@ public class CreditCardService implements Service<CreditCardDto, Integer> {
         return dao.getRowsNumber();
     }
 
+    public Integer getAmountWithUserId(Integer id) throws ServiceException {
+        logger.info("get amount with user id method " + PaymentService.class);
+        validator.validateIdNotNull(id);
+        return ((CreditCardDao)dao).getRowsNumberWithUserId(id);
+    }
+
     public List<CreditCardDto> getByUserId(Integer id) throws ServiceException {
         logger.info("get by user id method " + CreditCardService.class);
         validator.validateIdNotNull(id);
@@ -87,6 +97,18 @@ public class CreditCardService implements Service<CreditCardDto, Integer> {
         List<CreditCard> daoResult = ((CreditCardDao) dao).findByUserId(id);
         if (daoResult.isEmpty()){
             throw new ServiceException(ExceptionCode.CREDIT_CARD_IS_NOT_FOUND_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<CreditCardDto> getByUserIdWithinRange(Integer id, Integer limit, Integer offset) throws ServiceException {
+        logger.info("get by user id within range method " + CreditCardService.class);
+        ((CreditCardValidator)validator).validateUserId(id);
+        List<CreditCardDto> result = new ArrayList<>();
+        List<CreditCard> daoResult = ((CreditCardDao)dao).findByUserIdWithinRange(id, limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;

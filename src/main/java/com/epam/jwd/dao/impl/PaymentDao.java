@@ -232,10 +232,10 @@ public class PaymentDao implements Dao<Payment, Integer> {
         return result;
     }
 
-    private List<Payment> findPaymentsByUserId(Connection connection, Integer id) throws SQLException{
+    private List<Payment> findPaymentsByUserId(Connection connection, Integer userId) throws SQLException{
         List<Payment> result = new ArrayList<>();
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_PAYMENTS_BY_USER_ID);
-        preparedStatement.setInt(1, id);
+        preparedStatement.setInt(1, userId);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
             Payment payment;
@@ -265,10 +265,10 @@ public class PaymentDao implements Dao<Payment, Integer> {
         return result;
     }
 
-    private List<Payment> findPaymentsByUserIdWithinRange(Connection connection, Integer id, Integer limit, Integer offset) throws SQLException{
+    private List<Payment> findPaymentsByUserIdWithinRange(Connection connection, Integer userId, Integer limit, Integer offset) throws SQLException{
         List<Payment> result = new ArrayList<>();
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_PAYMENTS_BY_USER_ID_WITHIN_RANGE);
-        preparedStatement.setInt(1, id);
+        preparedStatement.setInt(1, userId);
         preparedStatement.setInt(2, limit);
         preparedStatement.setInt(3, offset);
         ResultSet resultSet = preparedStatement.executeQuery();
