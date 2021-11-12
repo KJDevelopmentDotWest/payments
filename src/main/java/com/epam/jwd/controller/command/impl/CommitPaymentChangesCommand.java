@@ -42,7 +42,7 @@ public class CommitPaymentChangesCommand implements Command {
         PaymentDto result = new PaymentDto(paymentDto.getId(),
                 paymentDto.getUserId(),
                 request.getParameter("destination"),
-                Integer.valueOf(request.getParameter("price")),
+                Long.valueOf(request.getParameter("price")),
                 false,
                 null,
                 request.getParameter("name"));

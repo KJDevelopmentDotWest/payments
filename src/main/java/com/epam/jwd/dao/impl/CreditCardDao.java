@@ -12,8 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,17 +23,17 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
 
     private static final Logger logger = LogManager.getLogger(CreditCardDao.class);
 
-    private static final String SQL_SAVE_CREDIT_CARD = "INSERT INTO credit_cards (name, expire_date, user_id) VALUES (?, ?, ?)";
+    private static final String SQL_SAVE_CREDIT_CARD = "INSERT INTO credit_cards (name, expire_date, user_id, number) VALUES (?, ?, ?, ?)";
     private static final String SQL_SAVE_BANK_ACCOUNT = "INSERT INTO bank_accounts (balance, blocked) VALUES (?, ?)";
 
-    private static final String SQL_FIND_ALL_CREDIT_CARD = "SELECT id, name, expire_date, user_id FROM credit_cards";
-    private static final String SQL_FIND_CREDIT_CARD_BY_ID = "SELECT id, name, expire_date, user_id FROM credit_cards WHERE id = ?";
-    private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID = "SELECT id, name, expire_date, user_id FROM credit_cards WHERE user_id = ?";
-    private static final String  SQL_FIND_CREDIT_CARD_BY_USER_ID_WITHIN_RANGE = "SELECT id, name, expire_date, user_id FROM credit_cards WHERE user_id = ? LIMIT ? OFFSET ?";
+    private static final String SQL_FIND_ALL_CREDIT_CARD = "SELECT id, name, expire_date, user_id, number FROM credit_cards";
+    private static final String SQL_FIND_CREDIT_CARD_BY_ID = "SELECT id, name, expire_date, user_id, number FROM credit_cards WHERE id = ?";
+    private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID = "SELECT id, name, expire_date, user_id, number FROM credit_cards WHERE user_id = ?";
+    private static final String  SQL_FIND_CREDIT_CARD_BY_USER_ID_WITHIN_RANGE = "SELECT id, name, expire_date, user_id, number FROM credit_cards WHERE user_id = ? LIMIT ? OFFSET ?";
 
     private static final String SQL_FIND_BANK_ACCOUNT_BY_ID = "SELECT id, balance, blocked FROM bank_accounts WHERE id = ?";
 
-    private static final String SQL_UPDATE_CREDIT_CARD_BY_ID = "UPDATE credit_cards SET name = ?, expire_date = ?, user_id = ? WHERE id = ?";
+    private static final String SQL_UPDATE_CREDIT_CARD_BY_ID = "UPDATE credit_cards SET name = ?, expire_date = ?, user_id = ?, number = ? WHERE id = ?";
     private static final String SQL_UPDATE_BANK_ACCOUNT_BY_ID = "UPDATE bank_accounts SET balance = ?, blocked = ? WHERE id = ?";
 
     private static final String SQL_DELETE_CREDIT_CARD_BY_ID = "DELETE FROM credit_cards WHERE id = ?";
@@ -200,8 +200,9 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         saveBankAccount(connection, card.getBankAccount());
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_CREDIT_CARD, new String[] {"id"});
         preparedStatement.setString(1, card.getName());
-        preparedStatement.setString(2, card.getExpireDate().toString());
-        preparedStatement.setInt(3, card.getUserId());
+        preparedStatement.setString(2, card.getExpireDate().toInstant().toString());
+        preparedStatement.setLong(3, card.getCardNumber());
+        preparedStatement.setInt(4, card.getUserId());
         preparedStatement.executeUpdate();
         ResultSet resultSet = preparedStatement.getGeneratedKeys();
         resultSet.next();
@@ -213,7 +214,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
 
     private void saveBankAccount(Connection connection, BankAccount account) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_BANK_ACCOUNT, new String[] {"id"});
-        preparedStatement.setInt(1, account.getBalance());
+        preparedStatement.setLong(1, account.getBalance());
         preparedStatement.setBoolean(2, account.getBlocked());
         preparedStatement.executeUpdate();
         ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -233,14 +234,16 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
                 CreditCard creditCard = new CreditCard(resultSet.getInt(1),
                         findBankAccountById(connection, resultSet.getInt(1)),
                         resultSet.getString(2),
-                        new SimpleDateFormat().parse(resultSet.getString(3)),
-                        resultSet.getInt(4));
+                        Date.from(Instant.parse(resultSet.getString(3))),
+                        resultSet.getInt(4),
+                        resultSet.getLong(5));
                 result.add(creditCard);
-            } catch (ParseException e) {
+            } catch (DateTimeParseException | NullPointerException e) {
                 CreditCard creditCard = new CreditCard(findBankAccountById(connection, resultSet.getInt(1)),
                         resultSet.getString(2),
                         new Date(),
-                        resultSet.getInt(4));
+                        resultSet.getInt(4),
+                        resultSet.getLong(5));
                 //todo and logger
                 result.add(creditCard);
                 logger.error(e);
@@ -262,13 +265,13 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
                 creditCard = new CreditCard(resultSet.getInt(1),
                         findBankAccountById(connection, resultSet.getInt(1)),
                         resultSet.getString(2),
-                        new SimpleDateFormat().parse(resultSet.getString(3)),
-                        resultSet.getInt(4));
-            } catch (ParseException e) {
+                        Date.from(Instant.parse(resultSet.getString(3))),
+                        resultSet.getInt(4), resultSet.getLong(5));
+            } catch (DateTimeParseException | NullPointerException e) {
                 creditCard = new CreditCard(findBankAccountById(connection, resultSet.getInt(1)),
                         resultSet.getString(2),
                         new Date(),
-                        resultSet.getInt(4));
+                        resultSet.getInt(4), resultSet.getLong(5));
                 //todo and logger
                 logger.error(e);
             }
@@ -287,7 +290,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         BankAccount bankAccount;
         if (resultSet.next()){
             bankAccount = new BankAccount(resultSet.getInt(1),
-                    resultSet.getInt(2),
+                    resultSet.getLong(2),
                     resultSet.getBoolean(3));
         } else {
             bankAccount = null;
@@ -307,14 +310,16 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
                 CreditCard creditCard = new CreditCard(resultSet.getInt(1),
                         findBankAccountById(connection, resultSet.getInt(1)),
                         resultSet.getString(2),
-                        new SimpleDateFormat().parse(resultSet.getString(3)),
-                        resultSet.getInt(4));
+                        Date.from(Instant.parse(resultSet.getString(3))),
+                        resultSet.getInt(4),
+                        resultSet.getLong(5));
                 result.add(creditCard);
-            } catch (ParseException e) {
+            } catch (DateTimeParseException | NullPointerException e) {
                 CreditCard creditCard = new CreditCard(findBankAccountById(connection, resultSet.getInt(1)),
                         resultSet.getString(2),
                         new Date(),
-                        resultSet.getInt(4));
+                        resultSet.getInt(4),
+                        resultSet.getLong(5));
                 //todo and logger
                 result.add(creditCard);
                 logger.error(e);
@@ -337,14 +342,16 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
                 CreditCard creditCard = new CreditCard(resultSet.getInt(1),
                         findBankAccountById(connection, resultSet.getInt(1)),
                         resultSet.getString(2),
-                        new SimpleDateFormat().parse(resultSet.getString(3)),
-                        resultSet.getInt(4));
+                        Date.from(Instant.parse(resultSet.getString(3))),
+                        resultSet.getInt(4),
+                        resultSet.getLong(5));
                 result.add(creditCard);
-            } catch (ParseException e) {
+            } catch (DateTimeParseException | NullPointerException e) {
                 CreditCard creditCard = new CreditCard(findBankAccountById(connection, resultSet.getInt(1)),
                         resultSet.getString(2),
                         new Date(),
-                        resultSet.getInt(4));
+                        resultSet.getInt(4),
+                        resultSet.getLong(5));
                 //todo and logger
                 result.add(creditCard);
                 logger.error(e);
@@ -358,9 +365,10 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
     private Boolean updateCreditCardById(Connection connection, CreditCard creditCard) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_CREDIT_CARD_BY_ID);
         preparedStatement.setString(1, creditCard.getName());
-        preparedStatement.setString(2, creditCard.getExpireDate().toString());
+        preparedStatement.setString(2, creditCard.getExpireDate().toInstant().toString());
         preparedStatement.setInt(3, creditCard.getUserId());
-        preparedStatement.setInt(4, creditCard.getId());
+        preparedStatement.setLong(4, creditCard.getCardNumber());
+        preparedStatement.setInt(5, creditCard.getId());
         Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1)
                 && updateBankAccountById(connection, creditCard.getBankAccount());
         preparedStatement.close();
@@ -369,7 +377,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
 
     private Boolean updateBankAccountById(Connection connection, BankAccount bankAccount) throws  SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_BANK_ACCOUNT_BY_ID);
-        preparedStatement.setInt(1, bankAccount.getBalance());
+        preparedStatement.setLong(1, bankAccount.getBalance());
         preparedStatement.setBoolean(2, bankAccount.getBlocked());
         preparedStatement.setInt(3, bankAccount.getId());
         Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);

@@ -13,7 +13,8 @@ public class CreditCardConverter implements Converter<CreditCard, CreditCardDto,
                 convertBankAccount(value.getBankAccount()),
                 value.getName(),
                 value.getExpireDate(),
-                value.getUserId());
+                value.getUserId(),
+                value.getCardNumber());
         return creditCard;
     }
 
@@ -23,7 +24,8 @@ public class CreditCardConverter implements Converter<CreditCard, CreditCardDto,
                 convertBankAccount(value.getBankAccount()),
                 value.getName(),
                 value.getExpireDate(),
-                value.getUserId());
+                value.getUserId(),
+                value.getCardNumber());
         return creditCardDTO;
     }
 

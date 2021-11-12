@@ -10,20 +10,31 @@ public class CreditCardDto extends AbstractDto<Integer> {
     private String name;
     private Date expireDate;
     private Integer userId;
+    private Long cardNumber;
 
-    public CreditCardDto(BankAccountDto bankAccount, String name, Date expireDate, Integer accountId) {
+    public CreditCardDto(BankAccountDto bankAccount, String name, Date expireDate, Integer accountId, Long cardNumber) {
         this.bankAccount = bankAccount;
         this.name = name;
         this.expireDate = expireDate;
         this.userId = accountId;
+        this.cardNumber = cardNumber;
     }
 
-    public CreditCardDto(Integer id, BankAccountDto bankAccount, String name, Date expireDate, Integer userId) {
+    public CreditCardDto(Integer id, BankAccountDto bankAccount, String name, Date expireDate, Integer userId, Long cardNumber) {
         this.bankAccount = bankAccount;
         this.name = name;
         this.expireDate = expireDate;
         this.userId = userId;
+        this.cardNumber = cardNumber;
         this.id = id;
+    }
+
+    public Long getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(Long cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
     public BankAccountDto getBankAccount() {

@@ -179,7 +179,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_PAYMENT, new String[] {"id"});
         preparedStatement.setInt(1, payment.getUserId());
         preparedStatement.setString(2, payment.getDestinationAddress());
-        preparedStatement.setInt(3, payment.getPrice());
+        preparedStatement.setLong(3, payment.getPrice());
         preparedStatement.setBoolean(4, payment.isCommitted());
         if (!Objects.isNull(payment.getTime())){
             preparedStatement.setString(5, payment.getTime().toInstant().toString());
@@ -210,7 +210,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
                 payment = new Payment(resultSet.getInt(1),
                         resultSet.getInt(2),
                         resultSet.getString(3),
-                        resultSet.getInt(4),
+                        resultSet.getLong(4),
                         resultSet.getBoolean(5),
                         Date.from(Instant.parse(resultSet.getString(6))),
                         resultSet.getString(7));
@@ -218,7 +218,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
                 payment = new Payment(resultSet.getInt(1),
                         resultSet.getInt(2),
                         resultSet.getString(3),
-                        resultSet.getInt(4),
+                        resultSet.getLong(4),
                         resultSet.getBoolean(5),
                         null,
                         resultSet.getString(7));
@@ -243,7 +243,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
                 payment = new Payment(resultSet.getInt(1),
                         resultSet.getInt(2),
                         resultSet.getString(3),
-                        resultSet.getInt(4),
+                        resultSet.getLong(4),
                         resultSet.getBoolean(5),
                         Date.from(Instant.parse(resultSet.getString(6))),
                         resultSet.getString(7));
@@ -251,7 +251,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
                 payment = new Payment(resultSet.getInt(1),
                         resultSet.getInt(2),
                         resultSet.getString(3),
-                        resultSet.getInt(4),
+                        resultSet.getLong(4),
                         resultSet.getBoolean(5),
                         null,
                         resultSet.getString(7));
@@ -278,7 +278,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
                 payment = new Payment(resultSet.getInt(1),
                         resultSet.getInt(2),
                         resultSet.getString(3),
-                        resultSet.getInt(4),
+                        resultSet.getLong(4),
                         resultSet.getBoolean(5),
                         Date.from(Instant.parse(resultSet.getString(6))),
                         resultSet.getString(7));
@@ -286,7 +286,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
                 payment = new Payment(resultSet.getInt(1),
                         resultSet.getInt(2),
                         resultSet.getString(3),
-                        resultSet.getInt(4),
+                        resultSet.getLong(4),
                         resultSet.getBoolean(5),
                         null,
                         resultSet.getString(7));
@@ -310,7 +310,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
                 payment = new Payment(resultSet.getInt(1),
                         resultSet.getInt(2),
                         resultSet.getString(3),
-                        resultSet.getInt(4),
+                        resultSet.getLong(4),
                         resultSet.getBoolean(5),
                         Date.from(Instant.parse(resultSet.getString(6))),
                         resultSet.getString(7));
@@ -318,7 +318,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
                 payment = new Payment(resultSet.getInt(1),
                         resultSet.getInt(2),
                         resultSet.getString(3),
-                        resultSet.getInt(4),
+                        resultSet.getLong(4),
                         resultSet.getBoolean(5),
                         null,
                         resultSet.getString(7));
@@ -337,7 +337,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PAYMENT_BY_ID);
         preparedStatement.setInt(1, payment.getUserId());
         preparedStatement.setString(2, payment.getDestinationAddress());
-        preparedStatement.setInt(3, payment.getPrice());
+        preparedStatement.setLong(3, payment.getPrice());
         preparedStatement.setBoolean(4, payment.isCommitted());
         if (!Objects.isNull(payment.getTime())){
             preparedStatement.setString(5, payment.getTime().toInstant().toString());

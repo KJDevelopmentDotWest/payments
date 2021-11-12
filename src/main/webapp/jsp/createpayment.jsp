@@ -20,7 +20,7 @@
                     <label for="floatingInput">name</label>
                 </div>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="price">
+                    <input type="number" class="form-control" id="floatingInput" placeholder="Password" name="price">
                     <label for="floatingInput">price</label>
                 </div>
                 <div class="form-floating">

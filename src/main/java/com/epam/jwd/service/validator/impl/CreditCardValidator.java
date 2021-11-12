@@ -63,7 +63,7 @@ public class CreditCardValidator implements Validator<CreditCardDto, Integer> {
         validateBlocked(bankAccountDTO.getBlocked());
     }
 
-    private void validateBalance(Integer balance) throws ServiceException {
+    private void validateBalance(Long balance) throws ServiceException {
         if (Objects.isNull(balance)){
             throw new ServiceException(ExceptionCode.BANK_ACCOUNT_BALANCE_IS_NULL_EXCEPTION_CODE);
         }

@@ -5,27 +5,27 @@ import com.epam.jwd.dao.model.Entity;
 import java.util.Objects;
 
 public class BankAccount extends Entity<Integer> {
-    private Integer balance;
+    private Long balance;
     private Boolean blocked;
 
     public BankAccount(){}
 
-    public BankAccount(Integer balance, Boolean blocked) {
+    public BankAccount(Long balance, Boolean blocked) {
         this.balance = balance;
         this.blocked = blocked;
     }
 
-    public BankAccount(Integer id, Integer balance, Boolean blocked) {
+    public BankAccount(Integer id, Long balance, Boolean blocked) {
         this.balance = balance;
         this.blocked = blocked;
         this.id = id;
     }
 
-    public Integer getBalance() {
+    public Long getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(Long balance) {
         this.balance = balance;
     }
 

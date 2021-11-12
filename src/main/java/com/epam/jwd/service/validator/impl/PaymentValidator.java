@@ -45,7 +45,7 @@ public class PaymentValidator implements Validator<PaymentDto, Integer> {
         }
     }
 
-    private void validatePrice(Integer price) throws ServiceException {
+    private void validatePrice(Long price) throws ServiceException {
         if (Objects.isNull(price)){
             throw new ServiceException(ExceptionCode.PAYMENT_PRICE_IS_NULL_EXCEPTION_CODE);
         }

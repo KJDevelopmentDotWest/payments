@@ -5,25 +5,25 @@ import com.epam.jwd.service.dto.AbstractDto;
 import java.util.Objects;
 
 public class BankAccountDto extends AbstractDto<Integer> {
-    private Integer balance;
+    private Long balance;
     private Boolean blocked;
 
-    public BankAccountDto(Integer balance, Boolean blocked) {
+    public BankAccountDto(Long balance, Boolean blocked) {
         this.balance = balance;
         this.blocked = blocked;
     }
 
-    public BankAccountDto(Integer id, Integer balance, Boolean blocked) {
+    public BankAccountDto(Integer id, Long balance, Boolean blocked) {
         this.balance = balance;
         this.blocked = blocked;
         this.id = id;
     }
 
-    public Integer getBalance() {
+    public Long getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(Long balance) {
         this.balance = balance;
     }
 

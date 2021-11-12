@@ -8,14 +8,14 @@ import java.util.Objects;
 public class Payment extends Entity<Integer> {
     private Integer userId;
     private String destinationAddress;
-    private Integer price;
+    private Long price;
     private Boolean committed;
     private Date time;
     private String name;
 
     public Payment() {}
 
-    public Payment(Integer userId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
+    public Payment(Integer userId, String destinationAddress, Long price, Boolean committed, Date time, String name) {
         this.userId = userId;
         this.destinationAddress = destinationAddress;
         this.price = price;
@@ -24,7 +24,7 @@ public class Payment extends Entity<Integer> {
         this.name = name;
     }
 
-    public Payment(Integer id, Integer userId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
+    public Payment(Integer id, Integer userId, String destinationAddress, Long price, Boolean committed, Date time, String name) {
         this.userId = userId;
         this.destinationAddress = destinationAddress;
         this.price = price;
@@ -58,19 +58,19 @@ public class Payment extends Entity<Integer> {
         this.destinationAddress = destinationAddress;
     }
 
-    public int getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
-    public boolean isCommitted() {
+    public Boolean isCommitted() {
         return committed;
     }
 
-    public void setCommitted(boolean committed) {
+    public void setCommitted(Boolean committed) {
         this.committed = committed;
     }
 

@@ -29,7 +29,7 @@ public class CommitPaymentCreationCommand implements Command {
 
         PaymentDto paymentDto = new PaymentDto((Integer) session.getAttribute("id"),
                 request.getParameter("destination"),
-                Integer.valueOf(request.getParameter("price")),
+                Long.valueOf(request.getParameter("price")),
                 false,
                 null,
                 request.getParameter("name"));

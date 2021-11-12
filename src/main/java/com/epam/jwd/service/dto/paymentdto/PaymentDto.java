@@ -8,12 +8,12 @@ import java.util.Objects;
 public class PaymentDto extends AbstractDto<Integer> {
     private Integer userId;
     private String destinationAddress;
-    private Integer price;
+    private Long price;
     private Boolean committed;
     private Date time;
     private String name;
 
-    public PaymentDto(Integer userId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
+    public PaymentDto(Integer userId, String destinationAddress, Long price, Boolean committed, Date time, String name) {
         this.userId = userId;
         this.destinationAddress = destinationAddress;
         this.price = price;
@@ -22,7 +22,7 @@ public class PaymentDto extends AbstractDto<Integer> {
         this.name = name;
     }
 
-    public PaymentDto(Integer id, Integer userId, String destinationAddress, Integer price, Boolean committed, Date time, String name) {
+    public PaymentDto(Integer id, Integer userId, String destinationAddress, Long price, Boolean committed, Date time, String name) {
         this.userId = userId;
         this.destinationAddress = destinationAddress;
         this.price = price;
@@ -48,11 +48,11 @@ public class PaymentDto extends AbstractDto<Integer> {
         this.destinationAddress = destinationAddress;
     }
 
-    public Integer getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 

@@ -18,4 +18,14 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+
+    <tag>
+        <name>creditcardoutput</name>
+        <tag-class>com.epam.jwd.controller.tag.CreditCardOutputTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>creditCardDto</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 </taglib>

@@ -10,22 +10,31 @@ public class CreditCard extends Entity<Integer> {
     private String name;
     private Date expireDate;
     private Integer userId;
+    private Long cardNumber;
 
-    public CreditCard() {}
-
-    public CreditCard(BankAccount bankAccount, String name, Date expireDate, Integer userId) {
+    public CreditCard(BankAccount bankAccount, String name, Date expireDate, Integer userId, Long cardNumber) {
         this.bankAccount = bankAccount;
         this.name = name;
         this.expireDate = expireDate;
         this.userId = userId;
+        this.cardNumber = cardNumber;
     }
 
-    public CreditCard(Integer id, BankAccount bankAccount, String name, Date expireDate, Integer userId) {
+    public CreditCard(Integer id, BankAccount bankAccount, String name, Date expireDate, Integer userId, Long cardNumber) {
         this.bankAccount = bankAccount;
         this.name = name;
         this.expireDate = expireDate;
         this.userId = userId;
+        this.cardNumber = cardNumber;
         this.id = id;
+    }
+
+    public Long getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(Long cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
     public Integer getUserId() {

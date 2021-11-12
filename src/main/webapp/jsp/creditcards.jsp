@@ -48,18 +48,18 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Destination</th>
-                    <th scope="col">Transaction Time</th>
-                    <th scope="col">Committed</th>
-                    <th scope="col">Edit</th>
+                    <th scope="col">Number</th>
+                    <th scope="col">Expire Date</th>
+                    <th scope="col">Balance</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Add Funds</th>
                 </tr>
             </thead>
             <tbody>
                 <c:forEach var="i" begin="0" end="${requestScope.creditcards.size()-1}">
                     <tr>
                         <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
-                        <td>${requestScope.creditcards.get(i)}</td>
+                        <m:creditcardoutput creditCardDto="${requestScope.creditcards.get(i)}"/>
                         <td></td>
                     </tr>
                 </c:forEach>
