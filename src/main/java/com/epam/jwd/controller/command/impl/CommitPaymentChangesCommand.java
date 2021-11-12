@@ -39,24 +39,18 @@ public class CommitPaymentChangesCommand implements Command {
     }
 
     private CommandResponse updatePayment(PaymentDto paymentDto, HttpServletRequest request) throws ServiceException{
-        PaymentDto result = new PaymentDto(paymentDto.getId(),
-                paymentDto.getUserId(),
-                request.getParameter("destination"),
-                Long.valueOf(request.getParameter("price")),
-                false,
-                null,
-                request.getParameter("name"));
+
+        paymentDto.setDestinationAddress(request.getParameter("destination"));
+        paymentDto.setPrice(Long.valueOf(request.getParameter("price")));
+        paymentDto.setName(request.getParameter("name"));
         if (Objects.equals(request.getParameter("action"), SAVE_AND_GO_TO_CHECKOUT)){
-//            result.setCommitted(true);
-//            result.setTime(new Date());
-//            service.update(result);
+            service.update(paymentDto);
             request.setAttribute("payment", paymentDto);
             request.setAttribute("creditcards",
                     new CreditCardService().getByUserId(paymentDto.getUserId()));
             return new CommandResponse(request.getContextPath() + CHECKOUT_PAGE_URL, false);
-        } else if (!result.equals(paymentDto)){
-            service.update(result);
         }
+        service.update(paymentDto);
         return new CommandResponse(request.getContextPath() + USER_PAYMENTS_PAGE_URL, true);
     }
 }

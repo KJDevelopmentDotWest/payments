@@ -11,7 +11,11 @@ public class CreditCardOutputTag extends SimpleTagSupport {
     private static final String COLUMN_START_TAG = "<td>";
     private static final String COLUMN_END_TAG = "</td>";
     private static final String STRING_BLOCKED = "BLOCKED";
-    private static final String STRING_LINK_BLOCK_CREDIT_CARD = "block";
+    private static final String STRING_LINK_BLOCK_CREDIT_CARD = """
+            <form class="inline" method="post" action="/payments?command=edit_payment" >
+                <button class="btn btn-exsm btn-primary" type="submit">edit</button>
+                <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
+            </form>""";
     private static final String STRING_LINK_ADD_FOUNDS = "ADD";
 
     private CreditCardDto creditCardDto;

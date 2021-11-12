@@ -44,7 +44,6 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
     private static final String SQL_COUNT_CREDIT_CARDS = "SELECT COUNT(id) as credit_cards_number FROM credit_cards";
     private static final String SQL_COUNT_CREDIT_CARDS_WITH_USER_ID = "SELECT COUNT(id) as credit_cards_number FROM credit_cards WHERE user_id = ?";
 
-
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
 
     @Override
