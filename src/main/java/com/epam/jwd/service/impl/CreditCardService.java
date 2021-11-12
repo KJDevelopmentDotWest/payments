@@ -37,7 +37,13 @@ public class CreditCardService implements Service<CreditCardDto, Integer> {
     public CreditCardDto create(CreditCardDto value) throws ServiceException {
         logger.info("create method " + CreditCardService.class);
         validator.validate(value, false);
-        return converter.convert(dao.save(converter.convert(value)));
+
+        CreditCard checkCreditCard = ((CreditCardDao)dao).findByCreditCardNumber(value.getCardNumber());
+        ((CreditCardValidator)validator).validateCardNumberUnique(checkCreditCard);
+
+        CreditCard createdCreditCard = converter.convert(value);
+
+        return converter.convert(dao.save(createdCreditCard));
     }
 
     @Override

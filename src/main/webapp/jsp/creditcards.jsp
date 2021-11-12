@@ -43,6 +43,8 @@
             </div>
         </nav>
 
+        <a href="/jsp/addcreditcard.jsp" class="btn btn-primary">Add Credit Card</a>
+
         <table class="table">
             <thead>
                 <tr>

@@ -4,6 +4,7 @@ import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.dao.model.creditcard.CreditCard;
 import com.epam.jwd.service.dto.creditcarddto.CreditCardDto;
+import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.impl.CreditCardService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,8 +45,11 @@ public class CreditCardsCommand implements Command {
                     MAX_ITEMS_IN_PAGE,
                     (pageNumber -1) * MAX_ITEMS_IN_PAGE);
         } catch (ServiceException e) {
+            if (e.getErrorCode() == ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE){
+                logger.info("caught");
+            }
             logger.error(e.getErrorCode());
-            creditCards = null;
+            creditCards = new ArrayList<>();
         }
 
         request.setAttribute("creditcards", creditCards);
