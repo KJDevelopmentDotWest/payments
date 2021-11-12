@@ -21,10 +21,8 @@ class UserDaoTest {
     public void findAllTest(){
         Dao<User, java.lang.Integer> dao = new UserDao();
         User user = new User("login3", "password", null, true, Role.CUSTOMER);
-        System.out.println("++++++++++++++++++");
         System.out.println(dao.save(user));
         System.out.println(dao.findAll().toString());
-        System.out.println("++++++++++++++++++");
     }
 
 }

@@ -6,7 +6,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <meta charset="utf-8">
         <style><%@include file="/css/bootstrap.min.css"%></style>
-
         <style><%@include file="/css/signin.css"%></style>
     </head>
 
@@ -22,7 +21,7 @@
                     <input type="number" class="form-control" id="floatingInput" placeholder="Password" name="cardNumber">
                     <label for="floatingInput">credit card number</label>
                 </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Add credit card</button>
             </form>
         </main>
     </body>

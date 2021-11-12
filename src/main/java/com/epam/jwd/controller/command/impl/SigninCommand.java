@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 import java.util.Objects;
 
 public class SigninCommand implements Command {
@@ -45,7 +44,6 @@ public class SigninCommand implements Command {
     }
 
     private CommandResponse actionDataCorrect(HttpServletRequest request, UserDto userDto){
-
         HttpSession session = request.getSession();
         session.setAttribute("role", userDto.getRole());
         session.setAttribute("id", userDto.getId());

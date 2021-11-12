@@ -277,7 +277,6 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_CREDIT_CARD_BY_ID);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
         CreditCard creditCard;
         if (resultSet.next()){
             try {
