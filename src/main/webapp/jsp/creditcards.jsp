@@ -94,10 +94,10 @@
                         <a class="page-link" href="/payments?command=credit_cards&currentPage=1">First</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="/payments?command=credit_cards&currentPage=${requestScope.lastPage-1}">${requestScope.maxPage-1}</a>
+                        <a class="page-link" href="/payments?command=credit_cards&currentPage=${requestScope.lastPage-1}">${requestScope.lastPage-1}</a>
                     </li>
                     <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="/payments?command=credit_cards&currentPage=${requestScope.lastPage}">${requestScope.maxPage}</a>
+                        <a class="page-link" href="/payments?command=credit_cards&currentPage=${requestScope.lastPage}">${requestScope.lastPage}</a>
                     </li>
                     <li class="page-item disabled">
                         <a class="page-link">Last</a>

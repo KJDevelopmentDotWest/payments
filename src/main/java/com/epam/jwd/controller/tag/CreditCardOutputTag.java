@@ -11,11 +11,12 @@ public class CreditCardOutputTag extends SimpleTagSupport {
     private static final String COLUMN_START_TAG = "<td>";
     private static final String COLUMN_END_TAG = "</td>";
     private static final String STRING_BLOCKED = "BLOCKED";
-    private static final String STRING_LINK_BLOCK_CREDIT_CARD = """
-            <form class="inline" method="post" action="/payments?command=edit_payment" >
-                <button class="btn btn-exsm btn-primary" type="submit">edit</button>
-                <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
-            </form>""";
+    private static final String STRING_LINK_BLOCK_CREDIT_CARD_START = """
+            <form class="inline" method="post" action="/payments?command=block_credit_card" >
+                <button class="btn btn-exsm btn-primary" type="submit">block</button>
+                <input type="hidden" name="creditCardId" value=
+            """;
+    private static final String STRING_LINK_BLOCK_CREDIT_CARD_END = "></form>";
     private static final String STRING_LINK_ADD_FOUNDS = "ADD";
 
     private CreditCardDto creditCardDto;
@@ -51,7 +52,9 @@ public class CreditCardOutputTag extends SimpleTagSupport {
         if (creditCardDto.getBankAccount().getBlocked()){
             stringBuilder.append(STRING_BLOCKED);
         } else {
-            stringBuilder.append(STRING_LINK_BLOCK_CREDIT_CARD);
+            stringBuilder.append(STRING_LINK_BLOCK_CREDIT_CARD_START)
+                    .append(creditCardDto.getId())
+                    .append(STRING_LINK_BLOCK_CREDIT_CARD_END);
         }
         stringBuilder.append(COLUMN_END_TAG);
         stringBuilder.append(COLUMN_START_TAG)

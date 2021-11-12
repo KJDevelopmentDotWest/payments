@@ -12,7 +12,7 @@
     <body>
         <main class="form-signin" align="center">
             <form action="/payments?command=add_credit_card" method="post" autocomplete="off">
-                <h1 class="h3 mb-3">Please edit your payment</h1>
+                <h1 class="h3 mb-3">Please add credit card</h1>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">
                     <label for="floatingInput">name</label>
