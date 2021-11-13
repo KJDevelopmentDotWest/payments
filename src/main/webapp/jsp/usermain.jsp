@@ -49,8 +49,7 @@
         <%= session.getAttribute("role") %>
         <c:set var="user" scope="page" value="${UserService().getById(sessionScope.id)}"/>
         <c:if test="${user.accountId == null}">
-           <p>My income is: <c:out value="${id}"/><p>
-           <p>User: <c:out value="${user}"/><p>
+          <h1></h1>
         </c:if>
 
     </body>

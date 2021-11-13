@@ -16,8 +16,13 @@ public class CreditCardOutputTag extends SimpleTagSupport {
                 <button class="btn btn-exsm btn-primary" type="submit">block</button>
                 <input type="hidden" name="creditCardId" value=
             """;
-    private static final String STRING_LINK_BLOCK_CREDIT_CARD_END = "></form>";
-    private static final String STRING_LINK_ADD_FOUNDS = "ADD";
+    private static final String STRING_LINK_ADD_FOUNDS_START = """
+            <form class="inline" method="post" action="/payments?command=add_funds" >
+                <input type="number" name="funds">
+                <button class="btn btn-exsm btn-primary" type="submit">add</button>
+                <input type="hidden" name="creditCardId" value=
+            """;
+    private static final String STRING_FORM_TAG_END = "></form>";
 
     private CreditCardDto creditCardDto;
 
@@ -50,16 +55,22 @@ public class CreditCardOutputTag extends SimpleTagSupport {
                 .append(COLUMN_END_TAG);
         stringBuilder.append(COLUMN_START_TAG);
         if (creditCardDto.getBankAccount().getBlocked()){
-            stringBuilder.append(STRING_BLOCKED);
+            stringBuilder.append(STRING_BLOCKED)
+                    .append(COLUMN_END_TAG)
+                    .append(COLUMN_START_TAG)
+                    .append(COLUMN_END_TAG);
         } else {
             stringBuilder.append(STRING_LINK_BLOCK_CREDIT_CARD_START)
                     .append(creditCardDto.getId())
-                    .append(STRING_LINK_BLOCK_CREDIT_CARD_END);
+                    .append(STRING_FORM_TAG_END)
+                    .append(COLUMN_END_TAG);
+            stringBuilder.append(COLUMN_START_TAG)
+                    .append(STRING_LINK_ADD_FOUNDS_START)
+                    .append(creditCardDto.getId())
+                    .append(STRING_FORM_TAG_END)
+                    .append(COLUMN_END_TAG);
         }
-        stringBuilder.append(COLUMN_END_TAG);
-        stringBuilder.append(COLUMN_START_TAG)
-                .append(STRING_LINK_ADD_FOUNDS)
-                .append(COLUMN_END_TAG);
+
         return stringBuilder.toString();
     }
 }

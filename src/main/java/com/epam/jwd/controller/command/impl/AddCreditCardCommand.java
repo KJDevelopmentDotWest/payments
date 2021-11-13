@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class AddCreditCardCommand implements Command {
@@ -26,18 +27,19 @@ public class AddCreditCardCommand implements Command {
 
         HttpSession session = request.getSession();
 
+        Date date = new Date();
+        date.setYear(date.getYear()+3);
+
         CreditCardDto creditCard = new CreditCardDto(
                 new BankAccountDto(
                         0L,
                         false
                 ),
                 request.getParameter("name"),
-                new Date(),
+                date,
                 (Integer) session.getAttribute("id"),
                 Long.valueOf(request.getParameter("cardNumber"))
         );
-
-        //todo card number must be unique
 
         CreditCardService service = new CreditCardService();
         try {

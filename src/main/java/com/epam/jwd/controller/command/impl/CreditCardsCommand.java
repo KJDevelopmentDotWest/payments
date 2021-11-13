@@ -32,7 +32,7 @@ public class CreditCardsCommand implements Command {
 
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute("id");
-        Integer pageNumber = Integer.valueOf(request.getParameter("currentPage"));
+        Integer pageNumber = Integer.valueOf(!Objects.isNull(request.getParameter("currentPage")) ? request.getParameter("currentPage") : "1");
         Integer lastPage = getLastPage(request, userId);
         List<CreditCardDto> creditCards;
 

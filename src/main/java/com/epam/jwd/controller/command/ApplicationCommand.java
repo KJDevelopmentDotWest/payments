@@ -19,6 +19,7 @@ public enum ApplicationCommand {
     COMMIT_PAYMENT_CHANGES(new CommitPaymentChangesCommand()),
     ADD_CREDIT_CARD(new AddCreditCardCommand()),
     BLOCK_CREDIT_CARD(new BlockCreditCardCommand()),
+    ADD_FUNDS(new AddFundsCommand()),
     CHECKOUT_PAYMENT(new CheckoutPaymentCommand()),
     DEFAULT(defaultCommandImpl());
 
