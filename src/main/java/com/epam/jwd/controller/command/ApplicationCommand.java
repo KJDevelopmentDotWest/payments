@@ -1,12 +1,8 @@
 package com.epam.jwd.controller.command;
 
 import com.epam.jwd.controller.command.api.Command;
-import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.controller.command.impl.*;
-import com.epam.jwd.controller.command.impl.showpage.ShowAccountCommand;
-import com.epam.jwd.controller.command.impl.showpage.ShowCreditCardsCommand;
-import com.epam.jwd.controller.command.impl.showpage.ShowPaymentsCommand;
-import com.epam.jwd.controller.command.impl.showpage.ShowSigninPage;
+import com.epam.jwd.controller.command.impl.showpage.*;
 import com.epam.jwd.dao.model.user.Role;
 
 import java.util.Arrays;
@@ -16,12 +12,17 @@ public enum ApplicationCommand {
 
     SHOW_SIGNIN(new ShowSigninPage()),
     SHOW_ACCOUNT(new ShowAccountCommand()),
+    SHOW_CREDIT_CARDS(new ShowCreditCardsCommand(), Role.CUSTOMER),
+    SHOW_PAYMENTS(new ShowPaymentsCommand(), Role.CUSTOMER),
+    SHOW_ADD_CREDIT_CARD(new ShowAddCreditCardCommand()),
+    SHOW_CREATE_PAYMENT(new ShowCreatePaymentCommand()),
+    SHOW_CHECKOUT(new ShowCheckoutCommand()),
+    SHOW_ERROR(new ShowErrorPageCommand()),
+    SHOW_EDIT_PAYMENT(new ShowEditPaymentCommand()),
+
     SIGNIN(new SigninCommand()),
     SIGNOUT(new SignoutCommand()),
-    SHOW_PAYMENTS(new ShowPaymentsCommand(), Role.CUSTOMER),
-    SHOW_CREDIT_CARDS(new ShowCreditCardsCommand(), Role.CUSTOMER),
     COMMIT_PAYMENT_CREATION(new CommitPaymentCreationCommand()),
-    EDIT_PAYMENT(new EditPaymentCommand()),
     COMMIT_PAYMENT_CHANGES(new CommitPaymentChangesCommand()),
     ADD_CREDIT_CARD(new AddCreditCardCommand()),
     BLOCK_CREDIT_CARD(new BlockCreditCardCommand()),
@@ -32,7 +33,7 @@ public enum ApplicationCommand {
     private final Command command;
     private final List<Role> allowedRoles;
 
-    private static final String ERROR_PAGE_URL = "/jsp/errorpage.jsp";
+    private static final String SHOW_ERROR_PAGE_URL = "/payments?command=show_error";
 
     ApplicationCommand(Command command, Role... roles){
         this.command = command;
@@ -56,7 +57,6 @@ public enum ApplicationCommand {
     }
 
     private static Command defaultCommandImpl(){
-        return (request, response) ->
-                new CommandResponse(request.getContextPath() + ERROR_PAGE_URL, true);
+        return SHOW_ERROR.getCommand();
     }
 }

@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.Objects;
 
-@WebFilter("/*")
+//@WebFilter("/*")
 public class LoginFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger(LoginFilter.class);
@@ -25,7 +25,7 @@ public class LoginFilter implements Filter {
 
         if (Objects.isNull(session.getAttribute("id"))
                 && !Objects.isNull(request.getParameter("command"))
-                && !request.getParameter("command").equals("signin")) {
+                && !request.getParameter("command").equals("show_signin")) {
             String url = ((HttpServletRequest) request).getContextPath() + SIGNIN_PAGE_URL;
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);
             dispatcher.forward(request, response);

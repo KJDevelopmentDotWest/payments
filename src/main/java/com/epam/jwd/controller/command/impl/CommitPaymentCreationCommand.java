@@ -18,7 +18,7 @@ public class CommitPaymentCreationCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(CommitPaymentCreationCommand.class);
 
-    private static final String USER_PAYMENTS_PAGE_URL = "/payments?command=payments&currentPage=1";
+    private static final String USER_PAYMENTS_PAGE_URL = "/payments?command=show_payments&currentPage=1";
     private static final String SAVE_ACTION = "save";
     private static final String SAVE_AND_PAY_ACTION = "saveAndPay";
 

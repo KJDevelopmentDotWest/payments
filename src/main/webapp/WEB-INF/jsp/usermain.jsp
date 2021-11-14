@@ -26,10 +26,10 @@
                   <a class="nav-link">Account</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/payments?command=credit_cards&currentPage=1">Credit Cards</a>
+                  <a class="nav-link" href="/payments?command=show_credit_cards&currentPage=1">Credit Cards</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/payments?command=payments&currentPage=1">Payments</a>
+                  <a class="nav-link" href="/payments?command=show_payments&currentPage=1">Payments</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/payments?command=signout">Log Out</a>

@@ -11,15 +11,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class CommitPaymentChangesCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger(EditPaymentCommand.class);
+    private static final Logger logger = LogManager.getLogger(CommitPaymentChangesCommand.class);
 
-    private static final String USER_PAYMENTS_PAGE_URL = "/payments?command=payments&currentPage=1";
-    private static final String CHECKOUT_PAGE_URL = "/jsp/paymentcheckout.jsp";
+    private static final String USER_PAYMENTS_PAGE_URL = "/payments?command=show_payments&currentPage=1";
+    private static final String SHOW_CHECKOUT_PAGE_URL = "/payments?command=show_checkout";
     private static final String SAVE_ACTION = "save";
     private static final String SAVE_AND_GO_TO_CHECKOUT = "saveAndCheckout";
 
@@ -28,6 +27,8 @@ public class CommitPaymentChangesCommand implements Command {
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
+        logger.info(CommitPaymentChangesCommand.class);
+        System.out.println(CommitPaymentChangesCommand.class);
         Integer paymentId = Integer.valueOf(request.getParameter("paymentId"));
         try {
             PaymentDto payment = service.getById(paymentId);
@@ -48,7 +49,7 @@ public class CommitPaymentChangesCommand implements Command {
             request.setAttribute("payment", paymentDto);
             request.setAttribute("creditcards",
                     new CreditCardService().getByUserId(paymentDto.getUserId()));
-            return new CommandResponse(request.getContextPath() + CHECKOUT_PAGE_URL, false);
+            return new CommandResponse(request.getContextPath() + SHOW_CHECKOUT_PAGE_URL, false);
         }
         service.update(paymentDto);
         return new CommandResponse(request.getContextPath() + USER_PAYMENTS_PAGE_URL, true);

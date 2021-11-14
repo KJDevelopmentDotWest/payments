@@ -1,4 +1,4 @@
-package com.epam.jwd.controller.command.impl;
+package com.epam.jwd.controller.command.impl.showpage;
 
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
@@ -10,11 +10,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class EditPaymentCommand implements Command {
+public class ShowEditPaymentCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger(EditPaymentCommand.class);
+    private static final Logger logger = LogManager.getLogger(ShowEditPaymentCommand.class);
 
-    private static final String EDIT_PAYMENT_PAGE_URL = "/jsp/editpayment.jsp";
+    private static final String EDIT_PAYMENT_PAGE_URL = "/WEB-INF/jsp/editpayment.jsp";
 
     PaymentService service = new PaymentService();
 

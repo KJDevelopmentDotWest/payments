@@ -2,6 +2,7 @@ package com.epam.jwd.controller.command.impl;
 
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
+import com.epam.jwd.controller.command.impl.showpage.ShowEditPaymentCommand;
 import com.epam.jwd.service.dto.creditcarddto.CreditCardDto;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.impl.CreditCardService;
@@ -11,7 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class BlockCreditCardCommand implements Command {
-    private static final Logger logger = LogManager.getLogger(EditPaymentCommand.class);
+    private static final Logger logger = LogManager.getLogger(ShowEditPaymentCommand.class);
 
     private static final String USER_PAYMENTS_PAGE_URL = "/payments?command=credit_cards&currentPage=1";
 

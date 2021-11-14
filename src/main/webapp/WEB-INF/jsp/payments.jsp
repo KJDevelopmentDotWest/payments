@@ -19,10 +19,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="/jsp/usermain.jsp">Account</a>
+                            <a class="nav-link" href="/payments?command=show_account">Account</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/payments?command=credit_cards&currentPage=1">Credit Cards</a>
+                            <a class="nav-link" href="/payments?command=show_credit_cards&currentPage=1">Credit Cards</a>
                         </li>
                         <li class="nav-item disabled">
                             <a class="nav-link">Payments</a>
@@ -43,7 +43,7 @@
             </div>
         </nav>
 
-        <a href="/jsp/createpayment.jsp" class="btn btn-primary">Create Payment</a>
+        <a href="/payments?command=show_create_payment" class="btn btn-primary">Create Payment</a>
 
         <table class="table">
             <thead>
@@ -72,7 +72,7 @@
                                 <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
                                 <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
                                 <td>
-                                    <form class="inline" method="post" action="/payments?command=edit_payment" >
+                                    <form class="inline" method="post" action="/payments?command=show_edit_payment" >
                                         <button class="btn btn-exsm btn-primary" type="submit">edit</button>
                                         <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
                                     </form>
@@ -94,10 +94,10 @@
                         <a class="page-link">1</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="/payments?command=payments&currentPage=2">2</a>
+                        <a class="page-link" href="/payments?command=show_payments&currentPage=2">2</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.lastPage}">Last</a>
+                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}">Last</a>
                     </li>
                 </ul>
             </nav>
@@ -107,13 +107,13 @@
             <nav>
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
-                        <a class="page-link" href="/payments?command=payments&currentPage=1">First</a>
+                        <a class="page-link" href="/payments?command=show_payments&currentPage=1">First</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.lastPage-1}">${requestScope.lastPage-1}</a>
+                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage-1}">${requestScope.lastPage-1}</a>
                     </li>
                     <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.lastPage}">${requestScope.lastPage}</a>
+                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}">${requestScope.lastPage}</a>
                     </li>
                     <li class="page-item disabled">
                         <a class="page-link">Last</a>
@@ -142,19 +142,19 @@
             <nav>
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
-                        <a class="page-link" href="/payments?command=payments&currentPage=1">First</a>
+                        <a class="page-link" href="/payments?command=show_payments&currentPage=1">First</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.currentPage-1}">${requestScope.currentPage-1}</a>
+                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage-1}">${requestScope.currentPage-1}</a>
                     </li>
                     <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.currentPage}">${requestScope.currentPage}</a>
+                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage}">${requestScope.currentPage}</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
+                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="/payments?command=payments&currentPage=${requestScope.lastPage}">Last</a>
+                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}">Last</a>
                     </li>
                 </ul>
             </nav>
