@@ -17,6 +17,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.Optional;
 
 public class ImageOutputTag extends SimpleTagSupport {
 
@@ -25,6 +26,9 @@ public class ImageOutputTag extends SimpleTagSupport {
     private Integer pictureId;
     private Integer width;
     private Integer height;
+
+    private static final Integer DEFAULT_WIDTH = 300;
+    private static final Integer DEFAULT_HEIGHT = 300;
 
     private final ProfilePictureService service = new ProfilePictureService();
 
@@ -62,7 +66,11 @@ public class ImageOutputTag extends SimpleTagSupport {
         JspWriter out = getJspContext().getOut();
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<img src=\"data:image/jpeg;base64,")
+        stringBuilder.append("<img width=\"")
+                .append(Optional.ofNullable(width).orElse(DEFAULT_WIDTH))
+                .append("\" height=\"")
+                .append(Optional.ofNullable(width).orElse(DEFAULT_HEIGHT))
+                .append("\" src=\"data:image/jpeg;base64,")
                 .append(encodeFileToBase64(file))
                 .append("\">");
 

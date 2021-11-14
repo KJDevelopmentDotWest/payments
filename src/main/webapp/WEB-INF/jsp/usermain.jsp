@@ -54,11 +54,9 @@
                 <h1> ${account.getSurname()} </h1>
                 <picture>
 
-                    <m:image pictureId="${account.getProfilePictureId()}"/>
+                    <m:image width="300" height="300" pictureId="${account.getProfilePictureId()}"/>
                 </picture>
             </c:if>
         </div>
-        <%= java.util.Calendar.getInstance().getTime() %>
-
     </body>
 </html>

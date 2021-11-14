@@ -26,7 +26,7 @@
                     <label for="floatingPassword">destination</label>
                 </div>
                 <div class="btn-group" role="group">
-                  <button type="submit" class="btn btn-primary" name="action" value="saveAndPay">Save payment and send transaction</button>
+                  <button type="submit" class="btn btn-primary" name="action" value="saveAndCheckout">Save payment and proceed to checkout</button>
                   <button type="submit" class="btn btn-primary" name="action" value="save">Save payment</button>
                 </div>
             </form>

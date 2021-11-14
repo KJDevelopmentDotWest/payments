@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 public class BlockCreditCardCommand implements Command {
     private static final Logger logger = LogManager.getLogger(ShowEditPaymentCommand.class);
 
-    private static final String USER_PAYMENTS_PAGE_URL = "/payments?command=credit_cards&currentPage=1";
+    private static final String SHOW_CREDIT_CARDS_PAGE_URL = "/payments?command=show_credit_cards&currentPage=1";
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
@@ -30,6 +30,6 @@ public class BlockCreditCardCommand implements Command {
             logger.error(e.getErrorCode());
         }
 
-        return new CommandResponse(request.getContextPath() + USER_PAYMENTS_PAGE_URL, true);
+        return new CommandResponse(request.getContextPath() + SHOW_CREDIT_CARDS_PAGE_URL, true);
     }
 }
