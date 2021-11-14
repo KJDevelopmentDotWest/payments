@@ -6,3 +6,7 @@
     padding:.10rem .5rem;font-size:.675rem;
     border-radius:.1rem
 }
+
+.account-content{
+    margin:0 300px 0 300px;//top right bottom left
+}

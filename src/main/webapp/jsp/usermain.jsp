@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ page import="com.epam.jwd.service.impl.UserService" %>
+<%@ page import="com.epam.jwd.service.impl.AccountService" %>
 <%@ page import="com.epam.jwd.service.dto.paymentdto.PaymentDto" %>
 
 <html>
@@ -11,7 +12,7 @@
         <meta charset="utf-8">
         <style><%@include file="/css/bootstrap.min.css"%></style>
         <style><%@include file="/css/navbar.css"%></style>
-
+        <style><%@include file="/css/core.css"%></style>
 
       </head>
 
@@ -44,13 +45,15 @@
             </div>
           </div>
         </nav>
+        <div class="account-content">
+            <c:set var="user" scope="page" value="${UserService().getById(sessionScope.id)}"/>
+            <c:if test="${user.accountId != null}">
+                <c:set var="account" scope="page" value="${AccountService().getById(user.getAccountId())}"/>
+                <h1> ${account.getName()} </h1>
+                <h1> ${account.getSurname()} </h1>
+            </c:if>
+        </div>
         <%= java.util.Calendar.getInstance().getTime() %>
-        <%= session.getAttribute("id") %>
-        <%= session.getAttribute("role") %>
-        <c:set var="user" scope="page" value="${UserService().getById(sessionScope.id)}"/>
-        <c:if test="${user.accountId == null}">
-          <h1></h1>
-        </c:if>
 
     </body>
 </html>
