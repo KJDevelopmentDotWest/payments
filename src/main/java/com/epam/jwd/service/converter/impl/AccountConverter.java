@@ -11,7 +11,7 @@ public class AccountConverter implements Converter<Account, AccountDto, Integer>
         return new Account(accountDTO.getId(),
                 accountDTO.getName(),
                 accountDTO.getSurname(),
-                accountDTO.getProfilePictureIId());
+                accountDTO.getProfilePictureId());
     }
 
     @Override

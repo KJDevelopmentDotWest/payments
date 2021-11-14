@@ -13,7 +13,7 @@ import java.util.Collections;
 
 public class SignoutCommand implements Command {
 
-    private static final String SIGNIN_PAGE_URL = "/jsp/signin.jsp";
+    private static final String SIGNIN_PAGE_URL = "/payments?command=show_signin";
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {

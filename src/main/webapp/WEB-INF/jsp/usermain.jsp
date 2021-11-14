@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib uri = "tags" prefix = "m" %>
 <%@ page import="com.epam.jwd.service.impl.UserService" %>
 <%@ page import="com.epam.jwd.service.impl.AccountService" %>
 <%@ page import="com.epam.jwd.service.dto.paymentdto.PaymentDto" %>
@@ -10,9 +11,9 @@
         <title>Account</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <meta charset="utf-8">
-        <style><%@include file="/css/bootstrap.min.css"%></style>
-        <style><%@include file="/css/navbar.css"%></style>
-        <style><%@include file="/css/core.css"%></style>
+        <style><%@include file="/WEB-INF/css/bootstrap.min.css"%></style>
+        <style><%@include file="/WEB-INF/css/navbar.css"%></style>
+        <style><%@include file="/WEB-INF/css/core.css"%></style>
 
       </head>
 
@@ -51,6 +52,10 @@
                 <c:set var="account" scope="page" value="${AccountService().getById(user.getAccountId())}"/>
                 <h1> ${account.getName()} </h1>
                 <h1> ${account.getSurname()} </h1>
+                <picture>
+
+                    <m:image pictureId="${account.getProfilePictureId()}"/>
+                </picture>
             </c:if>
         </div>
         <%= java.util.Calendar.getInstance().getTime() %>

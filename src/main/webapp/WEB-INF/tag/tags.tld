@@ -28,4 +28,14 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+
+    <tag>
+        <name>image</name>
+        <tag-class>com.epam.jwd.controller.tag.ImageOutputTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>pictureId</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 </taglib>
