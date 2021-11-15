@@ -60,7 +60,7 @@
             </c:if>
             <c:if test="${user.accountId == null}">
                 <h3>
-                    You have no account yet. You can  <a href="/payments?command=signout">create it now </a> or later
+                    You have no account yet. You can  <a href="/payments?command=show_create_account">create it now </a> or later
                 </h3>
             </c:if>
         </div>

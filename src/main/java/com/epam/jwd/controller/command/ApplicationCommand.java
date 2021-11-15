@@ -16,6 +16,7 @@ public enum ApplicationCommand {
     SHOW_PAYMENTS(new ShowPaymentsCommand(), Role.CUSTOMER),
     SHOW_ADD_CREDIT_CARD(new ShowAddCreditCardCommand()),
     SHOW_CREATE_PAYMENT(new ShowCreatePaymentCommand()),
+    SHOW_CREATE_ACCOUNT(new ShowCreateAccountCommand()),
     SHOW_CHECKOUT(new ShowCheckoutCommand()),
     SHOW_ERROR(new ShowErrorPageCommand()),
     SHOW_EDIT_PAYMENT(new ShowEditPaymentCommand()),
