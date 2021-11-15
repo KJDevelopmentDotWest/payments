@@ -19,7 +19,7 @@
                     <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
                     <label for="floatingPassword">Password</label>
                 </div>
-
+                New to Payments? <a href="/payments?command=show_create_user">Sign up</a>
                 <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
             </form>
         </main>

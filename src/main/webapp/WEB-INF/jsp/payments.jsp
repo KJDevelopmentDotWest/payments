@@ -162,7 +162,7 @@
                 </nav>
             </c:if>
         </c:if>
-        <c:if test="${requestScope.creditcards.size() == 0}">
+        <c:if test="${requestScope.payments.size() == 0 || requestScope.payments == null}">
             <h3>You have no payments yet</h3>
         </c:if>
     </body>
