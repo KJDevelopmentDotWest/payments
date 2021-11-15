@@ -48,7 +48,7 @@ public class CommitPaymentCreationCommand implements Command {
                 request.setAttribute("creditcards",
                         new CreditCardService().getByUserId(createdPayment.getUserId()));
             } catch (ServiceException e) {
-                e.printStackTrace();
+                logger.error(e.getErrorCode());
             }
 
             return new CommandResponse(request.getContextPath() + SHOW_CHECKOUT_PAGE_URL, false);

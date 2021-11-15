@@ -58,6 +58,11 @@
                 <h1> ${account.getSurname()} </h1>
                 <m:image width="300" height="300" pictureId="${account.getProfilePictureId()}"/>
             </c:if>
+            <c:if test="${user.accountId == null}">
+                <h3>
+                    You have no account yet. You can  <a href="/payments?command=signout">create it now </a> or later
+                </h3>
+            </c:if>
         </div>
     </body>
 </html>
