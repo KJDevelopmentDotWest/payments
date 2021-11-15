@@ -15,7 +15,7 @@
 
     <body>
         <main class="account-edit" align="center">
-            <form action="/payments?command=commit_account_changes" method="post" autocomplete="off">
+            <form action="/payments?command=commit_account_creation" method="post" autocomplete="off">
                 <h1 class="h3 mb-3">Please edit your account</h1>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">

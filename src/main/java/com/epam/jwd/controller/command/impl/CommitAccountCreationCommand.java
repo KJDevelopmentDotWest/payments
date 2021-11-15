@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class CommitAccountCreation implements Command {
+public class CommitAccountCreationCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(ShowEditPaymentCommand.class);
 
