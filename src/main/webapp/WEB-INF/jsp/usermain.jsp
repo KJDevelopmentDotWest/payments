@@ -50,12 +50,13 @@
             <c:set var="user" scope="page" value="${UserService().getById(sessionScope.id)}"/>
             <c:if test="${user.accountId != null}">
                 <c:set var="account" scope="page" value="${AccountService().getById(user.getAccountId())}"/>
-                <h1> ${account.getName()} </h1>
-                <h1> ${account.getSurname()} </h1>
-                <picture>
+                <h1>
+                    ${account.getName()}
+                    <a href="/payments?command=show_edit_account">link</a>
 
-                    <m:image width="300" height="300" pictureId="${account.getProfilePictureId()}"/>
-                </picture>
+                </h1>
+                <h1> ${account.getSurname()} </h1>
+                <m:image width="300" height="300" pictureId="${account.getProfilePictureId()}"/>
             </c:if>
         </div>
     </body>

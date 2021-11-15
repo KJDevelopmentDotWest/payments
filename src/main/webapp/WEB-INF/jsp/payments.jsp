@@ -45,119 +45,125 @@
 
         <a href="/payments?command=show_create_payment" class="btn btn-primary">Create Payment</a>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Destination</th>
-                    <th scope="col">Transaction Time</th>
-                    <th scope="col">Committed</th>
-                    <th scope="col">Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="i" begin="0" end="${requestScope.payments.size()-1}">
-                    <c:choose>
-                        <c:when test="${requestScope.payments.get(i).getCommitted()}">
-                            <tr>
-                                <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
-                                <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
-                                <td></td>
-                            </tr>
-                        </c:when>
-                        <c:otherwise>
-                            <tr>
-                                <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
-                                <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
-                                <td>
-                                    <form class="inline" method="post" action="/payments?command=show_edit_payment" >
-                                        <button class="btn btn-exsm btn-primary" type="submit">edit</button>
-                                        <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
-                                    </form>
-                                </td>
-                            </tr>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </tbody>
-        </table>
+        <c:if test="${requestScope.payments.size() > 0}">
 
-        <c:if test="${requestScope.currentPage == 1 && requestScope.lastPage != 1}">
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link">First</a>
-                    </li>
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="/payments?command=show_payments&currentPage=2">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}">Last</a>
-                    </li>
-                </ul>
-            </nav>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Destination</th>
+                        <th scope="col">Transaction Time</th>
+                        <th scope="col">Committed</th>
+                        <th scope="col">Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="i" begin="0" end="${requestScope.payments.size()-1}">
+                        <c:choose>
+                            <c:when test="${requestScope.payments.get(i).getCommitted()}">
+                                <tr>
+                                    <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
+                                    <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
+                                    <td></td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <tr>
+                                    <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
+                                    <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
+                                    <td>
+                                        <form class="inline" method="post" action="/payments?command=show_edit_payment" >
+                                            <button class="btn btn-exsm btn-primary" type="submit">edit</button>
+                                            <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
+                                        </form>
+                                    </td>
+                                </tr>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </tbody>
+            </table>
+
+            <c:if test="${requestScope.currentPage == 1 && requestScope.lastPage != 1}">
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link">First</a>
+                        </li>
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="/payments?command=show_payments&currentPage=2">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </c:if>
+
+            <c:if test="${requestScope.currentPage == requestScope.lastPage && requestScope.lastPage != 1}">
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="/payments?command=show_payments&currentPage=1">First</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage-1}">${requestScope.lastPage-1}</a>
+                        </li>
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}">${requestScope.lastPage}</a>
+                        </li>
+                        <li class="page-item disabled">
+                            <a class="page-link">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </c:if>
+
+            <c:if test="${requestScope.lastPage == 1}">
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link">First</a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link">1</a>
+                        </li>
+                        <li class="page-item disabled">
+                            <a class="page-link">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </c:if>
+
+            <c:if test="${requestScope.currentPage > 1 && requestScope.currentPage < requestScope.lastPage}">
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="/payments?command=show_payments&currentPage=1">First</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage-1}">${requestScope.currentPage-1}</a>
+                        </li>
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage}">${requestScope.currentPage}</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </c:if>
         </c:if>
-
-        <c:if test="${requestScope.currentPage == requestScope.lastPage && requestScope.lastPage != 1}">
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="/payments?command=show_payments&currentPage=1">First</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage-1}">${requestScope.lastPage-1}</a>
-                    </li>
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}">${requestScope.lastPage}</a>
-                    </li>
-                    <li class="page-item disabled">
-                        <a class="page-link">Last</a>
-                    </li>
-                </ul>
-            </nav>
-        </c:if>
-
-        <c:if test="${requestScope.lastPage == 1}">
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link">First</a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link">1</a>
-                    </li>
-                    <li class="page-item disabled">
-                        <a class="page-link">Last</a>
-                    </li>
-                </ul>
-            </nav>
-        </c:if>
-
-        <c:if test="${requestScope.currentPage > 1 && requestScope.currentPage < requestScope.lastPage}">
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="/payments?command=show_payments&currentPage=1">First</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage-1}">${requestScope.currentPage-1}</a>
-                    </li>
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage}">${requestScope.currentPage}</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}">Last</a>
-                    </li>
-                </ul>
-            </nav>
+        <c:if test="${requestScope.creditcards.size() == 0}">
+            <h3>You have no payments yet</h3>
         </c:if>
     </body>
 </html>

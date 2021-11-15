@@ -19,11 +19,13 @@ public enum ApplicationCommand {
     SHOW_CHECKOUT(new ShowCheckoutCommand()),
     SHOW_ERROR(new ShowErrorPageCommand()),
     SHOW_EDIT_PAYMENT(new ShowEditPaymentCommand()),
+    SHOW_EDIT_ACCOUNT(new ShowEditAccountCommand()),
 
     SIGNIN(new SigninCommand()),
     SIGNOUT(new SignoutCommand()),
     COMMIT_PAYMENT_CREATION(new CommitPaymentCreationCommand()),
     COMMIT_PAYMENT_CHANGES(new CommitPaymentChangesCommand()),
+    COMMIT_ACCOUNT_CHANGES(new CommitAccountChangesCommand()),
     ADD_CREDIT_CARD(new AddCreditCardCommand()),
     BLOCK_CREDIT_CARD(new BlockCreditCardCommand()),
     ADD_FUNDS(new AddFundsCommand()),
