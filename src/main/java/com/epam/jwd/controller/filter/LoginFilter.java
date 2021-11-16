@@ -1,9 +1,14 @@
 package com.epam.jwd.controller.filter;
 
-import jakarta.servlet.*;
+
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +30,11 @@ public class LoginFilter implements Filter {
 
         if (Objects.isNull(session.getAttribute("id"))
                 && !Objects.isNull(request.getParameter("command"))
-                && !request.getParameter("command").equals("show_signin")) {
+                && (request.getParameter("command").equals("show_signin")
+                    || request.getParameter("command").equals("signin")
+                    || request.getParameter("command").equals("show_create_user")
+                    || request.getParameter("command").equals("commit_user_creation")
+                    || request.getParameter("command").equals("signout"))) {
             String url = ((HttpServletRequest) request).getContextPath() + SIGNIN_PAGE_URL;
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);
             dispatcher.forward(request, response);
