@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,8 +43,8 @@ public class ShowPaymentsCommand implements Command {
                     MAX_ITEMS_IN_PAGE,
                     (pageNumber -1) * MAX_ITEMS_IN_PAGE);
         } catch (ServiceException e) {
-            logger.error(e);
-            payments = null;
+            logger.error(e.getErrorCode());
+            payments = new ArrayList<>();
         }
 
         request.setAttribute("payments", payments);
@@ -60,7 +61,7 @@ public class ShowPaymentsCommand implements Command {
                 paymentsAmount = service.getAmountWithUserId(userId);
             } catch (ServiceException e) {
                 paymentsAmount = 0;
-                logger.error(e);
+                logger.error(e.getErrorCode());
             }
             if (Double.compare(paymentsAmount / MAX_ITEMS_IN_PAGE.doubleValue(), paymentsAmount / MAX_ITEMS_IN_PAGE) == 0){
                 maxPage = paymentsAmount / MAX_ITEMS_IN_PAGE;
