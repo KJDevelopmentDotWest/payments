@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public class ShowCreditCardsCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger(ShowPaymentsCommand.class);
+    private static final Logger logger = LogManager.getLogger(ShowCreditCardsCommand.class);
 
     private static final String USER_CREDIT_CARDS_PAGE_URL = "/WEB-INF/jsp/creditcards.jsp";
     private static final Integer MAX_ITEMS_IN_PAGE = 5;
@@ -44,9 +44,6 @@ public class ShowCreditCardsCommand implements Command {
                     MAX_ITEMS_IN_PAGE,
                     (pageNumber -1) * MAX_ITEMS_IN_PAGE);
         } catch (ServiceException e) {
-            if (e.getErrorCode() == ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE){
-                logger.info("caught");
-            }
             logger.error(e.getErrorCode());
             creditCards = new ArrayList<>();
         }

@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 public class CommitUserCreationCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger(CommitPaymentChangesCommand.class);
+    private static final Logger logger = LogManager.getLogger(CommitUserCreationCommand.class);
 
     private static final String SHOW_SIGNIN_PAGE_URL = "/payments?command=show_signin";
 
@@ -21,6 +21,8 @@ public class CommitUserCreationCommand implements Command {
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
+
+        logger.info("command " + CommitUserCreationCommand.class);
 
         String login = request.getParameter("login");
         String password = request.getParameter("password");

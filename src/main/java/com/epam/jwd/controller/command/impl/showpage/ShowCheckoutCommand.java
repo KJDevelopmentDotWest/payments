@@ -15,7 +15,7 @@ public class ShowCheckoutCommand implements Command {
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
-        logger.info(ShowCheckoutCommand.class);
+        logger.info("command " + ShowCheckoutCommand.class);
         return new CommandResponse(request.getContextPath() + CHECKOUT_PAGE_URL, false);
     }
 }

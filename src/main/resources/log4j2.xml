@@ -8,7 +8,7 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${pattern_console}"/>
         </Console>
-        <RollingFile name="DebugRollingFile1" filename="logs/log.log"  filePattern="logs/log-%d{yyyy-MM-dd-hh-mm-ss}.log">
+        <RollingFile name="DebugRollingFile" filename="logs/log.log"  filePattern="logs/log-%d{yyyy-MM-dd-hh-mm-ss}.log">
             <PatternLayout pattern="${pattern_file}"/>
             <Policies>
                 <OnStartupTriggeringPolicy />
@@ -18,7 +18,7 @@
 
     <Loggers>
         <Root level="debug" >
-            <AppenderRef ref="DebugRollingFile1" />
+            <AppenderRef ref="DebugRollingFile" />
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>

@@ -27,7 +27,7 @@ public class CheckoutPaymentCommand implements Command {
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
-        logger.info(CheckoutPaymentCommand.class);
+        logger.info("command " + CheckoutPaymentCommand.class);
 
         Integer paymentId = Integer.valueOf( request.getParameter("paymentId"));
         Integer creditCardId = Integer.valueOf( request.getParameter("creditCardId"));

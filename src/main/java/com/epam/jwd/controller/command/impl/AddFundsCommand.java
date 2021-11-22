@@ -19,7 +19,7 @@ public class AddFundsCommand implements Command {
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
 
-        logger.info(AddFundsCommand.class);
+        logger.info("command " + AddFundsCommand.class);
 
         Integer creditCardId = Integer.valueOf( request.getParameter("creditCardId"));
         Integer funds = Integer.valueOf(request.getParameter("funds"));

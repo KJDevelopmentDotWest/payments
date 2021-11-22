@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ShowEditAccountCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger(ShowEditPaymentCommand.class);
+    private static final Logger logger = LogManager.getLogger(ShowEditAccountCommand.class);
 
     private static final String EDIT_ACCOUNT_PAGE_URL = "/WEB-INF/jsp/editaccount.jsp";
 
@@ -24,6 +24,7 @@ public class ShowEditAccountCommand implements Command {
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
+        logger.info("command " + ShowEditAccountCommand.class);
 
         HttpSession session = request.getSession();
         Integer id = (Integer) session.getAttribute("id");

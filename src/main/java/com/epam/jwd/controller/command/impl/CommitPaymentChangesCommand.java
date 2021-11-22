@@ -4,6 +4,7 @@ import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.paymentdto.PaymentDto;
+import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.impl.CreditCardService;
 import com.epam.jwd.service.impl.PaymentService;
@@ -28,8 +29,7 @@ public class CommitPaymentChangesCommand implements Command {
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
-        logger.info(CommitPaymentChangesCommand.class);
-        System.out.println(CommitPaymentChangesCommand.class);
+        logger.info("command " + CommitPaymentChangesCommand.class);
         Integer paymentId = Integer.valueOf(request.getParameter("paymentId"));
         try {
             PaymentDto payment = service.getById(paymentId);
@@ -48,8 +48,17 @@ public class CommitPaymentChangesCommand implements Command {
         service.update(paymentDto);
         if (Objects.equals(request.getParameter("action"), SAVE_AND_GO_TO_CHECKOUT)){
             request.setAttribute("payment", paymentDto);
-            request.setAttribute("creditcards",
-                    new CreditCardService().getByUserId(paymentDto.getUserId()));
+            try {
+                request.setAttribute("creditcards",
+                        new CreditCardService().getByUserId(paymentDto.getUserId()));
+            } catch (ServiceException e){
+                if (e.getErrorCode() == ExceptionCode.CREDIT_CARD_IS_NOT_FOUND_EXCEPTION_CODE){
+                    request.setAttribute("creditcards",
+                            null);
+                } else {
+                    throw new ServiceException();
+                }
+            }
             return new CommandResponse(request.getContextPath() + SHOW_CHECKOUT_PAGE_URL, false);
         }
         return new CommandResponse(request.getContextPath() + USER_PAYMENTS_PAGE_URL, true);

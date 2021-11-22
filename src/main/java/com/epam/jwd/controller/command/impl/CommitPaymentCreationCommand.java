@@ -27,6 +27,8 @@ public class CommitPaymentCreationCommand implements Command {
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
 
+        logger.info("command " + CommitPaymentCreationCommand.class);
+
         HttpSession session = request.getSession();
 
         PaymentDto paymentDto = new PaymentDto((Integer) session.getAttribute("id"),

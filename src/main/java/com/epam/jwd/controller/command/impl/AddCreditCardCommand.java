@@ -2,6 +2,7 @@ package com.epam.jwd.controller.command.impl;
 
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
+import com.epam.jwd.controller.command.impl.showpage.ShowAccountCommand;
 import com.epam.jwd.service.dto.creditcarddto.BankAccountDto;
 import com.epam.jwd.service.dto.creditcarddto.CreditCardDto;
 import com.epam.jwd.service.exception.ExceptionCode;
@@ -23,6 +24,8 @@ public class AddCreditCardCommand implements Command {
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
+
+        logger.info("command " + AddCreditCardCommand.class);
 
         HttpSession session = request.getSession();
 

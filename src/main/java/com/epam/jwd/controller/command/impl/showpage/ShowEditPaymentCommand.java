@@ -21,6 +21,8 @@ public class ShowEditPaymentCommand implements Command {
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
 
+        logger.info("command " + ShowEditPaymentCommand.class);
+
         Integer paymentId = Integer.valueOf(request.getParameter("paymentId"));
 
         PaymentDto payment = null;

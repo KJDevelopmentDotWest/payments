@@ -26,6 +26,9 @@ public class SigninCommand implements Command {
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
+
+        logger.info("command " + SigninCommand.class);
+
         UserService service = new UserService();
         try {
             UserDto userDto = service.getByLogin(request.getParameter("login"));
@@ -41,6 +44,7 @@ public class SigninCommand implements Command {
             } else {
                 logger.info("something else is wrong");
             }
+            logger.error(e.getErrorCode());
         }
         return new CommandResponse(request.getContextPath() + ERROR_PAGE_URL, false);
     }

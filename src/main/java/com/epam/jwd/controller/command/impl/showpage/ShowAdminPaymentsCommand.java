@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ShowAdminPaymentsCommand implements Command {
-    private static final Logger logger = LogManager.getLogger(ShowPaymentsCommand.class);
+    private static final Logger logger = LogManager.getLogger(ShowAdminPaymentsCommand.class);
 
     private static final String ADMIN_PAYMENTS_PAGE_URL = "/WEB-INF/jsp/adminpayments.jsp";
     private static final Integer MAX_ITEMS_IN_PAGE = 5;

@@ -17,14 +17,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-@WebFilter("/*")
+//@WebFilter("/*")
 public class LoginFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger(LoginFilter.class);
 
     private static final String SIGNIN_PAGE_URL = "/payments?command=show_signin_page";
 
-    private static final List<String> allowedWithoutLogin = List.of("show_signin", "signin", "show_create_user", "commit_user_creation", "signout");
+    private static final List<String> allowedWithoutLogin = List.of("show_signin", "signin", "show_create_user", "commit_user_creation", "signout", "show_error");
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

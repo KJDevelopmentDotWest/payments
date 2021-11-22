@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 public class CommitAccountCreationCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger(ShowEditPaymentCommand.class);
+    private static final Logger logger = LogManager.getLogger(CommitAccountCreationCommand.class);
 
     private static final String SHOW_ACCOUNT_PAGE_URL = "/payments?command=show_account";
 
@@ -25,7 +25,7 @@ public class CommitAccountCreationCommand implements Command {
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
-        logger.info(CommitAccountChangesCommand.class);
+        logger.info("command " + CommitAccountCreationCommand.class);
 
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute("id");
