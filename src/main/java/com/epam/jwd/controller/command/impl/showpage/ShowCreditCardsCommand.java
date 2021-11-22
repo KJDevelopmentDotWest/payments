@@ -58,24 +58,20 @@ public class ShowCreditCardsCommand implements Command {
     }
 
     private Integer getLastPage(HttpServletRequest request, Integer userId){
-        Integer maxPage;
-        if (Objects.isNull(request.getAttribute("lastPage"))){
-            Integer paymentsAmount;
-            try {
-                paymentsAmount = service.getAmountWithUserId(userId);
-            } catch (ServiceException e) {
-                paymentsAmount = 0;
-                logger.error(e.getErrorCode());
-            }
-            if (Double.compare(paymentsAmount / MAX_ITEMS_IN_PAGE.doubleValue(), paymentsAmount / MAX_ITEMS_IN_PAGE) == 0){
-                maxPage = paymentsAmount / MAX_ITEMS_IN_PAGE;
-            } else {
-                maxPage = paymentsAmount / MAX_ITEMS_IN_PAGE + 1;
-            }
-            request.setAttribute("lastPage", maxPage);
-        } else {
-            maxPage = (Integer) request.getAttribute("lastPage");
+        Integer lastPage;
+        Integer paymentsAmount;
+        try {
+            paymentsAmount = service.getAmountWithUserId(userId);
+        } catch (ServiceException e) {
+            paymentsAmount = 0;
+            logger.error(e.getErrorCode());
         }
-        return maxPage;
+        if (Double.compare(paymentsAmount / MAX_ITEMS_IN_PAGE.doubleValue(), paymentsAmount / MAX_ITEMS_IN_PAGE) == 0){
+            lastPage = paymentsAmount / MAX_ITEMS_IN_PAGE;
+        } else {
+            lastPage = paymentsAmount / MAX_ITEMS_IN_PAGE + 1;
+        }
+        request.setAttribute("lastPage", lastPage);
+        return lastPage;
     }
 }

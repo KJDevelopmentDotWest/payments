@@ -46,37 +46,20 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">User id</th>
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
                         <th scope="col">Destination</th>
                         <th scope="col">Transaction Time</th>
                         <th scope="col">Committed</th>
-                        <th scope="col">Edit</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="i" begin="0" end="${requestScope.payments.size()-1}">
-                        <c:choose>
-                            <c:when test="${requestScope.payments.get(i).getCommitted()}">
-                                <tr>
-                                    <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
-                                    <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
-                                    <td></td>
-                                </tr>
-                            </c:when>
-                            <c:otherwise>
-                                <tr>
-                                    <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
-                                    <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
-                                    <td>
-                                        <form class="inline" method="post" action="/payments?command=show_edit_payment" >
-                                            <button class="btn btn-exsm btn-primary" type="submit">edit</button>
-                                            <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
-                                        </form>
-                                    </td>
-                                </tr>
-                            </c:otherwise>
-                        </c:choose>
+                        <tr>
+                            <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
+                            <m:adminpaymentoutput paymentDto="${requestScope.payments.get(i)}"/>
+                        </tr>
                     </c:forEach>
                 </tbody>
             </table>

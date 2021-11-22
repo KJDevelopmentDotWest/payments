@@ -25,7 +25,7 @@
                             <a class="nav-link" href="/payments?command=show_credit_cards&currentPage=1">Credit Cards</a>
                         </li>
                         <li class="nav-item disabled">
-                            <a class="nav-link">Payments</a>
+                            <a class="nav-link active">Payments</a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link" href="/payments?command=signout">Log Out</a>

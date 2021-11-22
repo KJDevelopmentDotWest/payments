@@ -22,7 +22,7 @@
                             <a class="nav-link" href="/payments?command=show_account">Account</a>
                         </li>
                         <li class="nav-item disabled">
-                            <a class="nav-link">Credit Cards</a>
+                            <a class="nav-link active">Credit Cards</a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link" href="/payments?command=show_payments&currentPage=1">Payments</a>

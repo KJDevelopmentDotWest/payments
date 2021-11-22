@@ -40,7 +40,7 @@ public enum ApplicationCommand {
     private final Command command;
     private final List<Role> allowedRoles;
 
-    private static final String SHOW_ERROR_PAGE_URL = "/payments?command=show_error";
+    public static final String SHOW_ERROR_PAGE_URL = "/payments?command=show_error";
 
     ApplicationCommand(Command command, Role... roles){
         this.command = command;

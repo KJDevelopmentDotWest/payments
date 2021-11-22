@@ -1,5 +1,6 @@
 package com.epam.jwd.controller.command.impl;
 
+import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.paymentdto.PaymentDto;
@@ -36,7 +37,7 @@ public class CommitPaymentChangesCommand implements Command {
         } catch (ServiceException e) {
             logger.error(e.getErrorCode());
         }
-        return new CommandResponse(request.getContextPath() + ERROR_PAGE_URL, true);
+        return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
     }
 
     private CommandResponse updatePayment(PaymentDto paymentDto, HttpServletRequest request) throws ServiceException{
@@ -44,14 +45,13 @@ public class CommitPaymentChangesCommand implements Command {
         paymentDto.setDestinationAddress(request.getParameter("destination"));
         paymentDto.setPrice(Long.valueOf(request.getParameter("price")));
         paymentDto.setName(request.getParameter("name"));
+        service.update(paymentDto);
         if (Objects.equals(request.getParameter("action"), SAVE_AND_GO_TO_CHECKOUT)){
-            service.update(paymentDto);
             request.setAttribute("payment", paymentDto);
             request.setAttribute("creditcards",
                     new CreditCardService().getByUserId(paymentDto.getUserId()));
             return new CommandResponse(request.getContextPath() + SHOW_CHECKOUT_PAGE_URL, false);
         }
-        service.update(paymentDto);
         return new CommandResponse(request.getContextPath() + USER_PAYMENTS_PAGE_URL, true);
     }
 }
