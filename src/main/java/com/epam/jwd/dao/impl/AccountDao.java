@@ -146,10 +146,7 @@ public class AccountDao implements Dao<Account, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_ACCOUNTS);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
-            result.add(new Account(resultSet.getInt(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getInt(4)));
+            result.add(convertResultSetToAccount(resultSet));
         }
         preparedStatement.close();
         resultSet.close();
@@ -162,10 +159,7 @@ public class AccountDao implements Dao<Account, Integer> {
         ResultSet resultSet = preparedStatement.executeQuery();
         Account account;
         if (resultSet.next()){
-            account = new Account(resultSet.getInt(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getInt(4));
+            account = convertResultSetToAccount(resultSet);
         } else {
             account = null;
         }
@@ -205,5 +199,12 @@ public class AccountDao implements Dao<Account, Integer> {
         preparedStatement.close();
         resultSet.close();
         return result;
+    }
+
+    private Account convertResultSetToAccount(ResultSet resultSet) throws SQLException {
+        return new Account(resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getString(3),
+                resultSet.getInt(4));
     }
 }

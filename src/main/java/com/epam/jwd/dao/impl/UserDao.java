@@ -3,6 +3,7 @@ package com.epam.jwd.dao.impl;
 import com.epam.jwd.dao.api.Dao;
 import com.epam.jwd.dao.connectionpool.api.ConnectionPool;
 import com.epam.jwd.dao.connectionpool.impl.ConnectionPoolImpl;
+import com.epam.jwd.dao.model.payment.Payment;
 import com.epam.jwd.dao.model.user.Role;
 import com.epam.jwd.dao.model.user.User;
 import org.apache.logging.log4j.LogManager;
@@ -12,9 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class UserDao implements Dao<User, java.lang.Integer> {
 
@@ -26,13 +25,32 @@ public class UserDao implements Dao<User, java.lang.Integer> {
     private static final String SQL_FIND_USER_BY_ID = "SELECT id, login, password, account_id, is_active, role_id FROM users WHERE id = ?";
     private static final String SQL_FIND_USER_BY_LOGIN = "SELECT id, login, password, account_id, is_active, role_id FROM users WHERE login = ?";
 
+    private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ID = "SELECT id, login, password, account_id, is_active, role_id FROM users ORDER BY id LIMIT ? OFFSET ?";
+    private static final String SQL_FIND_ALL_USERS_ORDERED_BY_LOGIN = "SELECT id, login, password, account_id, is_active, role_id FROM users ORDER BY login LIMIT ? OFFSET ?";
+    private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ROLE = "SELECT id, login, password, account_id, is_active, role_id FROM users ORDER BY role_id LIMIT ? OFFSET ?";
+    private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ACTIVE = "SELECT id, login, password, account_id, is_active, role_id FROM users ORDER BY is_active LIMIT ? OFFSET ?";
+
     private static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?";
 
     private static final String SQL_UPDATE_USER_BY_ID = "UPDATE users SET login = ?, password = ?, account_id = ?, is_active = ?, role_id = ? WHERE id = ?";
 
     private static final String SQL_COUNT_USERS = "SELECT COUNT(id) as users_number FROM users";
 
+    private static final Integer KEY_ORDER_BY_ID = 1;
+    private static final Integer KEY_ORDER_BY_LOGIN = 2;
+    private static final Integer KEY_ORDER_BY_ROLE = 3;
+    private static final Integer KEY_ORDER_BY_ACTIVE = 4;
+
+    private static final Map<Integer, String> ORDER_BY_KEY_TO_SQL_STRING = new HashMap<>();
+
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
+
+    static {
+        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_ID, SQL_FIND_ALL_USERS_ORDERED_BY_ID);
+        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_LOGIN, SQL_FIND_ALL_USERS_ORDERED_BY_LOGIN);
+        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_ROLE, SQL_FIND_ALL_USERS_ORDERED_BY_ROLE);
+        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_ACTIVE, SQL_FIND_ALL_USERS_ORDERED_BY_ACTIVE);
+    }
 
     @Override
     public User save(User entity) {
@@ -66,7 +84,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
         }
     }
 
-    //deletes user with id = entity.getId() and his account
+    //deletes user with id = entity.getId()
     @Override
     public Boolean delete(User entity) {
         logger.info("delete method " + UserDao.class);
@@ -145,6 +163,66 @@ public class UserDao implements Dao<User, java.lang.Integer> {
         return user;
     }
 
+    public List<User> findAllOrderedByIdWithinRange(Integer limit, Integer offset){
+        logger.info("find all ordered by id within range method " + PaymentDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<User> users = new ArrayList<>();
+        try {
+            users = findAllUsersOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_ID);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return users;
+    }
+
+    public List<User> findAllOrderedByLoginWithinRange(Integer limit, Integer offset){
+        logger.info("find all ordered by login within range method " + PaymentDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<User> users = new ArrayList<>();
+        try {
+            users = findAllUsersOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_LOGIN);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return users;
+    }
+
+    public List<User> findAllOrderedByRoleWithinRange(Integer limit, Integer offset){
+        logger.info("find all ordered by role within range method " + PaymentDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<User> users = new ArrayList<>();
+        try {
+            users = findAllUsersOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_ROLE);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return users;
+    }
+
+    public List<User> findAllOrderedByActiveWithinRange(Integer limit, Integer offset){
+        logger.info("find all ordered by active within range method " + PaymentDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<User> users = new ArrayList<>();
+        try {
+            users = findAllUsersOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_ACTIVE);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return users;
+    }
+
     private User saveUser(Connection connection, User user) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_USER, new String[] {"id"});
         preparedStatement.setString(1, user.getLogin());
@@ -167,15 +245,21 @@ public class UserDao implements Dao<User, java.lang.Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_USERS);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
-            User user = new User(resultSet.getInt(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getInt(4) != 0
-                            ? resultSet.getInt(4)
-                            : null,
-                    resultSet.getBoolean(5),
-                    Role.getById(resultSet.getInt(6)));
-            result.add(user);
+            result.add(convertResultSetToUser(resultSet));
+        }
+        preparedStatement.close();
+        resultSet.close();
+        return result;
+    }
+
+    private List<User> findAllUsersOrderedByWithinRange(Connection connection, Integer limit, Integer offset, Integer orderBy) throws SQLException{
+        List<User> result = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement(ORDER_BY_KEY_TO_SQL_STRING.get(orderBy));
+        preparedStatement.setInt(1, limit);
+        preparedStatement.setInt(2, offset);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            result.add(convertResultSetToUser(resultSet));
         }
         preparedStatement.close();
         resultSet.close();
@@ -188,14 +272,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
         ResultSet resultSet = preparedStatement.executeQuery();
         User user;
         if (resultSet.next()){
-            user = new User(resultSet.getInt(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getInt(4) != 0
-                            ? resultSet.getInt(4)
-                            : null,
-                    resultSet.getBoolean(5),
-                    Role.getById(resultSet.getInt(6)));
+            user = convertResultSetToUser(resultSet);
         } else {
             user = null;
         }
@@ -210,14 +287,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
         ResultSet resultSet = preparedStatement.executeQuery();
         User user;
         if (resultSet.next()){
-            user = new User(resultSet.getInt(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getInt(4) != 0
-                            ? resultSet.getInt(4)
-                            : null,
-                    resultSet.getBoolean(5),
-                    Role.getById(resultSet.getInt(6)));
+            user = convertResultSetToUser(resultSet);
         } else {
             user = null;
         }
@@ -259,5 +329,16 @@ public class UserDao implements Dao<User, java.lang.Integer> {
         preparedStatement.close();
         resultSet.close();
         return result;
+    }
+
+    private User convertResultSetToUser(ResultSet resultSet) throws SQLException{
+        return new User(resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getString(3),
+                resultSet.getInt(4) != 0
+                        ? resultSet.getInt(4)
+                        : null,
+                resultSet.getBoolean(5),
+                Role.getById(resultSet.getInt(6)));
     }
 }

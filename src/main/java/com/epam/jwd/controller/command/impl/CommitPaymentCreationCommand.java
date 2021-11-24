@@ -41,8 +41,6 @@ public class CommitPaymentCreationCommand implements Command {
         PaymentService service = new PaymentService();
 
         if (Objects.equals(request.getParameter("action"), SAVE_AND_PAY_ACTION)){
-            paymentDto.setCommitted(true);
-            paymentDto.setTime(new Date());
 
             try {
                 PaymentDto createdPayment = service.create(paymentDto);

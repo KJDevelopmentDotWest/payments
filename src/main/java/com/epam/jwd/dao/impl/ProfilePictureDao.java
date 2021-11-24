@@ -145,9 +145,7 @@ public class ProfilePictureDao implements Dao<ProfilePicture, Integer> {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_PROFILE_PICTURES);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
-            result.add(new ProfilePicture(resultSet.getInt(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3)));
+            result.add(convertResultSetToProfilePicture(resultSet));
         }
         preparedStatement.close();
         resultSet.close();
@@ -160,9 +158,7 @@ public class ProfilePictureDao implements Dao<ProfilePicture, Integer> {
         ResultSet resultSet = preparedStatement.executeQuery();
         ProfilePicture result = null;
         if (resultSet.next()){
-            result = new ProfilePicture(resultSet.getInt(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3));
+            result = convertResultSetToProfilePicture(resultSet);
         }
         preparedStatement.close();
         resultSet.close();
@@ -199,5 +195,11 @@ public class ProfilePictureDao implements Dao<ProfilePicture, Integer> {
         preparedStatement.close();
         resultSet.close();
         return result;
+    }
+
+    private ProfilePicture convertResultSetToProfilePicture(ResultSet resultSet) throws SQLException {
+        return new ProfilePicture(resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getString(3));
     }
 }

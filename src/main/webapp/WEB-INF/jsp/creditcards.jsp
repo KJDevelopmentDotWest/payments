@@ -128,20 +128,20 @@
                 <nav>
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
-                            <a class="page-link" href="/payments?show_command=credit_cards&currentPage=1">First</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=1">First</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?show_command=credit_cards&currentPage=${requestScope.currentPage-1}">${requestScope.currentPage-1}</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage-1}">${requestScope.currentPage-1}</a>
 
                         </li>
                         <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="/payments?show_command=credit_cards&currentPage=${requestScope.currentPage}">${requestScope.currentPage}</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}">${requestScope.currentPage}</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?show_command=credit_cards&currentPage=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?show_command=credit_cards&currentPage=${requestScope.lastPage}">Last</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.lastPage}">Last</a>
                         </li>
                     </ul>
                 </nav>
