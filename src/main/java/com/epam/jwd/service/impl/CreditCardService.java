@@ -90,6 +90,83 @@ public class CreditCardService implements Service<CreditCardDto, Integer> {
         return dao.getRowsNumber();
     }
 
+    public List<CreditCardDto> getSortedByIdWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by id within range method " + CreditCardService.class);
+        List<CreditCardDto> result = new ArrayList<>();
+        List<CreditCard> daoResult = ((CreditCardDao)dao).findAllOrderedByIdWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<CreditCardDto> getSortedByUserIdWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by id within range method " + CreditCardService.class);
+        List<CreditCardDto> result = new ArrayList<>();
+        List<CreditCard> daoResult = ((CreditCardDao)dao).findAllOrderedByUserIdWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<CreditCardDto> getSortedByNameWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by id within range method " + CreditCardService.class);
+        List<CreditCardDto> result = new ArrayList<>();
+        List<CreditCard> daoResult = ((CreditCardDao)dao).findAllOrderedByNameWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<CreditCardDto> getSortedByNumberWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by id within range method " + CreditCardService.class);
+        List<CreditCardDto> result = new ArrayList<>();
+        List<CreditCard> daoResult = ((CreditCardDao)dao).findAllOrderedByNumberWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<CreditCardDto> getSortedByExpireDateWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by id within range method " + CreditCardService.class);
+        List<CreditCardDto> result = new ArrayList<>();
+        List<CreditCard> daoResult = ((CreditCardDao)dao).findAllOrderedByExpireDateWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<CreditCardDto> getSortedByBalanceWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by id within range method " + CreditCardService.class);
+        List<CreditCardDto> result = new ArrayList<>();
+        List<CreditCard> daoResult = ((CreditCardDao)dao).findAllOrderedByBalanceWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<CreditCardDto> getSortedByStateWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by id within range method " + CreditCardService.class);
+        List<CreditCardDto> result = new ArrayList<>();
+        List<CreditCard> daoResult = ((CreditCardDao)dao).findAllOrderedByStateWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
     public Integer getAmountWithUserId(Integer id) throws ServiceException {
         logger.info("get amount with user id method " + PaymentService.class);
         validator.validateIdNotNull(id);

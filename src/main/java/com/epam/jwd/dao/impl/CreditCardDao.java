@@ -68,9 +68,6 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
             "ORDER BY blocked " +
             "LIMIT ? OFFSET ?";
 
-    private static final String SQL_FIND_BANK_ACCOUNT_BY_ID = "SELECT id, balance, blocked, credit_card_id FROM bank_accounts WHERE id = ?";
-    private static final String SQL_FIND_BANK_ACCOUNT_BY_CREDIT_CARD_ID = "SELECT id, balance, blocked, credit_card_id FROM bank_accounts WHERE credit_card_id = ?";
-
     private static final String SQL_UPDATE_CREDIT_CARD_BY_ID = "UPDATE credit_cards SET name = ?, expire_date = ?, user_id = ?, number = ? WHERE id = ?";
     private static final String SQL_UPDATE_BANK_ACCOUNT_BY_ID = "UPDATE bank_accounts SET balance = ?, blocked = ?, credit_card_id = ? WHERE id = ?";
 

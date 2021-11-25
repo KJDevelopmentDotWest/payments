@@ -86,6 +86,83 @@ public class PaymentService implements Service<PaymentDto, Integer> {
         return ((PaymentDao)dao).getRowsNumberWithUserId(id);
     }
 
+    public List<PaymentDto> getSortedByIdWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by id within range method " + PaymentService.class);
+        List<PaymentDto> result = new ArrayList<>();
+        List<Payment> daoResult = ((PaymentDao)dao).findAllOrderedByIdWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<PaymentDto> getSortedByUserIdWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by user id within range method " + PaymentService.class);
+        List<PaymentDto> result = new ArrayList<>();
+        List<Payment> daoResult = ((PaymentDao)dao).findAllOrderedByUserIdWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<PaymentDto> getSortedByNameWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by name within range method " + PaymentService.class);
+        List<PaymentDto> result = new ArrayList<>();
+        List<Payment> daoResult = ((PaymentDao)dao).findAllOrderedByNameWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<PaymentDto> getSortedByPriceWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by price within range method " + PaymentService.class);
+        List<PaymentDto> result = new ArrayList<>();
+        List<Payment> daoResult = ((PaymentDao)dao).findAllOrderedByPriceWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<PaymentDto> getSortedByDestinationAddressWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by address within range method " + PaymentService.class);
+        List<PaymentDto> result = new ArrayList<>();
+        List<Payment> daoResult = ((PaymentDao)dao).findAllOrderedByAddressWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<PaymentDto> getSortedByTimeWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by time within range method " + PaymentService.class);
+        List<PaymentDto> result = new ArrayList<>();
+        List<Payment> daoResult = ((PaymentDao)dao).findAllOrderedByTimeWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<PaymentDto> getSortedByCommittedWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by committed within range method " + PaymentService.class);
+        List<PaymentDto> result = new ArrayList<>();
+        List<Payment> daoResult = ((PaymentDao)dao).findAllOrderedByCommittedWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
     public List<PaymentDto> getByUserId(Integer id) throws ServiceException {
         logger.info("get by user id method " + PaymentService.class);
         ((PaymentValidator)validator).validateUserId(id);

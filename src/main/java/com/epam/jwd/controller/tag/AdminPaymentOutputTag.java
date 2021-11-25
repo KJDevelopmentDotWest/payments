@@ -34,6 +34,10 @@ public class AdminPaymentOutputTag extends SimpleTagSupport {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append(COLUMN_START_TAG)
+                .append(paymentDto.getId())
+                .append(COLUMN_END_TAG);
+        stringBuilder
+                .append(COLUMN_START_TAG)
                 .append(paymentDto.getUserId())
                 .append(COLUMN_END_TAG);
         stringBuilder

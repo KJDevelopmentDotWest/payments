@@ -29,6 +29,12 @@ public class UserDao implements Dao<User, java.lang.Integer> {
     private static final String SQL_FIND_ALL_USERS_ORDERED_BY_LOGIN = "SELECT id, login, password, account_id, is_active, role_id FROM users ORDER BY login LIMIT ? OFFSET ?";
     private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ROLE = "SELECT id, login, password, account_id, is_active, role_id FROM users ORDER BY role_id LIMIT ? OFFSET ?";
     private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ACTIVE = "SELECT id, login, password, account_id, is_active, role_id FROM users ORDER BY is_active LIMIT ? OFFSET ?";
+    private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ACCOUNT_NAME = "SELECT id, login, password, account_id, is_active, role_id " +
+            "FROM users LEFT JOIN accounts ON account_id = accounts.id ORDER BY name ON users.id = user_id LIMIT ? OFFSET ?";
+    private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ACCOUNT_SURNAME = "SELECT id, login, password, account_id, is_active, role_id " +
+            "FROM users LEFT JOIN accounts ON account_id = accounts.id ORDER BY surname LIMIT ? OFFSET ?";
+    private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ACCOUNT_PROFILE_PICTURE_ID = "SELECT id, login, password, account_id, is_active, role_id " +
+            "FROM users LEFT JOIN accounts ON account_id = accounts.id ORDER BY profile_picture_id LIMIT ? OFFSET ?";
 
     private static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?";
 
@@ -40,6 +46,9 @@ public class UserDao implements Dao<User, java.lang.Integer> {
     private static final Integer KEY_ORDER_BY_LOGIN = 2;
     private static final Integer KEY_ORDER_BY_ROLE = 3;
     private static final Integer KEY_ORDER_BY_ACTIVE = 4;
+    private static final Integer KEY_ORDER_BY_ACCOUNT_NAME = 5;
+    private static final Integer KEY_ORDER_BY_ACCOUNT_SURNAME = 6;
+    private static final Integer KEY_ORDER_BY_ACCOUNT_PROFILE_PICTURE_ID = 7;
 
     private static final Map<Integer, String> ORDER_BY_KEY_TO_SQL_STRING = new HashMap<>();
 
@@ -50,6 +59,9 @@ public class UserDao implements Dao<User, java.lang.Integer> {
         ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_LOGIN, SQL_FIND_ALL_USERS_ORDERED_BY_LOGIN);
         ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_ROLE, SQL_FIND_ALL_USERS_ORDERED_BY_ROLE);
         ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_ACTIVE, SQL_FIND_ALL_USERS_ORDERED_BY_ACTIVE);
+        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_ACCOUNT_NAME, SQL_FIND_ALL_USERS_ORDERED_BY_ACCOUNT_NAME);
+        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_ACCOUNT_SURNAME, SQL_FIND_ALL_USERS_ORDERED_BY_ACCOUNT_SURNAME);
+        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_ACCOUNT_PROFILE_PICTURE_ID, SQL_FIND_ALL_USERS_ORDERED_BY_ACCOUNT_PROFILE_PICTURE_ID);
     }
 
     @Override
@@ -222,6 +234,53 @@ public class UserDao implements Dao<User, java.lang.Integer> {
         }
         return users;
     }
+
+    public List<User> findAllOrderedByAccountNameWithinRange(Integer limit, Integer offset){
+        logger.info("find all ordered by account name within range method " + PaymentDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<User> users = new ArrayList<>();
+        try {
+            users = findAllUsersOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_ACCOUNT_NAME);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return users;
+    }
+
+    public List<User> findAllOrderedByAccountSurnameWithinRange(Integer limit, Integer offset){
+        logger.info("find all ordered by account surname within range method " + PaymentDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<User> users = new ArrayList<>();
+        try {
+            users = findAllUsersOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_ACCOUNT_SURNAME);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return users;
+    }
+
+    public List<User> findAllOrderedByAccountProfilePictureIdWithinRange(Integer limit, Integer offset){
+        logger.info("find all ordered by account profile picture id within range method " + PaymentDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<User> users = new ArrayList<>();
+        try {
+            users = findAllUsersOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_ACCOUNT_PROFILE_PICTURE_ID);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return users;
+    }
+
+
 
     private User saveUser(Connection connection, User user) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_USER, new String[] {"id"});

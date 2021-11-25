@@ -13,6 +13,7 @@ public enum ApplicationCommand {
     SHOW_SIGNIN(new ShowSigninPage()),
     SHOW_ACCOUNT(new ShowAccountCommand()),
     SHOW_CREDIT_CARDS(new ShowCreditCardsCommand(), Role.CUSTOMER),
+    SHOW_ADMIN_CREDIT_CARDS(new ShowAdminCreditCardsCommand(), Role.ADMIN),
     SHOW_PAYMENTS(new ShowPaymentsCommand(), Role.CUSTOMER),
     SHOW_ADMIN_PAYMENTS(new ShowAdminPaymentsCommand(), Role.ADMIN),
     SHOW_ADD_CREDIT_CARD(new ShowAddCreditCardCommand()),

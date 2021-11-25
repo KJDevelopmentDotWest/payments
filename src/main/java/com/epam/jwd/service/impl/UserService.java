@@ -15,8 +15,8 @@ import com.epam.jwd.service.validator.impl.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class UserService implements Service<UserDto, Integer> {
@@ -85,13 +85,92 @@ public class UserService implements Service<UserDto, Integer> {
     }
 
     public UserDto getByLogin(String login) throws ServiceException {
-        logger.info("get login method " + UserService.class);
+        logger.info("get by login method " + UserService.class);
         ((UserValidator)validator).validateLoginNotNull(login);
         User result = ((UserDao)dao).findByLogin(login);
         if (Objects.isNull(result)){
             throw new ServiceException(ExceptionCode.USER_IS_NOT_FOUND_EXCEPTION_CODE);
         }
         return converter.convert(result);
+    }
+
+
+
+    public List<UserDto> getSortedByIdWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by id within range method " + UserService.class);
+        List<UserDto> result = new ArrayList<>();
+        List<User> daoResult = ((UserDao)dao).findAllOrderedByIdWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<UserDto> getSortedByLoginWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by login within range method " + UserService.class);
+        List<UserDto> result = new ArrayList<>();
+        List<User> daoResult = ((UserDao)dao).findAllOrderedByLoginWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<UserDto> getSortedByRoleWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by role within range method " + UserService.class);
+        List<UserDto> result = new ArrayList<>();
+        List<User> daoResult = ((UserDao)dao).findAllOrderedByRoleWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<UserDto> getSortedByActiveWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by active within range method " + UserService.class);
+        List<UserDto> result = new ArrayList<>();
+        List<User> daoResult = ((UserDao)dao).findAllOrderedByActiveWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<UserDto> getSortedByAccountNameWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by account name within range method " + UserService.class);
+        List<UserDto> result = new ArrayList<>();
+        List<User> daoResult = ((UserDao)dao).findAllOrderedByAccountNameWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<UserDto> getSortedByAccountSurnameWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by account surname within range method " + UserService.class);
+        List<UserDto> result = new ArrayList<>();
+        List<User> daoResult = ((UserDao)dao).findAllOrderedByAccountSurnameWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
+    }
+
+    public List<UserDto> getSortedByAccountProfilePictureIdWithinRange(Integer limit, Integer offset) throws ServiceException {
+        logger.info("get sorted by account profile picture id within range method " + UserService.class);
+        List<UserDto> result = new ArrayList<>();
+        List<User> daoResult = ((UserDao)dao).findAllOrderedByAccountProfilePictureIdWithinRange(limit, offset);
+        if (daoResult.isEmpty()){
+            throw new ServiceException(ExceptionCode.REPOSITORY_IS_EMPTY_EXCEPTION_CODE);
+        }
+        daoResult.forEach(user -> result.add(converter.convert(user)));
+        return result;
     }
 
     public List<UserDto> sortByRole (List<UserDto> users){

@@ -8,20 +8,14 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Objects;
 
-public class CreditCardOutputTag extends SimpleTagSupport {
+public class AdminCreditCardOutputTag extends SimpleTagSupport {
 
     private static final String COLUMN_START_TAG = "<td>";
     private static final String COLUMN_END_TAG = "</td>";
-    private static final String STRING_BLOCKED = "BLOCKED";
-    private static final String STRING_LINK_BLOCK_CREDIT_CARD_START = """
+    private static final String STRING_ACTIVE = "ACTIVE";
+    private static final String STRING_LINK_UNBLOCK_CREDIT_CARD_START = """
             <form class="inline" method="post" action="/payments?command=block_credit_card" >
-                <button class="btn btn-exsm btn-primary" type="submit">block</button>
-                <input type="hidden" name="creditCardId" value=
-            """;
-    private static final String STRING_LINK_ADD_FOUNDS_START = """
-            <form class="inline" method="post" action="/payments?command=add_funds" >
-                <input type="number" name="funds">
-                <button class="btn btn-exsm btn-primary" type="submit">add</button>
+                <button class="btn btn-exsm btn-primary" type="submit">unblock</button>
                 <input type="hidden" name="creditCardId" value=
             """;
     private static final String STRING_FORM_TAG_END = "></form>";
@@ -40,6 +34,14 @@ public class CreditCardOutputTag extends SimpleTagSupport {
 
     private String generateHtmlExpression(){
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(COLUMN_START_TAG)
+                .append(creditCardDto.getId())
+                .append(COLUMN_END_TAG);
+        stringBuilder
+                .append(COLUMN_START_TAG)
+                .append(creditCardDto.getUserId())
+                .append(COLUMN_END_TAG);
         stringBuilder
                 .append(COLUMN_START_TAG)
                 .append(creditCardDto.getName())
@@ -61,22 +63,18 @@ public class CreditCardOutputTag extends SimpleTagSupport {
                 .append(creditCardDto.getBankAccount().getBalance())
                 .append(COLUMN_END_TAG);
         stringBuilder.append(COLUMN_START_TAG);
-        if (creditCardDto.getBankAccount().getBlocked()){
-            stringBuilder.append(STRING_BLOCKED)
+        if (!creditCardDto.getBankAccount().getBlocked()){
+            stringBuilder.append(STRING_ACTIVE)
                     .append(COLUMN_END_TAG)
                     .append(COLUMN_START_TAG)
                     .append(COLUMN_END_TAG);
         } else {
-            stringBuilder.append(STRING_LINK_BLOCK_CREDIT_CARD_START)
-                    .append(creditCardDto.getId())
-                    .append(STRING_FORM_TAG_END)
-                    .append(COLUMN_END_TAG);
-            stringBuilder.append(COLUMN_START_TAG)
-                    .append(STRING_LINK_ADD_FOUNDS_START)
+            stringBuilder.append(STRING_LINK_UNBLOCK_CREDIT_CARD_START)
                     .append(creditCardDto.getId())
                     .append(STRING_FORM_TAG_END)
                     .append(COLUMN_END_TAG);
         }
         return stringBuilder.toString();
     }
+
 }

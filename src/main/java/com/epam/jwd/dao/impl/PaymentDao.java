@@ -41,26 +41,26 @@ public class PaymentDao implements Dao<Payment, Integer> {
     private static final String SQL_COUNT_PAYMENTS = "SELECT COUNT(id) as payments_number FROM payments";
     private static final String SQL_COUNT_PAYMENTS_WITH_USER_ID = "SELECT COUNT(id) as payments_number FROM payments WHERE user_id = ?";
 
-    private static final Integer KEY_ORDER_BY_USER_ID = 1;
-    private static final Integer KEY_ORDER_BY_NAME = 2;
-    private static final Integer KEY_ORDER_BY_PRICE = 3;
-    private static final Integer KEY_ORDER_BY_DESTINATION_ADDRESS = 4;
-    private static final Integer KEY_ORDER_BY_TIME = 5;
-    private static final Integer KEY_ORDER_BY_COMMITTED = 6;
-    private static final Integer KEY_ORDER_BY_ID= 7;
+    private static final Integer KEY_ORDER_BY_ID= 1;
+    private static final Integer KEY_ORDER_BY_USER_ID = 2;
+    private static final Integer KEY_ORDER_BY_NAME = 3;
+    private static final Integer KEY_ORDER_BY_PRICE = 4;
+    private static final Integer KEY_ORDER_BY_DESTINATION_ADDRESS = 5;
+    private static final Integer KEY_ORDER_BY_TIME = 6;
+    private static final Integer KEY_ORDER_BY_COMMITTED = 7;
 
     private static final Map<Integer, String> ORDER_BY_KEY_TO_SQL_STRING = new HashMap<>();
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
 
     static {
+        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_ID, SQL_FIND_ALL_PAYMENTS_ORDERED_BY_ID_WITHIN_RANGE);
         ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_USER_ID, SQL_FIND_ALL_PAYMENTS_ORDERED_BY_USER_ID_WITHIN_RANGE);
         ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_NAME, SQL_FIND_ALL_PAYMENTS_ORDERED_BY_NAME_WITHIN_RANGE);
         ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_PRICE, SQL_FIND_ALL_PAYMENTS_ORDERED_BY_PRICE_WITHIN_RANGE);
         ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_DESTINATION_ADDRESS, SQL_FIND_ALL_PAYMENTS_ORDERED_BY_DESTINATION_ADDRESS_WITHIN_RANGE);
         ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_TIME, SQL_FIND_ALL_PAYMENTS_ORDERED_BY_TIME_WITHIN_RANGE);
         ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_COMMITTED, SQL_FIND_ALL_PAYMENTS_ORDERED_BY_COMMITTED_WITHIN_RANGE);
-        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_ID, SQL_FIND_ALL_PAYMENTS_ORDERED_BY_ID_WITHIN_RANGE);
     }
 
     @Override
@@ -200,6 +200,21 @@ public class PaymentDao implements Dao<Payment, Integer> {
             connectionPool.returnConnection(connection);
         }
         return result;
+    }
+
+    public List<Payment> findAllOrderedByIdWithinRange(Integer limit, Integer offset){
+        logger.info("find all ordered by user id within range method " + PaymentDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<Payment> payments = new ArrayList<>();
+        try {
+            payments = findAllPaymentsOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_ID);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return payments;
     }
 
     public List<Payment> findAllOrderedByUserIdWithinRange(Integer limit, Integer offset){
