@@ -36,6 +36,7 @@ public enum ApplicationCommand {
     ADD_CREDIT_CARD(new AddCreditCardCommand()),
     BLOCK_CREDIT_CARD(new BlockCreditCardCommand()),
     UNBLOCK_CREDIT_CARD(new UnblockCreditCardCommand()),
+    UNBLOCK_USER(new UnblockUserCommand()),
     ADD_FUNDS(new AddFundsCommand()),
     CHECKOUT_PAYMENT(new CheckoutPaymentCommand()),
     DEFAULT(defaultCommandImpl());

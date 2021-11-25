@@ -18,16 +18,10 @@ public class AdminUsersOutputTag extends SimpleTagSupport {
     private static final String COLUMN_START_TAG = "<td>";
     private static final String COLUMN_END_TAG = "</td>";
     private static final String STRING_ACTIVE = "ACTIVE";
-    private static final String STRING_LINK_BLOCK_CREDIT_CARD_START = """
-            <form class="inline" method="post" action="/payments?command=block_credit_card" >
-                <button class="btn btn-exsm btn-primary" type="submit">block</button>
-                <input type="hidden" name="creditCardId" value=
-            """;
     private static final String STRING_LINK_UNBLOCK_USER_START = """
-            <form class="inline" method="post" action="/payments?command=add_funds" >
-                <input type="number" name="funds">
-                <button class="btn btn-exsm btn-primary" type="submit">add</button>
-                <input type="hidden" name="creditCardId" value=
+            <form class="inline" method="post" action="/payments?command=unblock_user" >
+                <button class="btn btn-exsm btn-primary" type="submit">unblock</button>
+                <input type="hidden" name="userId" value=
             """;
     private static final String STRING_FORM_TAG_END = "></form>";
 
