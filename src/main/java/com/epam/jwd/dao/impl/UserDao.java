@@ -29,11 +29,11 @@ public class UserDao implements Dao<User, java.lang.Integer> {
     private static final String SQL_FIND_ALL_USERS_ORDERED_BY_LOGIN = "SELECT id, login, password, account_id, is_active, role_id FROM users ORDER BY login LIMIT ? OFFSET ?";
     private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ROLE = "SELECT id, login, password, account_id, is_active, role_id FROM users ORDER BY role_id LIMIT ? OFFSET ?";
     private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ACTIVE = "SELECT id, login, password, account_id, is_active, role_id FROM users ORDER BY is_active LIMIT ? OFFSET ?";
-    private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ACCOUNT_NAME = "SELECT id, login, password, account_id, is_active, role_id " +
-            "FROM users LEFT JOIN accounts ON account_id = accounts.id ORDER BY name ON users.id = user_id LIMIT ? OFFSET ?";
-    private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ACCOUNT_SURNAME = "SELECT id, login, password, account_id, is_active, role_id " +
+    private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ACCOUNT_NAME = "SELECT users.id, login, password, account_id, is_active, role_id " +
+            "FROM users LEFT JOIN accounts ON account_id = accounts.id ORDER BY name LIMIT ? OFFSET ?";
+    private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ACCOUNT_SURNAME = "SELECT users.id, login, password, account_id, is_active, role_id " +
             "FROM users LEFT JOIN accounts ON account_id = accounts.id ORDER BY surname LIMIT ? OFFSET ?";
-    private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ACCOUNT_PROFILE_PICTURE_ID = "SELECT id, login, password, account_id, is_active, role_id " +
+    private static final String SQL_FIND_ALL_USERS_ORDERED_BY_ACCOUNT_PROFILE_PICTURE_ID = "SELECT users.id, login, password, account_id, is_active, role_id " +
             "FROM users LEFT JOIN accounts ON account_id = accounts.id ORDER BY profile_picture_id LIMIT ? OFFSET ?";
 
     private static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?";
@@ -176,7 +176,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
     }
 
     public List<User> findAllOrderedByIdWithinRange(Integer limit, Integer offset){
-        logger.info("find all ordered by id within range method " + PaymentDao.class);
+        logger.info("find all ordered by id within range method " + UserDao.class);
         Connection connection = connectionPool.takeConnection();
         List<User> users = new ArrayList<>();
         try {
@@ -191,7 +191,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
     }
 
     public List<User> findAllOrderedByLoginWithinRange(Integer limit, Integer offset){
-        logger.info("find all ordered by login within range method " + PaymentDao.class);
+        logger.info("find all ordered by login within range method " + UserDao.class);
         Connection connection = connectionPool.takeConnection();
         List<User> users = new ArrayList<>();
         try {
@@ -206,7 +206,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
     }
 
     public List<User> findAllOrderedByRoleWithinRange(Integer limit, Integer offset){
-        logger.info("find all ordered by role within range method " + PaymentDao.class);
+        logger.info("find all ordered by role within range method " + UserDao.class);
         Connection connection = connectionPool.takeConnection();
         List<User> users = new ArrayList<>();
         try {
@@ -221,7 +221,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
     }
 
     public List<User> findAllOrderedByActiveWithinRange(Integer limit, Integer offset){
-        logger.info("find all ordered by active within range method " + PaymentDao.class);
+        logger.info("find all ordered by active within range method " + UserDao.class);
         Connection connection = connectionPool.takeConnection();
         List<User> users = new ArrayList<>();
         try {
@@ -236,7 +236,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
     }
 
     public List<User> findAllOrderedByAccountNameWithinRange(Integer limit, Integer offset){
-        logger.info("find all ordered by account name within range method " + PaymentDao.class);
+        logger.info("find all ordered by account name within range method " + UserDao.class);
         Connection connection = connectionPool.takeConnection();
         List<User> users = new ArrayList<>();
         try {
@@ -251,7 +251,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
     }
 
     public List<User> findAllOrderedByAccountSurnameWithinRange(Integer limit, Integer offset){
-        logger.info("find all ordered by account surname within range method " + PaymentDao.class);
+        logger.info("find all ordered by account surname within range method " + UserDao.class);
         Connection connection = connectionPool.takeConnection();
         List<User> users = new ArrayList<>();
         try {
@@ -266,7 +266,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
     }
 
     public List<User> findAllOrderedByAccountProfilePictureIdWithinRange(Integer limit, Integer offset){
-        logger.info("find all ordered by account profile picture id within range method " + PaymentDao.class);
+        logger.info("find all ordered by account profile picture id within range method " + UserDao.class);
         Connection connection = connectionPool.takeConnection();
         List<User> users = new ArrayList<>();
         try {

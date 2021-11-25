@@ -14,7 +14,7 @@ public class AdminCreditCardOutputTag extends SimpleTagSupport {
     private static final String COLUMN_END_TAG = "</td>";
     private static final String STRING_ACTIVE = "ACTIVE";
     private static final String STRING_LINK_UNBLOCK_CREDIT_CARD_START = """
-            <form class="inline" method="post" action="/payments?command=block_credit_card" >
+            <form class="inline" method="post" action="/payments?command=unblock_credit_card" >
                 <button class="btn btn-exsm btn-primary" type="submit">unblock</button>
                 <input type="hidden" name="creditCardId" value=
             """;

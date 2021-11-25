@@ -50,6 +50,16 @@
     </tag>
 
     <tag>
+        <name>adminuseroutput</name>
+        <tag-class>com.epam.jwd.controller.tag.AdminUsersOutputTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>userDto</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
         <name>image</name>
         <tag-class>com.epam.jwd.controller.tag.ImageOutputTag</tag-class>
         <body-content>scriptless</body-content>

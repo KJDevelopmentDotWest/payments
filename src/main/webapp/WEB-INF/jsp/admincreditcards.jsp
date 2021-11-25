@@ -18,6 +18,9 @@
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/payments?command=show_admin_users&currentPage=1">Users</a>
+                        </li>
                         <li class="nav-item disabled">
                             <a class="nav-link active">Credit Cards</a>
                         </li>
@@ -39,8 +42,6 @@
                 </div>
             </div>
         </nav>
-
-        <a href="/payments?command=show_add_credit_card&currentPage=1" class="btn btn-primary">Add Credit Card</a>
 
         <c:if test="${requestScope.creditcards.size() > 0}">
 

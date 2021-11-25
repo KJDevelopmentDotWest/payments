@@ -19,7 +19,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item disabled">
-                            <a class="nav-link active">Credit Cards</a>
+                            <a class="nav-link active">Users</a>
+                        </li>
+                        <li class="nav-item">
+                             <a class="nav-link" href="/payments?command=show_admin_credit_cards&currentPage=1">Credit Cards</a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link" href="/payments?command=show_admin_payments&currentPage=1">Payments</a>
@@ -40,28 +43,26 @@
             </div>
         </nav>
 
-        <a href="/payments?command=show_add_credit_card&currentPage=1" class="btn btn-primary">Add Credit Card</a>
-
-        <c:if test="${requestScope.creditcards.size() > 0}">
+        <c:if test="${requestScope.users.size() > 0}">
 
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=id" class="active">Id</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=userId" class="active">User Id</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=name" class="active">Name</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=number" class="active">Number</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=date" class="active">Expire Date</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=balance" class="active">Balance</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=state" class="active">State</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=id" class="active">Id</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=login" class="active">Login</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=role" class="active">Role</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=active" class="active">Active</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=name" class="active">Name</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=surname" class="active">Surname</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=profilePictureId" class="active">Profile Picture Id</a></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="i" begin="0" end="${requestScope.creditcards.size()-1}">
+                    <c:forEach var="i" begin="0" end="${requestScope.users.size()-1}">
                         <tr>
                             <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
-                            <m:admincreditcardoutput creditCardDto="${requestScope.creditcards.get(i)}"/>
+                            <m:adminuseroutput userDto="${requestScope.users.get(i)}"/>
                             <td></td>
                         </tr>
                     </c:forEach>
@@ -78,10 +79,10 @@
                             <a class="page-link">1</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=2&sortBy=${requestScope.sortBy}">2</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=2&sortBy=${requestScope.sortBy}">2</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">Last</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">Last</a>
                         </li>
                     </ul>
                 </nav>
@@ -91,13 +92,13 @@
                 <nav>
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=1&sortBy=${requestScope.sortBy}">First</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=1&sortBy=${requestScope.sortBy}">First</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.lastPage-1}&sortBy=${requestScope.sortBy}">${requestScope.lastPage-1}</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.lastPage-1}&sortBy=${requestScope.sortBy}">${requestScope.lastPage-1}</a>
                         </li>
                         <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${requestScope.lastPage}</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${requestScope.lastPage}</a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">Last</a>
@@ -126,27 +127,24 @@
                 <nav>
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=1&sortBy=${requestScope.sortBy}">First</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=1&sortBy=${requestScope.sortBy}">First</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage-1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage-1}</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage-1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage-1}</a>
 
                         </li>
                         <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=${requestScope.sortBy}">${requestScope.currentPage}</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=${requestScope.sortBy}">${requestScope.currentPage}</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage+1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage+1}</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage+1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage+1}</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">Last</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">Last</a>
                         </li>
                     </ul>
                 </nav>
             </c:if>
-        </c:if>
-        <c:if test="${requestScope.creditcards.size() == 0 || requestScope.creditcards.size() == null}">
-            <h3>You have no credit cards yet</h3>
         </c:if>
     </body>
 </html>

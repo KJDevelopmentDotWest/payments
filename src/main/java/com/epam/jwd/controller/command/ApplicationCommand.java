@@ -12,6 +12,7 @@ public enum ApplicationCommand {
 
     SHOW_SIGNIN(new ShowSigninPage()),
     SHOW_ACCOUNT(new ShowAccountCommand()),
+    SHOW_ADMIN_USERS(new ShowAdminUsersCommand(), Role.ADMIN),
     SHOW_CREDIT_CARDS(new ShowCreditCardsCommand(), Role.CUSTOMER),
     SHOW_ADMIN_CREDIT_CARDS(new ShowAdminCreditCardsCommand(), Role.ADMIN),
     SHOW_PAYMENTS(new ShowPaymentsCommand(), Role.CUSTOMER),
@@ -34,6 +35,7 @@ public enum ApplicationCommand {
     COMMIT_USER_CREATION(new CommitUserCreationCommand()),
     ADD_CREDIT_CARD(new AddCreditCardCommand()),
     BLOCK_CREDIT_CARD(new BlockCreditCardCommand()),
+    UNBLOCK_CREDIT_CARD(new UnblockCreditCardCommand()),
     ADD_FUNDS(new AddFundsCommand()),
     CHECKOUT_PAYMENT(new CheckoutPaymentCommand()),
     DEFAULT(defaultCommandImpl());
