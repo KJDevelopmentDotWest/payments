@@ -41,32 +41,32 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
 
     private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_NAME_WITHIN_RANGE = "SELECT credit_cards.id, name, expire_date, user_id, number, bank_accounts.id, balance, blocked " +
             "FROM credit_cards JOIN bank_accounts ON credit_cards.id = credit_card_id " +
-            "ORDER BY name " +
             "WHERE user_id = ? " +
+            "ORDER BY name " +
             "LIMIT ? OFFSET ?";
 
     private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_EXPIRE_DATE_WITHIN_RANGE = "SELECT credit_cards.id, name, expire_date, user_id, number, bank_accounts.id, balance, blocked " +
             "FROM credit_cards JOIN bank_accounts ON credit_cards.id = credit_card_id " +
-            "ORDER BY expire_date " +
             "WHERE user_id = ? " +
+            "ORDER BY expire_date " +
             "LIMIT ? OFFSET ?";
 
     private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_BALANCE_WITHIN_RANGE = "SELECT credit_cards.id, name, expire_date, user_id, number, bank_accounts.id, balance, blocked " +
             "FROM credit_cards JOIN bank_accounts ON credit_cards.id = credit_card_id " +
-            "ORDER BY balance " +
             "WHERE user_id = ? " +
+            "ORDER BY balance " +
             "LIMIT ? OFFSET ?";
 
     private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_STATE_WITHIN_RANGE = "SELECT credit_cards.id, name, expire_date, user_id, number, bank_accounts.id, balance, blocked " +
             "FROM credit_cards JOIN bank_accounts ON credit_cards.id = credit_card_id " +
-            "ORDER BY blocked " +
             "WHERE user_id = ? " +
+            "ORDER BY blocked " +
             "LIMIT ? OFFSET ?";
 
     private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_NUMBER_WITHIN_RANGE = "SELECT credit_cards.id, name, expire_date, user_id, number, bank_accounts.id, balance, blocked " +
             "FROM credit_cards JOIN bank_accounts ON credit_cards.id = credit_card_id " +
-            "ORDER BY number " +
             "WHERE user_id = ? " +
+            "ORDER BY number " +
             "LIMIT ? OFFSET ?";
 
     private static final String SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_ID_WITHIN_RANGE = "SELECT credit_cards.id, name, expire_date, user_id, number, bank_accounts.id, balance, blocked " +

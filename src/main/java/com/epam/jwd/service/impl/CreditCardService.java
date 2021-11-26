@@ -168,7 +168,7 @@ public class CreditCardService implements Service<CreditCardDto, Integer> {
     }
 
     public Integer getAmountWithUserId(Integer id) throws ServiceException {
-        logger.info("get amount with user id method " + PaymentService.class);
+        logger.info("get amount with user id method " + CreditCardService.class);
         validator.validateIdNotNull(id);
         return ((CreditCardDao)dao).getRowsNumberWithUserId(id);
     }

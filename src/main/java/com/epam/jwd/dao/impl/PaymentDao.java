@@ -26,11 +26,11 @@ public class PaymentDao implements Dao<Payment, Integer> {
     private static final String SQL_FIND_PAYMENTS_BY_USER_ID = "select id, user_id, destination_address, price, committed, time, name FROM payments WHERE user_id = ?";
     private static final String SQL_FIND_PAYMENTS_BY_USER_ID_WITHIN_RANGE = "select id, user_id, destination_address, price, committed, time, name FROM payments WHERE user_id = ? LIMIT ? OFFSET ?";
 
-    private static final String SQL_FIND_PAYMENTS_BY_USER_ID_ORDER_BY_NAME_WITHIN_RANGE = "select id, user_id, destination_address, price, committed, time, name FROM payments ORDER BY name WHERE user_id = ? LIMIT ? OFFSET ?";
-    private static final String SQL_FIND_PAYMENTS_BY_USER_ID_ORDER_BY_PRICE_WITHIN_RANGE = "select id, user_id, destination_address, price, committed, time, name FROM payments ORDER BY price WHERE user_id = ? LIMIT ? OFFSET ?";
-    private static final String SQL_FIND_PAYMENTS_BY_USER_ID_ORDER_BY_DESTINATION_WITHIN_RANGE = "select id, user_id, destination_address, price, committed, time, name FROM payments ORDER BY destination_address WHERE user_id = ? LIMIT ? OFFSET ?";
-    private static final String SQL_FIND_PAYMENTS_BY_USER_ID_ORDER_BY_TIME_WITHIN_RANGE = "select id, user_id, destination_address, price, committed, time, name FROM payments ORDER BY time WHERE user_id = ? LIMIT ? OFFSET ?";
-    private static final String SQL_FIND_PAYMENTS_BY_USER_ID_ORDER_BY_COMMITTED_WITHIN_RANGE = "select id, user_id, destination_address, price, committed, time, name FROM payments ORDER BY committed WHERE user_id = ? LIMIT ? OFFSET ?";
+    private static final String SQL_FIND_PAYMENTS_BY_USER_ID_ORDER_BY_NAME_WITHIN_RANGE = "select id, user_id, destination_address, price, committed, time, name FROM payments WHERE user_id = ? ORDER BY name LIMIT ? OFFSET ?";
+    private static final String SQL_FIND_PAYMENTS_BY_USER_ID_ORDER_BY_PRICE_WITHIN_RANGE = "select id, user_id, destination_address, price, committed, time, name FROM payments WHERE user_id = ? ORDER BY price LIMIT ? OFFSET ?";
+    private static final String SQL_FIND_PAYMENTS_BY_USER_ID_ORDER_BY_DESTINATION_WITHIN_RANGE = "select id, user_id, destination_address, price, committed, time, name FROM payments WHERE user_id = ? ORDER BY destination_address LIMIT ? OFFSET ?";
+    private static final String SQL_FIND_PAYMENTS_BY_USER_ID_ORDER_BY_TIME_WITHIN_RANGE = "select id, user_id, destination_address, price, committed, time, name FROM payments WHERE user_id = ? ORDER BY time LIMIT ? OFFSET ?";
+    private static final String SQL_FIND_PAYMENTS_BY_USER_ID_ORDER_BY_COMMITTED_WITHIN_RANGE = "select id, user_id, destination_address, price, committed, time, name FROM payments WHERE user_id = ? ORDER BY committed LIMIT ? OFFSET ?";
 
     private static final String SQL_FIND_ALL_PAYMENTS_ORDERED_BY_USER_ID_WITHIN_RANGE = "select id, user_id, destination_address, price, committed, time, name FROM payments ORDER BY user_id LIMIT ? OFFSET ?";
     private static final String SQL_FIND_ALL_PAYMENTS_ORDERED_BY_NAME_WITHIN_RANGE = "select id, user_id, destination_address, price, committed, time, name FROM payments ORDER BY name LIMIT ? OFFSET ?";
