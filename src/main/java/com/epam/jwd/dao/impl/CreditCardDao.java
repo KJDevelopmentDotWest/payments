@@ -39,6 +39,36 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
             "WHERE user_id = ? " +
             "LIMIT ? OFFSET ?";
 
+    private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_NAME_WITHIN_RANGE = "SELECT credit_cards.id, name, expire_date, user_id, number, bank_accounts.id, balance, blocked " +
+            "FROM credit_cards JOIN bank_accounts ON credit_cards.id = credit_card_id " +
+            "ORDER BY name " +
+            "WHERE user_id = ? " +
+            "LIMIT ? OFFSET ?";
+
+    private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_EXPIRE_DATE_WITHIN_RANGE = "SELECT credit_cards.id, name, expire_date, user_id, number, bank_accounts.id, balance, blocked " +
+            "FROM credit_cards JOIN bank_accounts ON credit_cards.id = credit_card_id " +
+            "ORDER BY expire_date " +
+            "WHERE user_id = ? " +
+            "LIMIT ? OFFSET ?";
+
+    private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_BALANCE_WITHIN_RANGE = "SELECT credit_cards.id, name, expire_date, user_id, number, bank_accounts.id, balance, blocked " +
+            "FROM credit_cards JOIN bank_accounts ON credit_cards.id = credit_card_id " +
+            "ORDER BY balance " +
+            "WHERE user_id = ? " +
+            "LIMIT ? OFFSET ?";
+
+    private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_STATE_WITHIN_RANGE = "SELECT credit_cards.id, name, expire_date, user_id, number, bank_accounts.id, balance, blocked " +
+            "FROM credit_cards JOIN bank_accounts ON credit_cards.id = credit_card_id " +
+            "ORDER BY blocked " +
+            "WHERE user_id = ? " +
+            "LIMIT ? OFFSET ?";
+
+    private static final String SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_NUMBER_WITHIN_RANGE = "SELECT credit_cards.id, name, expire_date, user_id, number, bank_accounts.id, balance, blocked " +
+            "FROM credit_cards JOIN bank_accounts ON credit_cards.id = credit_card_id " +
+            "ORDER BY number " +
+            "WHERE user_id = ? " +
+            "LIMIT ? OFFSET ?";
+
     private static final String SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_ID_WITHIN_RANGE = "SELECT credit_cards.id, name, expire_date, user_id, number, bank_accounts.id, balance, blocked " +
             "FROM credit_cards JOIN bank_accounts ON credit_cards.id = credit_card_id " +
             "ORDER BY credit_cards.id " +
@@ -77,26 +107,39 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
     private static final String SQL_COUNT_CREDIT_CARDS = "SELECT COUNT(id) as credit_cards_number FROM credit_cards";
     private static final String SQL_COUNT_CREDIT_CARDS_WITH_USER_ID = "SELECT COUNT(id) as credit_cards_number FROM credit_cards WHERE user_id = ?";
 
-    private static final Integer KEY_ORDER_BY_ID = 1;
-    private static final Integer KEY_ORDER_BY_USER_ID = 2;
-    private static final Integer KEY_ORDER_BY_NAME = 3;
-    private static final Integer KEY_ORDER_BY_NUMBER = 4;
-    private static final Integer KEY_ORDER_BY_EXPIRE_DATE = 5;
-    private static final Integer KEY_ORDER_BY_BALANCE = 6;
-    private static final Integer KEY_ORDER_BY_STATE = 7;
+    private static final Integer KEY_FIND_ALL_ORDER_BY_ID = 1;
+    private static final Integer KEY_FIND_ALL_ORDER_BY_USER_ID = 2;
+    private static final Integer KEY_FIND_ALL_ORDER_BY_NAME = 3;
+    private static final Integer KEY_FIND_ALL_ORDER_BY_NUMBER = 4;
+    private static final Integer KEY_FIND_ALL_ORDER_BY_EXPIRE_DATE = 5;
+    private static final Integer KEY_FIND_ALL_ORDER_BY_BALANCE = 6;
+    private static final Integer KEY_FIND_ALL_ORDER_BY_STATE = 7;
 
-    private static final Map<Integer, String> ORDER_BY_KEY_TO_SQL_STRING = new HashMap<>();
+    private static final Integer KEY_FIND_BY_USER_ID_ORDER_BY_NAME = 1;
+    private static final Integer KEY_FIND_BY_USER_ID_ORDER_BY_EXPIRE_DATE = 2;
+    private static final Integer KEY_FIND_BY_USER_ID_ORDER_BY_BALANCE = 3;
+    private static final Integer KEY_FIND_BY_USER_ID_ORDER_BY_STATE = 4;
+    private static final Integer KEY_FIND_BY_USER_ID_ORDER_BY_NUMBER = 5;
+
+    private static final Map<Integer, String> FIND_ALL_ORDER_BY_KEY_TO_SQL_STRING = new HashMap<>();
+    private static final Map<Integer, String> FIND_BY_USER_ID_ORDER_BY_KEY_TO_SQL_STRING = new HashMap<>();
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
 
     static {
-        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_ID, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_ID_WITHIN_RANGE);
-        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_USER_ID, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_USER_ID_WITHIN_RANGE);
-        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_NAME, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_NAME_WITHIN_RANGE);
-        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_NUMBER, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_NUMBER_WITHIN_RANGE);
-        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_EXPIRE_DATE, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_EXPIRE_DATE_WITHIN_RANGE);
-        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_BALANCE, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_BALANCE_WITHIN_RANGE);
-        ORDER_BY_KEY_TO_SQL_STRING.put(KEY_ORDER_BY_STATE, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_STATE_WITHIN_RANGE);
+        FIND_ALL_ORDER_BY_KEY_TO_SQL_STRING.put(KEY_FIND_ALL_ORDER_BY_ID, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_ID_WITHIN_RANGE);
+        FIND_ALL_ORDER_BY_KEY_TO_SQL_STRING.put(KEY_FIND_ALL_ORDER_BY_USER_ID, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_USER_ID_WITHIN_RANGE);
+        FIND_ALL_ORDER_BY_KEY_TO_SQL_STRING.put(KEY_FIND_ALL_ORDER_BY_NAME, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_NAME_WITHIN_RANGE);
+        FIND_ALL_ORDER_BY_KEY_TO_SQL_STRING.put(KEY_FIND_ALL_ORDER_BY_NUMBER, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_NUMBER_WITHIN_RANGE);
+        FIND_ALL_ORDER_BY_KEY_TO_SQL_STRING.put(KEY_FIND_ALL_ORDER_BY_EXPIRE_DATE, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_EXPIRE_DATE_WITHIN_RANGE);
+        FIND_ALL_ORDER_BY_KEY_TO_SQL_STRING.put(KEY_FIND_ALL_ORDER_BY_BALANCE, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_BALANCE_WITHIN_RANGE);
+        FIND_ALL_ORDER_BY_KEY_TO_SQL_STRING.put(KEY_FIND_ALL_ORDER_BY_STATE, SQL_FIND_ALL_CREDIT_CARDS_ORDERED_BY_STATE_WITHIN_RANGE);
+
+        FIND_BY_USER_ID_ORDER_BY_KEY_TO_SQL_STRING.put(KEY_FIND_BY_USER_ID_ORDER_BY_NAME, SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_NAME_WITHIN_RANGE);
+        FIND_BY_USER_ID_ORDER_BY_KEY_TO_SQL_STRING.put(KEY_FIND_BY_USER_ID_ORDER_BY_EXPIRE_DATE, SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_EXPIRE_DATE_WITHIN_RANGE);
+        FIND_BY_USER_ID_ORDER_BY_KEY_TO_SQL_STRING.put(KEY_FIND_BY_USER_ID_ORDER_BY_BALANCE, SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_BALANCE_WITHIN_RANGE);
+        FIND_BY_USER_ID_ORDER_BY_KEY_TO_SQL_STRING.put(KEY_FIND_BY_USER_ID_ORDER_BY_STATE, SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_STATE_WITHIN_RANGE);
+        FIND_BY_USER_ID_ORDER_BY_KEY_TO_SQL_STRING.put(KEY_FIND_BY_USER_ID_ORDER_BY_NUMBER, SQL_FIND_CREDIT_CARD_BY_USER_ID_ORDERED_BY_NUMBER_WITHIN_RANGE);
     }
 
     @Override
@@ -176,6 +219,22 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
     }
 
     @Override
+    public CreditCard findById(Integer id) {
+        logger.info("find by id method " + CreditCardDao.class);
+        Connection connection = connectionPool.takeConnection();
+        CreditCard creditCard = null;
+        try {
+            creditCard = findCreditCardById(connection, id);
+        } catch (SQLException e) {
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return creditCard;
+    }
+
+    @Override
     public Integer getRowsNumber() {
         logger.info("get row number method " + CreditCardDao.class);
         Connection connection = connectionPool.takeConnection();
@@ -204,22 +263,6 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
             connectionPool.returnConnection(connection);
         }
         return result;
-    }
-
-    @Override
-    public CreditCard findById(Integer id) {
-        logger.info("find by id method " + CreditCardDao.class);
-        Connection connection = connectionPool.takeConnection();
-        CreditCard creditCard = null;
-        try {
-            creditCard = findCreditCardById(connection, id);
-        } catch (SQLException e) {
-            //todo implement logger and custom exception
-            logger.error(e);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-        return creditCard;
     }
 
     public List<CreditCard> findByUserId(Integer id){
@@ -270,7 +313,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         Connection connection = connectionPool.takeConnection();
         List<CreditCard> creditCards = new ArrayList<>();
         try {
-            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_ID);
+            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_FIND_ALL_ORDER_BY_ID);
         } catch (SQLException e){
             //todo implement logger and custom exception
             logger.error(e);
@@ -285,7 +328,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         Connection connection = connectionPool.takeConnection();
         List<CreditCard> creditCards = new ArrayList<>();
         try {
-            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_USER_ID);
+            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_FIND_ALL_ORDER_BY_USER_ID);
         } catch (SQLException e){
             //todo implement logger and custom exception
             logger.error(e);
@@ -300,7 +343,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         Connection connection = connectionPool.takeConnection();
         List<CreditCard> creditCards = new ArrayList<>();
         try {
-            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_NAME);
+            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_FIND_ALL_ORDER_BY_NAME);
         } catch (SQLException e){
             //todo implement logger and custom exception
             logger.error(e);
@@ -315,7 +358,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         Connection connection = connectionPool.takeConnection();
         List<CreditCard> creditCards = new ArrayList<>();
         try {
-            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_NUMBER);
+            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_FIND_ALL_ORDER_BY_NUMBER);
         } catch (SQLException e){
             //todo implement logger and custom exception
             logger.error(e);
@@ -330,7 +373,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         Connection connection = connectionPool.takeConnection();
         List<CreditCard> creditCards = new ArrayList<>();
         try {
-            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_EXPIRE_DATE);
+            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_FIND_ALL_ORDER_BY_EXPIRE_DATE);
         } catch (SQLException e){
             //todo implement logger and custom exception
             logger.error(e);
@@ -345,7 +388,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         Connection connection = connectionPool.takeConnection();
         List<CreditCard> creditCards = new ArrayList<>();
         try {
-            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_BALANCE);
+            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_FIND_ALL_ORDER_BY_BALANCE);
         } catch (SQLException e){
             //todo implement logger and custom exception
             logger.error(e);
@@ -360,7 +403,82 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
         Connection connection = connectionPool.takeConnection();
         List<CreditCard> creditCards = new ArrayList<>();
         try {
-            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_ORDER_BY_STATE);
+            creditCards = findAllCreditCardsOrderedByWithinRange(connection, limit, offset, KEY_FIND_ALL_ORDER_BY_STATE);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return creditCards;
+    }
+
+    public List<CreditCard> findByUserIdOrderedByNameWithinRange(Integer id, Integer limit, Integer offset) {
+        logger.info("find by user id ordered by name within range method " + CreditCardDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<CreditCard> creditCards = new ArrayList<>();
+        try {
+            creditCards = findCreditCardByUserIdWithinRangeOrderedBy(connection, id, limit, offset, KEY_FIND_BY_USER_ID_ORDER_BY_NAME);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return creditCards;
+    }
+
+    public List<CreditCard> findByUserIdOrderedByExpireDateWithinRange(Integer id, Integer limit, Integer offset) {
+        logger.info("find by user id ordered by expire date within range method " + CreditCardDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<CreditCard> creditCards = new ArrayList<>();
+        try {
+            creditCards = findCreditCardByUserIdWithinRangeOrderedBy(connection, id, limit, offset, KEY_FIND_BY_USER_ID_ORDER_BY_EXPIRE_DATE);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return creditCards;
+    }
+
+    public List<CreditCard> findByUserIdOrderedByBalanceWithinRange(Integer id, Integer limit, Integer offset) {
+        logger.info("find by user id ordered by balance within range method " + CreditCardDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<CreditCard> creditCards = new ArrayList<>();
+        try {
+            creditCards = findCreditCardByUserIdWithinRangeOrderedBy(connection, id, limit, offset, KEY_FIND_BY_USER_ID_ORDER_BY_BALANCE);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return creditCards;
+    }
+
+    public List<CreditCard> findByUserIdOrderedByStateWithinRange(Integer id, Integer limit, Integer offset) {
+        logger.info("find by user id ordered by state within range method " + CreditCardDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<CreditCard> creditCards = new ArrayList<>();
+        try {
+            creditCards = findCreditCardByUserIdWithinRangeOrderedBy(connection, id, limit, offset, KEY_FIND_BY_USER_ID_ORDER_BY_STATE);
+        } catch (SQLException e){
+            //todo implement logger and custom exception
+            logger.error(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return creditCards;
+    }
+
+    public List<CreditCard> findByUserIdOrderedByNumberWithinRange(Integer id, Integer limit, Integer offset) {
+        logger.info("find by user id ordered by number within range method " + CreditCardDao.class);
+        Connection connection = connectionPool.takeConnection();
+        List<CreditCard> creditCards = new ArrayList<>();
+        try {
+            creditCards = findCreditCardByUserIdWithinRangeOrderedBy(connection, id, limit, offset, KEY_FIND_BY_USER_ID_ORDER_BY_NUMBER);
         } catch (SQLException e){
             //todo implement logger and custom exception
             logger.error(e);
@@ -414,7 +532,7 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
 
     private List<CreditCard> findAllCreditCardsOrderedByWithinRange(Connection connection, Integer limit, Integer offset, Integer orderBy) throws SQLException{
         List<CreditCard> result = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement(ORDER_BY_KEY_TO_SQL_STRING.get(orderBy));
+        PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_ORDER_BY_KEY_TO_SQL_STRING.get(orderBy));
         preparedStatement.setInt(1, limit);
         preparedStatement.setInt(2, offset);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -473,6 +591,21 @@ public class CreditCardDao implements Dao<CreditCard, Integer> {
     private List<CreditCard> findCreditCardByUserIdWithinRange(Connection connection, Integer userId, Integer limit, Integer offset)throws SQLException{
         List<CreditCard> result = new ArrayList<>();
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_CREDIT_CARD_BY_USER_ID_WITHIN_RANGE);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, limit);
+        preparedStatement.setInt(3, offset);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            result.add(convertResultSetToCreditCard(resultSet));
+        }
+        preparedStatement.close();
+        resultSet.close();
+        return result;
+    }
+
+    private List<CreditCard> findCreditCardByUserIdWithinRangeOrderedBy(Connection connection, Integer userId, Integer limit, Integer offset, Integer orderBy)throws SQLException{
+        List<CreditCard> result = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_USER_ID_ORDER_BY_KEY_TO_SQL_STRING.get(orderBy));
         preparedStatement.setInt(1, userId);
         preparedStatement.setInt(2, limit);
         preparedStatement.setInt(3, offset);
