@@ -51,11 +51,11 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Number</th>
-                        <th scope="col">Expire Date</th>
-                        <th scope="col">Balance</th>
-                        <th scope="col">State</th>
+                        <th class="active"scope="col"><a href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=name" class="active">Name</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=number" class="active">Number</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=date" class="active">Expire Date</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=balance" class="active">Balance</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=state" class="active">State</a></th>
                         <th scope="col">Add Funds</th>
                     </tr>
                 </thead>
@@ -80,10 +80,10 @@
                             <a class="page-link">1</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=2">2</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=2&sortBy=${requestScope.sortBy}">2</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.lastPage}">Last</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">Last</a>
                         </li>
                     </ul>
                 </nav>
@@ -93,13 +93,13 @@
                 <nav>
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=1">First</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=1&sortBy=${requestScope.sortBy}">First</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.lastPage-1}">${requestScope.lastPage-1}</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.lastPage-1}&sortBy=${requestScope.sortBy}">${requestScope.lastPage-1}</a>
                         </li>
                         <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.lastPage}">${requestScope.lastPage}</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${requestScope.lastPage}</a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">Last</a>
@@ -128,20 +128,20 @@
                 <nav>
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=1">First</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=1&sortBy=${requestScope.sortBy}">First</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage-1}">${requestScope.currentPage-1}</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage-1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage-1}</a>
 
                         </li>
                         <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}">${requestScope.currentPage}</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=${requestScope.sortBy}">${requestScope.currentPage}</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage+1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage+1}</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.lastPage}">Last</a>
+                            <a class="page-link" href="/payments?command=show_credit_cards&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">Last</a>
                         </li>
                     </ul>
                 </nav>
