@@ -187,7 +187,7 @@ public class PaymentService implements Service<PaymentDto, Integer> {
         return result;
     }
 
-    public List<PaymentDto> getByUserIdOrderedByNameWithinRange(Integer id, Integer limit, Integer offset) throws ServiceException {
+    public List<PaymentDto> getByUserIdSortedByNameWithinRange(Integer id, Integer limit, Integer offset) throws ServiceException {
         logger.info("get by user id ordered by name within range method " + PaymentService.class);
         ((PaymentValidator)validator).validateUserId(id);
         List<PaymentDto> result = new ArrayList<>();
@@ -199,7 +199,7 @@ public class PaymentService implements Service<PaymentDto, Integer> {
         return result;
     }
 
-    public List<PaymentDto> getByUserIdOrderedByPriceWithinRange(Integer id, Integer limit, Integer offset) throws ServiceException {
+    public List<PaymentDto> getByUserIdSortedByPriceWithinRange(Integer id, Integer limit, Integer offset) throws ServiceException {
         logger.info("get by user id ordered by price within range method " + PaymentService.class);
         ((PaymentValidator)validator).validateUserId(id);
         List<PaymentDto> result = new ArrayList<>();
@@ -211,7 +211,7 @@ public class PaymentService implements Service<PaymentDto, Integer> {
         return result;
     }
 
-    public List<PaymentDto> getByUserIdOrderedByDestinationAddressWithinRange(Integer id, Integer limit, Integer offset) throws ServiceException {
+    public List<PaymentDto> getByUserIdSortedByDestinationAddressWithinRange(Integer id, Integer limit, Integer offset) throws ServiceException {
         logger.info("get by user id ordered by destination address within range method " + PaymentService.class);
         ((PaymentValidator)validator).validateUserId(id);
         List<PaymentDto> result = new ArrayList<>();
@@ -223,7 +223,7 @@ public class PaymentService implements Service<PaymentDto, Integer> {
         return result;
     }
 
-    public List<PaymentDto> getByUserIdOrderedByTimeWithinRange(Integer id, Integer limit, Integer offset) throws ServiceException {
+    public List<PaymentDto> getByUserIdSortedByTimeWithinRange(Integer id, Integer limit, Integer offset) throws ServiceException {
         logger.info("get by user id ordered by time within range method " + PaymentService.class);
         ((PaymentValidator)validator).validateUserId(id);
         List<PaymentDto> result = new ArrayList<>();
@@ -235,7 +235,7 @@ public class PaymentService implements Service<PaymentDto, Integer> {
         return result;
     }
 
-    public List<PaymentDto> getByUserIdOrderedByCommittedWithinRange(Integer id, Integer limit, Integer offset) throws ServiceException {
+    public List<PaymentDto> getByUserIdSortedByCommittedWithinRange(Integer id, Integer limit, Integer offset) throws ServiceException {
         logger.info("get by user id ordered by committed within range method " + PaymentService.class);
         ((PaymentValidator)validator).validateUserId(id);
         List<PaymentDto> result = new ArrayList<>();

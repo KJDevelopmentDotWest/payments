@@ -1,5 +1,7 @@
 package com.epam.jwd.controller.command.impl.showpage;
 
+import com.epam.jwd.controller.api.BiFunctionThrowsServiceException;
+import com.epam.jwd.controller.api.TriFunctionThrowsServiceException;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.paymentdto.PaymentDto;
@@ -11,9 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ShowPaymentsCommand implements Command {
 
@@ -23,6 +23,23 @@ public class ShowPaymentsCommand implements Command {
     private static final Integer MAX_ITEMS_IN_PAGE = 5;
 
     private final PaymentService service = new PaymentService();
+
+    private static final String KEY_ORDER_BY_NAME = "name";
+    private static final String KEY_ORDER_BY_PRICE = "price";
+    private static final String KEY_ORDER_BY_DESTINATION_ADDRESS = "destination";
+    private static final String KEY_ORDER_BY_TIME = "time";
+    private static final String KEY_ORDER_BY_COMMITTED = "committed";
+
+    private final Map<String, TriFunctionThrowsServiceException<Integer, Integer, Integer, List<PaymentDto>>> orderByKeyToMethodMap;
+
+    public ShowPaymentsCommand(){
+        orderByKeyToMethodMap = new HashMap<>();
+        orderByKeyToMethodMap.put(KEY_ORDER_BY_NAME, service::getByUserIdSortedByNameWithinRange);
+        orderByKeyToMethodMap.put(KEY_ORDER_BY_PRICE, service::getByUserIdSortedByPriceWithinRange);
+        orderByKeyToMethodMap.put(KEY_ORDER_BY_DESTINATION_ADDRESS, service::getByUserIdSortedByDestinationAddressWithinRange);
+        orderByKeyToMethodMap.put(KEY_ORDER_BY_TIME, service::getByUserIdSortedByTimeWithinRange);
+        orderByKeyToMethodMap.put(KEY_ORDER_BY_COMMITTED, service::getByUserIdSortedByCommittedWithinRange);
+    }
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
@@ -34,6 +51,8 @@ public class ShowPaymentsCommand implements Command {
         Integer lastPage = getLastPage(request, userId);
         List<PaymentDto> payments;
 
+        String sortBy = request.getParameter("sortBy");
+
         if (pageNumber > lastPage){
             pageNumber = 1;
         }
@@ -42,6 +61,8 @@ public class ShowPaymentsCommand implements Command {
             payments = service.getByUserIdWithinRange(userId,
                     MAX_ITEMS_IN_PAGE,
                     (pageNumber -1) * MAX_ITEMS_IN_PAGE);
+            payments = orderByKeyToMethodMap.getOrDefault(sortBy, service::getByUserIdSortedByNameWithinRange)
+                    .apply(userId, MAX_ITEMS_IN_PAGE, (pageNumber -1) * MAX_ITEMS_IN_PAGE);
         } catch (ServiceException e) {
             logger.error(e.getErrorCode());
             payments = new ArrayList<>();
@@ -49,6 +70,7 @@ public class ShowPaymentsCommand implements Command {
 
         request.setAttribute("payments", payments);
         request.setAttribute("currentPage", pageNumber);
+        request.setAttribute("sortBy", sortBy);
 
         return new CommandResponse(request.getContextPath() + USER_PAYMENTS_PAGE_URL, false);
     }
