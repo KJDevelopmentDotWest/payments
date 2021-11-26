@@ -1,9 +1,9 @@
 package com.epam.jwd.controller.command.impl.showpage;
 
+import com.epam.jwd.controller.api.TriFunctionThrowsServiceException;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.creditcarddto.CreditCardDto;
-import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.impl.CreditCardService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,9 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ShowCreditCardsCommand implements Command {
 
@@ -24,6 +22,23 @@ public class ShowCreditCardsCommand implements Command {
     private static final Integer MAX_ITEMS_IN_PAGE = 5;
 
     CreditCardService service = new CreditCardService();
+
+    private static final String KEY_ORDER_BY_NAME = "name";
+    private static final String KEY_ORDER_BY_NUMBER = "number";
+    private static final String KEY_ORDER_BY_EXPIRE_DATE = "date";
+    private static final String KEY_ORDER_BY_BALANCE = "balance";
+    private static final String KEY_ORDER_BY_STATE = "state";
+
+    private final Map<String, TriFunctionThrowsServiceException<Integer, Integer, Integer, List<CreditCardDto>>> orderByKeyToMethodMap;
+
+    public ShowCreditCardsCommand() {
+        this.orderByKeyToMethodMap = new HashMap<>();
+        orderByKeyToMethodMap.put(KEY_ORDER_BY_NAME, service::getByUserIdSortedByNameWithinRange);
+        orderByKeyToMethodMap.put(KEY_ORDER_BY_NUMBER, service::getByUserIdSortedByNumberWithinRange);
+        orderByKeyToMethodMap.put(KEY_ORDER_BY_EXPIRE_DATE, service::getByUserIdSortedByExpireDateWithinRange);
+        orderByKeyToMethodMap.put(KEY_ORDER_BY_BALANCE, service::getByUserIdSortedByBalanceWithinRange);
+        orderByKeyToMethodMap.put(KEY_ORDER_BY_STATE, service::getByUserIdSortedByStateWithinRange);
+    }
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
@@ -35,19 +50,21 @@ public class ShowCreditCardsCommand implements Command {
         Integer lastPage = getLastPage(request, userId);
         List<CreditCardDto> creditCards;
 
+        String sortBy = request.getParameter("sortBy");
+
         if (pageNumber > lastPage){
             pageNumber = 1;
         }
 
         try {
-            creditCards = service.getByUserIdWithinRange(userId,
-                    MAX_ITEMS_IN_PAGE,
-                    (pageNumber -1) * MAX_ITEMS_IN_PAGE);
+            creditCards = orderByKeyToMethodMap.getOrDefault(sortBy, service::getByUserIdSortedByNameWithinRange)
+                    .apply(userId, MAX_ITEMS_IN_PAGE, (pageNumber -1) * MAX_ITEMS_IN_PAGE);
         } catch (ServiceException e) {
             logger.error(e.getErrorCode());
             creditCards = new ArrayList<>();
         }
 
+        request.setAttribute("sortBy", sortBy);
         request.setAttribute("creditcards", creditCards);
         request.setAttribute("currentPage", pageNumber);
 
