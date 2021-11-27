@@ -55,6 +55,7 @@ public class AdminUsersOutputTag extends SimpleTagSupport {
                 .append(COLUMN_START_TAG);
         if (!userDto.getActive()){
             stringBuilder.append(STRING_LINK_UNBLOCK_USER_START);
+            stringBuilder.append(userDto.getId());
             stringBuilder
                     .append(STRING_FORM_TAG_END);
         } else {

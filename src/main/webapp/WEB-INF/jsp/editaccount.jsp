@@ -15,6 +15,7 @@
 
     <body>
         <main class="account-edit" align="center">
+            <a href="/payments?command=block_user"><button class="btn btn-primary" >Delete User</button></a>
             <form action="/payments?command=commit_account_changes" method="post" autocomplete="off">
                 <h1 class="h3 mb-3">Please edit your account</h1>
                 <div class="form-floating">

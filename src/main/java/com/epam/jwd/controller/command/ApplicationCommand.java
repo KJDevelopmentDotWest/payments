@@ -35,6 +35,7 @@ public enum ApplicationCommand {
     COMMIT_USER_CREATION(new CommitUserCreationCommand()),
     ADD_CREDIT_CARD(new AddCreditCardCommand()),
     BLOCK_CREDIT_CARD(new BlockCreditCardCommand()),
+    BLOCK_USER(new BlockUserCommand()),
     UNBLOCK_CREDIT_CARD(new UnblockCreditCardCommand()),
     UNBLOCK_USER(new UnblockUserCommand()),
     ADD_FUNDS(new AddFundsCommand()),
