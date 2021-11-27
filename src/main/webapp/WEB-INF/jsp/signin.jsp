@@ -1,4 +1,10 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="locale" var="loc"/>
+<fmt:message bundle="${loc}" key="greeting" var="greeting"/>
+<fmt:message bundle="${loc}" key="listusers" var="listusers"/>
 
 <html>
     <head>
@@ -7,10 +13,11 @@
         <style><%@include file="/WEB-INF/css/signin.css"%></style>
         <style><%@include file="/WEB-INF/css/bootstrap.min.css"%></style>
     </head>
+
     <body class="text-center">
         <main class="form-signin" align="center">
             <form action="/payments?command=signin" method="post">
-                <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+                <h1 class="h3 mb-3 fw-normal">${greeting}</h1>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Login" name="login">
                     <label for="floatingInput">Login</label>

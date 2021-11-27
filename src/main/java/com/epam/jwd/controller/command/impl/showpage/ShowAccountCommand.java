@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Locale;
+
 public class ShowAccountCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(ShowAccountCommand.class);

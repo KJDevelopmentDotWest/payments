@@ -31,32 +31,32 @@
                     <div class="row">
                         <div class="col">
                             <input class="btn btn-primary" type="radio" name="pictureId" value="1">
-                                <m:image width="100" height="100" pictureId="${1}"/>
+                                <m:profileimage width="100" height="100" pictureId="${1}"/>
                             </input>
                         </div>
                         <div class="col">
                             <input class="btn btn-primary" type="radio" name="pictureId" value="2">
-                                <m:image width="100" height="100" pictureId="${2}"/>
+                                <m:profileimage width="100" height="100" pictureId="${2}"/>
                             </input>
                         </div>
                         <div class="col">
                             <input class="btn btn-primary" type="radio" name="pictureId" value="3">
-                                <m:image width="100" height="100" pictureId="${3}"/>
+                                <m:profileimage width="100" height="100" pictureId="${3}"/>
                             </input>
                         </div>
                         <div class="col">
                             <input class="btn btn-primary" type="radio" name="pictureId" value="4">
-                                <m:image width="100" height="100" pictureId="${4}"/>
+                                <m:profileimage width="100" height="100" pictureId="${4}"/>
                             </input>
                         </div>
                         <div class="col">
                             <input class="btn btn-primary" type="radio" name="pictureId" value="5">
-                                <m:image width="100" height="100" pictureId="${5}"/>
+                                <m:profileimage width="100" height="100" pictureId="${5}"/>
                             </input>
                         </div>
                         <div class="col">
                             <input class="btn btn-primary" type="radio" name="pictureId" value="6">
-                                <m:image width="100" height="100" pictureId="${6}"/>
+                                <m:profileimage width="100" height="100" pictureId="${6}"/>
                             </input>
                         </div>
                     </div>
@@ -64,32 +64,32 @@
                     <div class="row">
                         <div class="col">
                             <input class="btn btn-primary" type="radio" name="pictureId" value="7">
-                                <m:image width="100" height="100" pictureId="${7}"/>
+                                <m:profileimage width="100" height="100" pictureId="${7}"/>
                             </input>
                         </div>
                         <div class="col">
                             <input class="btn btn-primary" type="radio" name="pictureId" value="8">
-                                <m:image width="100" height="100" pictureId="${8}"/>
+                                <m:profileimage width="100" height="100" pictureId="${8}"/>
                             </input>
                         </div>
                         <div class="col">
                             <input class="btn btn-primary" type="radio" name="pictureId" value="9">
-                                <m:image width="100" height="100" pictureId="${9}"/>
+                                <m:profileimage width="100" height="100" pictureId="${9}"/>
                             </input>
                         </div>
                         <div class="col">
                             <input class="btn btn-primary" type="radio" name="pictureId" value="10">
-                                <m:image width="100" height="100" pictureId="${10}"/>
+                                <m:profileimage width="100" height="100" pictureId="${10}"/>
                             </input>
                         </div>
                         <div class="col">
                             <input class="btn btn-primary" type="radio" name="pictureId" value="11">
-                                <m:image width="100" height="100" pictureId="${11}"/>
+                                <m:profileimage width="100" height="100" pictureId="${11}"/>
                             </input>
                         </div>
                         <div class="col">
                             <input class="btn btn-primary" type="radio" name="pictureId" value="12">
-                                <m:image width="100" height="100" pictureId="${12}"/>
+                                <m:profileimage width="100" height="100" pictureId="${12}"/>
                             </input>
                         </div>
                     </div>

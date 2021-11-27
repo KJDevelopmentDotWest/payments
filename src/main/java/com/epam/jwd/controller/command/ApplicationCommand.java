@@ -28,6 +28,7 @@ public enum ApplicationCommand {
 
     SIGNIN(new SigninCommand()),
     SIGNOUT(new SignoutCommand()),
+    CHANGE_LANGUAGE(new ChangeLanguageCommand()),
     COMMIT_PAYMENT_CREATION(new CommitPaymentCreationCommand()),
     COMMIT_PAYMENT_CHANGES(new CommitPaymentChangesCommand()),
     COMMIT_ACCOUNT_CHANGES(new CommitAccountChangesCommand()),

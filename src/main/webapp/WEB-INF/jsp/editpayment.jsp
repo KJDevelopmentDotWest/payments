@@ -27,7 +27,7 @@
                     <label for="floatingPassword">destination</label>
                 </div>
                 <input type="hidden" name="paymentId" value="${requestScope.payment.getId()}">
-                <div class="btn-group" role="group" aria-label="Basic example">
+                <div class="btn-group" role="group">
                   <button type="submit" class="btn btn-primary" name="action" value="saveAndCheckout">Save changes and proceed to checkout</button>
                   <button type="submit" class="btn btn-primary" name="action" value="save">Save changes</button>
                 </div>

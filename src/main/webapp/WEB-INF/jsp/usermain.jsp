@@ -56,7 +56,7 @@
 
                 </h1>
                 <h1> ${account.getSurname()} </h1>
-                <m:image width="300" height="300" pictureId="${account.getProfilePictureId()}"/>
+                <m:profileimage width="300" height="300" pictureId="${account.getProfilePictureId()}"/>
             </c:if>
             <c:if test="${user.accountId == null}">
                 <h3>

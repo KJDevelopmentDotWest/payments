@@ -3,6 +3,11 @@
 <%@ page import="com.epam.jwd.service.impl.PaymentService" %>
 <%@ taglib uri = "tags" prefix = "m" %>
 
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="locale" var="loc"/>
+<fmt:message bundle="${loc}" key="greeting" var="greeting"/>
+<fmt:message bundle="${loc}" key="listusers" var="listusers"/>
+
 <html>
     <head>
         <title>Payments</title>
@@ -31,19 +36,31 @@
                             <a class="nav-link" href="/payments?command=signout">Log Out</a>
                         </li>
                     </ul>
-
-                    <div class="btn-group" role="group" ">
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                        <label class="btn btn-outline-primary" for="btnradio1">English</label>
-
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio2">Russian</label>
-                    </div>
+                    <c:choose>
+                        <c:when test="${sessionScope.lang == 'ru'}">
+                            <form action="/payments?command=change_language" method="post" autocomplete="off">
+                                <div class="btn-group" role="group"action="/payments?command=signout">
+                                    <button type="submit" class="btn btn-primary" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>
+                                    <button type="submit" class="btn btn-primary active" name="lang" value="ru" id="btnradio2" autocomplete="off">Ru</button>
+                                </div>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <form action="/payments?command=change_language" method="post" autocomplete="off">
+                                <div class="btn-group" role="group"action="/payments?command=signout">
+                                    <button type="submit" class="btn btn-primary active" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>
+                                    <button type="submit" class="btn btn-primary" name="lang" value="ru" id="btnradio2" autocomplete="off">Ru</button>
+                                </div>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </nav>
 
+
         <a href="/payments?command=show_add_credit_card&currentPage=1" class="btn btn-primary">Add Credit Card</a>
+        <h1>${greeting}</h1>
 
         <c:if test="${requestScope.creditcards.size() > 0}">
 

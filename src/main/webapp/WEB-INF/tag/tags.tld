@@ -60,8 +60,8 @@
     </tag>
 
     <tag>
-        <name>image</name>
-        <tag-class>com.epam.jwd.controller.tag.ImageOutputTag</tag-class>
+        <name>profileimage</name>
+        <tag-class>com.epam.jwd.controller.tag.ProfileImageOutputTag</tag-class>
         <body-content>scriptless</body-content>
         <attribute>
             <name>pictureId</name>

@@ -19,9 +19,9 @@ import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Optional;
 
-public class ImageOutputTag extends SimpleTagSupport {
+public class ProfileImageOutputTag extends SimpleTagSupport {
 
-    private static final Logger logger = LogManager.getLogger(ImageOutputTag.class);
+    private static final Logger logger = LogManager.getLogger(ProfileImageOutputTag.class);
 
     private Integer pictureId;
     private Integer width;
