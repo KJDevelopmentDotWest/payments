@@ -67,7 +67,6 @@
                 <h1>
                     ${account.getName()}
                     <a href="/payments?command=show_edit_account">link</a>
-
                 </h1>
                 <h1> ${account.getSurname()} </h1>
                 <m:profileimage width="300" height="300" pictureId="${account.getProfilePictureId()}"/>
