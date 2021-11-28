@@ -6,6 +6,18 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale" var="loc"/>
 
+<fmt:message bundle="${loc}" key="main" var="main"/>
+<fmt:message bundle="${loc}" key="logout" var="logout"/>
+<fmt:message bundle="${loc}" key="name" var="name"/>
+<fmt:message bundle="${loc}" key="number" var="number"/>
+<fmt:message bundle="${loc}" key="date" var="date"/>
+<fmt:message bundle="${loc}" key="pay" var="pay"/>
+<fmt:message bundle="${loc}" key="balance" var="balance"/>
+<fmt:message bundle="${loc}" key="usernocreditcards" var="usernocreditcards"/>
+<fmt:message bundle="${loc}" key="choosecreditcard" var="choosecreditcard"/>
+<fmt:message bundle="${loc}" key="currentpaymentprice" var="currentpaymentprice"/>
+<fmt:message bundle="${loc}" key="addcreditcard" var="addcreditcard"/>
+
 <html>
     <head>
         <title>Payments</title>
@@ -21,44 +33,26 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="/payments?command=show_account">Main</a>
+                            <a class="nav-link" href="/payments?command=show_account">${main}</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" href="/payments?command=signout">Log Out</a>
+                            <a class="nav-link" href="/payments?command=signout">${logout}</a>
                         </li>
                     </ul>
-                    <c:choose>
-                        <c:when test="${sessionScope.lang == 'ru'}">
-                            <form action="/payments?command=change_language" method="post" autocomplete="off">
-                                <div class="btn-group" role="group"action="/payments?command=signout">
-                                    <button type="submit" class="btn btn-primary" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>
-                                    <button type="submit" class="btn btn-primary active" name="lang" value="ru" id="btnradio2" autocomplete="off">Ru</button>
-                                </div>
-                            </form>
-                        </c:when>
-                        <c:otherwise>
-                            <form action="/payments?command=change_language" method="post" autocomplete="off">
-                                <div class="btn-group" role="group"action="/payments?command=signout">
-                                    <button type="submit" class="btn btn-primary active" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>
-                                    <button type="submit" class="btn btn-primary" name="lang" value="ru" id="btnradio2" autocomplete="off">Ru</button>
-                                </div>
-                            </form>
-                        </c:otherwise>
-                    </c:choose>
                 </div>
             </div>
         </nav>
-        <h4>Current payment price is ${requestScope.payment.price}</h4>
+        <h4>${currentpaymentprice} ${requestScope.payment.price}</h4>
         <c:if test="${requestScope.creditcards != null}">
-            <h4>Choose your credit card</h4>
+            <h4>${choosecreditcard}</h4>
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Number</th>
-                        <th scope="col">Balance</th>
-                        <th scope="col">Pay</th>
+                        <th scope="col">${name}</th>
+                        <th scope="col">${number}</th>
+                        <th scope="col">${balance}</th>
+                        <th scope="col">${pay}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,7 +85,7 @@
             </table>
         </c:if>
         <c:if test="${requestScope.creditcards == null}">
-            <h4>You have no credit credit cards, but can add one <a href="/payments?command=show_credit_cards">here </a></h4>
+            <h4>${usernocreditcards} <a href="/payments?command=show_credit_cards"> ${addcreditcard}</a></h4>
         </c:if>
     </body>
 </html>
