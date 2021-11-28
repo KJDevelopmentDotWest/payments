@@ -4,6 +4,7 @@
 <%@ page import="com.epam.jwd.service.impl.UserService" %>
 <%@ page import="com.epam.jwd.service.impl.AccountService" %>
 <%@ page import="com.epam.jwd.service.dto.paymentdto.PaymentDto" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale" var="loc"/>
