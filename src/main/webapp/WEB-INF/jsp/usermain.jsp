@@ -8,6 +8,14 @@
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale" var="loc"/>
+<fmt:message bundle="${loc}" key="account" var="account"/>
+<fmt:message bundle="${loc}" key="creditcards" var="creditcards"/>
+<fmt:message bundle="${loc}" key="payments" var="payments"/>
+<fmt:message bundle="${loc}" key="logout" var="logout"/>
+<fmt:message bundle="${loc}" key="edit" var="edit"/>
+<fmt:message bundle="${loc}" key="havenoaccountstart" var="havenoaccountstart"/>
+<fmt:message bundle="${loc}" key="createaccount" var="createaccount"/>
+<fmt:message bundle="${loc}" key="havenoaccountend" var="havenoaccountend"/>
 
 <html>
 
@@ -26,16 +34,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item disabled">
-                            <a class="nav-link active">Account</a>
+                            <a class="nav-link active">${account}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/payments?command=show_credit_cards&currentPage=1">Credit Cards</a>
+                            <a class="nav-link" href="/payments?command=show_credit_cards&currentPage=1">${creditcards}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/payments?command=show_payments&currentPage=1">Payments</a>
+                            <a class="nav-link" href="/payments?command=show_payments&currentPage=1">${payments}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/payments?command=signout">Log Out</a>
+                            <a class="nav-link" href="/payments?command=signout">${logout}</a>
                         </li>
                     </ul>
                     <c:choose>
@@ -59,20 +67,35 @@
                 </div>
             </div>
         </nav>
-        <div class="account-content">
+        <div>
             <c:set var="user" scope="page" value="${UserService().getById(sessionScope.id)}"/>
             <c:if test="${user.accountId != null}">
                 <c:set var="account" scope="page" value="${AccountService().getById(user.getAccountId())}"/>
-                <h1>
-                    ${account.getName()}
-                    <a href="/payments?command=show_edit_account">link</a>
-                </h1>
-                <h1> ${account.getSurname()} </h1>
-                <m:profileimage width="300" height="300" pictureId="${account.getProfilePictureId()}"/>
+                <section class="vh-100" >
+                    <div class="container py-5 h-100">
+                        <div class="row d-flex justify-content-center align-items-center ">
+                            <div class="col-md-12 col-xl-4">
+                                <div class="card" style="border-radius: 15px;">
+                                    <div class="card-body text-center">
+                                        <div class="mt-3 mb-4">
+                                            <m:profileimage width="100" height="100" pictureId="${account.getProfilePictureId()}"/>
+                                        </div>
+                                        <h4 class="mb-2">${account.name} ${account.surname}</h4>
+                                        <a href="/payments?command=show_edit_account">
+                                            <button type="button" class="btn btn-primary btn-rounded btn-lg">
+                                                ${edit}
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </c:if>
             <c:if test="${user.accountId == null}">
                 <h3>
-                    You have no account yet. You can  <a href="/payments?command=show_create_account">create it now </a> or later
+                    ${havenoaccountstart}<a href="/payments?command=show_create_account"> ${createaccount}</a> ${havenoaccountend}
                 </h3>
             </c:if>
         </div>
