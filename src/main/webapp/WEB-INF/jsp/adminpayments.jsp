@@ -31,14 +31,24 @@
                             <a class="nav-link" href="/payments?command=signout">Log Out</a>
                         </li>
                     </ul>
-
-                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                        <label class="btn btn-outline-primary" for="btnradio1">English</label>
-
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio2">Russian</label>
-                    </div>
+                    <c:choose>
+                        <c:when test="${sessionScope.lang == 'ru'}">
+                            <form action="/payments?command=change_language" method="post" autocomplete="off">
+                                <div class="btn-group" role="group"action="/payments?command=signout">
+                                    <button type="submit" class="btn btn-primary" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>
+                                    <button type="submit" class="btn btn-primary active" name="lang" value="ru" id="btnradio2" autocomplete="off">Ru</button>
+                                </div>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <form action="/payments?command=change_language" method="post" autocomplete="off">
+                                <div class="btn-group" role="group"action="/payments?command=signout">
+                                    <button type="submit" class="btn btn-primary active" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>
+                                    <button type="submit" class="btn btn-primary" name="lang" value="ru" id="btnradio2" autocomplete="off">Ru</button>
+                                </div>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </nav>
