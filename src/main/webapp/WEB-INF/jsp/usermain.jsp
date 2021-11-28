@@ -18,8 +18,7 @@
         <style><%@include file="/WEB-INF/css/bootstrap.min.css"%></style>
         <style><%@include file="/WEB-INF/css/navbar.css"%></style>
         <style><%@include file="/WEB-INF/css/core.css"%></style>
-
-      </head>
+    </head>
 
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">

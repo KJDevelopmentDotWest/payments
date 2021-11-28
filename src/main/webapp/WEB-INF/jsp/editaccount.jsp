@@ -12,7 +12,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <meta charset="utf-8">
         <style><%@include file="/WEB-INF/css/bootstrap.min.css"%></style>
-        <style><%@include file="/WEB-INF/css/signin.css"%></style>
         <style><%@include file="/WEB-INF/css/grid.css"%></style>
         <style><%@include file="/WEB-INF/css/core.css"%></style>
         <style><%@include file="/WEB-INF/css/navbar.css"%></style>
@@ -52,7 +51,7 @@
                 </div>
             </div>
         </nav>
-        <main class="account-edit form-margin-navbar" align="center">
+        <main class="account-edit" align="center">
             <a href="/payments?command=block_user"><button class="btn btn-primary" >Delete User</button></a>
             <form action="/payments?command=commit_account_changes" method="post" autocomplete="off">
                 <h1 class="h3 mb-3">Please edit your account</h1>
