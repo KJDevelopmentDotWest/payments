@@ -14,3 +14,11 @@
 .account-edit{
     margin:0 150px 0 150px;//top right bottom left
 }
+
+.form-margin-no-navbar{
+    margin:150px auto auto auto;//top right bottom left
+}
+
+.form-margin-navbar{
+    margin:80px auto auto auto;//top right bottom left
+}

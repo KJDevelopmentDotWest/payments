@@ -7,11 +7,45 @@
         <meta charset="utf-8">
         <style><%@include file="/WEB-INF/css/bootstrap.min.css"%></style>
         <style><%@include file="/WEB-INF/css/signin.css"%></style>
+        <style><%@include file="/WEB-INF/css/navbar.css"%></style>
+        <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
     <body>
-        <main class="form-signin" align="center">
-            <form action="/payments?command=commit_payment_creation" method="post" autocomplete="off">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" >
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/payments?command=show_account">Main</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="/payments?command=signout">Log Out</a>
+                        </li>
+                    </ul>
+                    <c:choose>
+                        <c:when test="${sessionScope.lang == 'ru'}">
+                            <form action="/payments?command=change_language" method="post" autocomplete="off">
+                                <div class="btn-group" role="group"action="/payments?command=signout">
+                                    <button type="submit" class="btn btn-primary" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>
+                                    <button type="submit" class="btn btn-primary active" name="lang" value="ru" id="btnradio2" autocomplete="off">Ru</button>
+                                </div>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <form action="/payments?command=change_language" method="post" autocomplete="off">
+                                <div class="btn-group" role="group"action="/payments?command=signout">
+                                    <button type="submit" class="btn btn-primary active" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>
+                                    <button type="submit" class="btn btn-primary" name="lang" value="ru" id="btnradio2" autocomplete="off">Ru</button>
+                                </div>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+        </nav>
+        <main class="form-signin form-margin-navbar" align="center" display="grid">
+            <form action="/payments?command=commit_payment_creation" method="post" autocomplete="off" vertical-align="bottom">
                 <h1 class="h3 mb-3">Please create your payment</h1>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">

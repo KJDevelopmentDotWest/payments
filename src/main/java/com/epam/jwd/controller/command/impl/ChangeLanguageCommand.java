@@ -11,12 +11,12 @@ import org.apache.logging.log4j.Logger;
 
 public class ChangeLanguageCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger(ShowCreditCardsCommand.class);
+    private static final Logger logger = LogManager.getLogger(ChangeLanguageCommand.class);
     private static final String LANG_STRING = "lang";
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
-        logger.info("command " + ShowCreditCardsCommand.class);
+        logger.info("command " + ChangeLanguageCommand.class);
         HttpSession session = request.getSession();
         session.setAttribute(LANG_STRING, request.getParameter(LANG_STRING));
         return new CommandResponse(request.getContextPath() + request.getHeader("referer"), true);

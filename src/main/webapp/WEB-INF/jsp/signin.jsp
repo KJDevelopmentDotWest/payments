@@ -12,10 +12,11 @@
         <meta charset="utf-8">
         <style><%@include file="/WEB-INF/css/signin.css"%></style>
         <style><%@include file="/WEB-INF/css/bootstrap.min.css"%></style>
+        <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
     <body class="text-center">
-        <main class="form-signin" align="center">
+        <main class="form-signin form-margin-no-navbar" align="center">
             <form action="/payments?command=signin" method="post">
                 <h1 class="h3 mb-3 fw-normal">${greeting}</h1>
                 <div class="form-floating">

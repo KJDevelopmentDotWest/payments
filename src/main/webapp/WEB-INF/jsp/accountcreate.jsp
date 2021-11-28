@@ -14,9 +14,41 @@
     </head>
 
     <body>
-        <main class="account-edit" align="center">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/payments?command=show_account">Main</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="/payments?command=signout">Log Out</a>
+                        </li>
+                    </ul>
+                    <c:choose>
+                        <c:when test="${sessionScope.lang == 'ru'}">
+                            <form action="/payments?command=change_language" method="post" autocomplete="off">
+                                <div class="btn-group" role="group"action="/payments?command=signout">
+                                    <button type="submit" class="btn btn-primary" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>
+                                    <button type="submit" class="btn btn-primary active" name="lang" value="ru" id="btnradio2" autocomplete="off">Ru</button>
+                                </div>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <form action="/payments?command=change_language" method="post" autocomplete="off">
+                                <div class="btn-group" role="group"action="/payments?command=signout">
+                                    <button type="submit" class="btn btn-primary active" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>
+                                    <button type="submit" class="btn btn-primary" name="lang" value="ru" id="btnradio2" autocomplete="off">Ru</button>
+                                </div>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+        </nav>
+        <main class="account-edit form-margin-navbar" align="center">
             <form action="/payments?command=commit_account_creation" method="post" autocomplete="off">
-                <h1 class="h3 mb-3">Please edit your account</h1>
+                <h1 class="h3 mb-3">Create your account</h1>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">
                     <label for="floatingInput">name</label>
@@ -26,7 +58,7 @@
                     <label for="floatingInput">price</label>
                 </div>
                 <br/>
-                <h3>Choose new profile picture</h3>
+                <h3>Choose profile picture</h3>
                 <div class="container">
                     <div class="row">
                         <div class="col">
