@@ -61,7 +61,7 @@
                 </div>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="surname" value="${requestScope.account.getSurname()}">
-                    <label for="floatingInput">price</label>
+                    <label for="floatingInput">surname</label>
                 </div>
                 <input type="hidden" name="accountId" value="${requestScope.account.getId()}">
                 <br/>

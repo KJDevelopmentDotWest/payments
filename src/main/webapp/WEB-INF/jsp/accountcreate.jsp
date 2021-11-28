@@ -59,7 +59,7 @@
                 </div>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="surname">
-                    <label for="floatingInput">price</label>
+                    <label for="floatingInput">surname</label>
                 </div>
                 <br/>
                 <h3>Choose profile picture</h3>

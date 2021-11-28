@@ -85,7 +85,7 @@
                         <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=destination" class="active">${destination}</a></th>
                         <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=time" class="active">${time}</a></th>
                         <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=committed" class="active">${committed}</a></th>
-                        <th scope="col">Edit</th>
+                        <th scope="col">${edit}</th>
                     </tr>
                 </thead>
                 <tbody>

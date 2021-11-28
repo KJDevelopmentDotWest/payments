@@ -94,7 +94,7 @@
                 </section>
             </c:if>
             <c:if test="${user.accountId == null}">
-                <h3>
+                <h3 class="account-content">
                     ${havenoaccountstart}<a href="/payments?command=show_create_account"> ${createaccount}</a> ${havenoaccountend}
                 </h3>
             </c:if>
