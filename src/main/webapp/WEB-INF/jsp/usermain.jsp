@@ -5,6 +5,9 @@
 <%@ page import="com.epam.jwd.service.impl.AccountService" %>
 <%@ page import="com.epam.jwd.service.dto.paymentdto.PaymentDto" %>
 
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="locale" var="loc"/>
+
 <html>
 
     <head>

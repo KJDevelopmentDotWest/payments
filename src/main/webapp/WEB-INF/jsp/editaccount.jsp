@@ -2,6 +2,9 @@
 <%@ taglib uri = "tags" prefix = "m" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="locale" var="loc"/>
+
 <html>
     <head>
         <title>Payments</title>

@@ -3,6 +3,9 @@
 <%@ page import="com.epam.jwd.service.impl.PaymentService" %>
 <%@ taglib uri = "tags" prefix = "m" %>
 
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="locale" var="loc"/>
+
 <html>
     <head>
         <title>Credit Cards</title>
