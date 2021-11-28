@@ -21,8 +21,7 @@ public class CommitPaymentCreationCommand implements Command {
 
     private static final String USER_PAYMENTS_PAGE_URL = "/payments?command=show_payments&currentPage=1";
     private static final String SHOW_CHECKOUT_PAGE_URL = "/payments?command=show_checkout";
-    private static final String SAVE_ACTION = "save";
-    private static final String SAVE_AND_PAY_ACTION = "saveAndCheckout";
+    private static final String SAVE_AND_PAY_ACTION = "checkout";
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {

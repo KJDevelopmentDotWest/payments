@@ -414,10 +414,7 @@ public class PaymentDao implements Dao<Payment, Integer> {
         preparedStatement.setString(6, payment.getName());
         preparedStatement.executeUpdate();
         ResultSet resultSet = preparedStatement.getGeneratedKeys();
-        logger.info(resultSet);
-        if (resultSet.next()){
-
-        }
+        resultSet.next();
         Integer id = resultSet.getInt(1);
         payment.setId(id);
         preparedStatement.close();
