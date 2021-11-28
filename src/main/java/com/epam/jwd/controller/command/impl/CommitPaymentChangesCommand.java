@@ -25,7 +25,6 @@ public class CommitPaymentChangesCommand implements Command {
 
     PaymentService service = new PaymentService();
 
-
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + CommitPaymentChangesCommand.class);

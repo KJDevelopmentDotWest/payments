@@ -72,6 +72,7 @@
                     <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="destination" value="${requestScope.payment.getDestinationAddress()}">
                     <label for="floatingPassword">${destination}</label>
                 </div>
+                <input type="hidden" name="paymentId" value="${requestScope.payment.getId()}">
                 <button type="submit" class="btn btn-primary w-100" name="action" value="checkout">${savepayment}</button>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="action" value="checkout" id="flexCheckDefault">
