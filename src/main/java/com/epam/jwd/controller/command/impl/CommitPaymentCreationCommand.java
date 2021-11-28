@@ -1,8 +1,10 @@
 package com.epam.jwd.controller.command.impl;
 
+import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.paymentdto.PaymentDto;
+import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.impl.CreditCardService;
 import com.epam.jwd.service.impl.PaymentService;
@@ -47,9 +49,13 @@ public class CommitPaymentCreationCommand implements Command {
                 request.setAttribute("creditcards",
                         new CreditCardService().getByUserId(createdPayment.getUserId()));
             } catch (ServiceException e) {
+                if (e.getErrorCode() == ExceptionCode.CREDIT_CARD_IS_NOT_FOUND_EXCEPTION_CODE){
+                    request.setAttribute("creditcards",
+                            null);
+                }
                 logger.error(e.getErrorCode());
+                return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
             }
-
             return new CommandResponse(request.getContextPath() + SHOW_CHECKOUT_PAGE_URL, false);
         } else {
 

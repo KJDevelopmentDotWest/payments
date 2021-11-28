@@ -21,8 +21,7 @@ public class CommitPaymentChangesCommand implements Command {
 
     private static final String USER_PAYMENTS_PAGE_URL = "/payments?command=show_payments&currentPage=1";
     private static final String SHOW_CHECKOUT_PAGE_URL = "/payments?command=show_checkout";
-    private static final String SAVE_ACTION = "save";
-    private static final String SAVE_AND_GO_TO_CHECKOUT = "saveAndCheckout";
+    private static final String SAVE_AND_PAY_ACTION = "checkout";
 
     PaymentService service = new PaymentService();
 
@@ -46,7 +45,7 @@ public class CommitPaymentChangesCommand implements Command {
         paymentDto.setPrice(Long.valueOf(request.getParameter("price")));
         paymentDto.setName(request.getParameter("name"));
         service.update(paymentDto);
-        if (Objects.equals(request.getParameter("action"), SAVE_AND_GO_TO_CHECKOUT)){
+        if (Objects.equals(request.getParameter("action"), SAVE_AND_PAY_ACTION)){
             request.setAttribute("payment", paymentDto);
             try {
                 request.setAttribute("creditcards",
@@ -56,7 +55,8 @@ public class CommitPaymentChangesCommand implements Command {
                     request.setAttribute("creditcards",
                             null);
                 } else {
-                    throw new ServiceException();
+                    logger.error(e);
+                    return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
                 }
             }
             return new CommandResponse(request.getContextPath() + SHOW_CHECKOUT_PAGE_URL, false);
