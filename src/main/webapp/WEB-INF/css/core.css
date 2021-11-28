@@ -22,3 +22,9 @@
 .form-margin-navbar{
     margin:80px auto auto auto;//top right bottom left
 }
+
+.top-right{
+    position:absolute;
+    top:10px;
+    right: 10px;
+ }
