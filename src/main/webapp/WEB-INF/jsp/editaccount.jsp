@@ -5,6 +5,13 @@
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale" var="loc"/>
+<fmt:message bundle="${loc}" key="main" var="main"/>
+<fmt:message bundle="${loc}" key="logout" var="logout"/>
+<fmt:message bundle="${loc}" key="name" var="name"/>
+<fmt:message bundle="${loc}" key="surname" var="surname"/>
+<fmt:message bundle="${loc}" key="savechanges" var="savechanges"/>
+<fmt:message bundle="${loc}" key="choosenewprofilepicture" var="choosenewprofilepicture"/>
+<fmt:message bundle="${loc}" key="deleteuser" var="deleteuser"/>
 
 <html>
     <head>
@@ -24,10 +31,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="/payments?command=show_account">Main</a>
+                            <a class="nav-link" href="/payments?command=show_account">${main}</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" href="/payments?command=signout">Log Out</a>
+                            <a class="nav-link" href="/payments?command=signout">${logout}</a>
                         </li>
                     </ul>
                     <c:choose>
@@ -52,20 +59,20 @@
             </div>
         </nav>
         <main class="account-edit" align="center">
-            <a href="/payments?command=block_user"><button class="btn btn-primary" >Delete User</button></a>
+            <a href="/payments?command=block_user"><button class="btn btn-primary" >${deleteuser}</button></a>
             <form action="/payments?command=commit_account_changes" method="post" autocomplete="off">
-                <h1 class="h3 mb-3">Please edit your account</h1>
+                <h1 class="h3 mb-3">${editaccount}</h1>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name" value="${requestScope.account.getName()}">
-                    <label for="floatingInput">name</label>
+                    <label for="floatingInput">${name}</label>
                 </div>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="surname" value="${requestScope.account.getSurname()}">
-                    <label for="floatingInput">surname</label>
+                    <label for="floatingInput">${surname}</label>
                 </div>
                 <input type="hidden" name="accountId" value="${requestScope.account.getId()}">
                 <br/>
-                <h3>Choose new profile picture</h3>
+                <h3>${choosenewprofilepicture}</h3>
                 <div class="container">
                     <div class="row">
                         <div class="col">
@@ -134,7 +141,7 @@
                     </div>
                 </div>
                 <br/>
-                <button type="submit" class="btn btn-primary" >Save changes</button>
+                <button type="submit" class="btn btn-primary" >${savechanges}</button>
             </form>
         </main>
     </body>
