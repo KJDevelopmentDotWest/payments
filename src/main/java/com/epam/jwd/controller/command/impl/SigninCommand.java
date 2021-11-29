@@ -21,7 +21,7 @@ public class SigninCommand implements Command {
     private static final Logger logger = LogManager.getLogger(SigninCommand.class);
 
     private static final String SHOW_USER_MAIN_PAGE_URL = "/payments?command=show_account";
-    private static final String SHOW_ADMIN_MAIN_PAGE_URL = "/payments?command=show_admin_payments";
+    private static final String SHOW_ADMIN_MAIN_PAGE_URL = "/payments?command=show_admin_users";
 
 
     @Override
