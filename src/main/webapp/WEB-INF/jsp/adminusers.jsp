@@ -13,9 +13,13 @@
 <fmt:message bundle="${loc}" key="login" var="login"/>
 <fmt:message bundle="${loc}" key="role" var="role"/>
 <fmt:message bundle="${loc}" key="active" var="active"/>
+<fmt:message bundle="${loc}" key="users" var="usersstring"/>
 <fmt:message bundle="${loc}" key="profilepictureid" var="profilepictureid"/>
 <fmt:message bundle="${loc}" key="first" var="first"/>
 <fmt:message bundle="${loc}" key="last" var="last"/>
+<fmt:message bundle="${loc}" key="creditcards" var="creditcards"/>
+<fmt:message bundle="${loc}" key="payments" var="payments"/>
+<fmt:message bundle="${loc}" key="logout" var="logout"/>
 
 <html>
     <head>
@@ -33,8 +37,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item disabled">
-                            <a class="nav-link active">${users}</a>
-                        </li>
+                                                    <a class="nav-link active">${usersstring}</a>
+                                                </li>
                         <li class="nav-item">
                              <a class="nav-link" href="/payments?command=show_admin_credit_cards&currentPage=1">${creditcards}</a>
                         </li>
