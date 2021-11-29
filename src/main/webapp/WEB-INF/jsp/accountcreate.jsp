@@ -5,6 +5,13 @@
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale" var="loc"/>
+<fmt:message bundle="${loc}" key="main" var="main"/>
+<fmt:message bundle="${loc}" key="logout" var="logout"/>
+<fmt:message bundle="${loc}" key="name" var="name"/>
+<fmt:message bundle="${loc}" key="filldata" var="filldata"/>
+<fmt:message bundle="${loc}" key="surname" var="surname"/>
+<fmt:message bundle="${loc}" key="saveaccount" var="saveaccount"/>
+<fmt:message bundle="${loc}" key="chooseprofilepicture" var="chooseprofilepicture"/>
 
 <html>
     <head>
@@ -23,10 +30,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="/payments?command=show_account">Main</a>
+                            <a class="nav-link" href="/payments?command=show_account">${main}</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" href="/payments?command=signout">Log Out</a>
+                            <a class="nav-link" href="/payments?command=signout">${logout}</a>
                         </li>
                     </ul>
                     <c:choose>
@@ -50,19 +57,19 @@
                 </div>
             </div>
         </nav>
-        <main class="account-edit form-margin-navbar" align="center">
+        <main class="account-edit" align="center">
             <form action="/payments?command=commit_account_creation" method="post" autocomplete="off">
-                <h1 class="h3 mb-3">Create your account</h1>
+                <h1 class="h3 mb-3">${filldata}</h1>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">
-                    <label for="floatingInput">name</label>
+                    <label for="floatingInput">${name}</label>
                 </div>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="surname">
-                    <label for="floatingInput">surname</label>
+                    <label for="floatingInput">${surname}</label>
                 </div>
                 <br/>
-                <h3>Choose profile picture</h3>
+                <h3>${chooseprofilepicture}</h3>
                 <div class="container">
                     <div class="row">
                         <div class="col">
@@ -131,7 +138,7 @@
                     </div>
                 </div>
                 <br/>
-                <button type="submit" class="btn btn-primary" >Create account</button>
+                <button type="submit" class="btn btn-primary" >${saveaccount}</button>
             </form>
         </main>
     </body>

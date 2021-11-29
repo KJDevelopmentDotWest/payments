@@ -33,7 +33,7 @@ public class ShowEditPaymentCommand implements Command {
                 return new CommandResponse(request.getContextPath() + ERROR_PAGE_URL, true);
             }
         } catch (ServiceException e) {
-            logger.error(e);
+            logger.error(e.getErrorCode());
         }
 
         request.setAttribute("payment", payment);

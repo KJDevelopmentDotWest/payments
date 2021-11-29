@@ -50,11 +50,11 @@ public class CommitPaymentChangesCommand implements Command {
                 request.setAttribute("creditcards",
                         new CreditCardService().getByUserId(paymentDto.getUserId()));
             } catch (ServiceException e){
+                logger.error(e);
                 if (e.getErrorCode() == ExceptionCode.CREDIT_CARD_IS_NOT_FOUND_EXCEPTION_CODE){
                     request.setAttribute("creditcards",
                             null);
                 } else {
-                    logger.error(e);
                     return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
                 }
             }
