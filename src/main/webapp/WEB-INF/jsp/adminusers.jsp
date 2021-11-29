@@ -6,6 +6,17 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale" var="loc"/>
 
+
+<fmt:message bundle="${loc}" key="name" var="name"/>
+<fmt:message bundle="${loc}" key="surname" var="surname"/>
+<fmt:message bundle="${loc}" key="id" var="id"/>
+<fmt:message bundle="${loc}" key="login" var="login"/>
+<fmt:message bundle="${loc}" key="role" var="role"/>
+<fmt:message bundle="${loc}" key="active" var="active"/>
+<fmt:message bundle="${loc}" key="profilepictureid" var="profilepictureid"/>
+<fmt:message bundle="${loc}" key="first" var="first"/>
+<fmt:message bundle="${loc}" key="last" var="last"/>
+
 <html>
     <head>
         <title>Credit Cards</title>
@@ -22,16 +33,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item disabled">
-                            <a class="nav-link active">Users</a>
+                            <a class="nav-link active">${users}</a>
                         </li>
                         <li class="nav-item">
-                             <a class="nav-link" href="/payments?command=show_admin_credit_cards&currentPage=1">Credit Cards</a>
+                             <a class="nav-link" href="/payments?command=show_admin_credit_cards&currentPage=1">${creditcards}</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" href="/payments?command=show_admin_payments&currentPage=1">Payments</a>
+                            <a class="nav-link" href="/payments?command=show_admin_payments&currentPage=1">${payments}</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" href="/payments?command=signout">Log Out</a>
+                            <a class="nav-link" href="/payments?command=signout">${logout}</a>
                         </li>
                     </ul>
                     <c:choose>
@@ -62,13 +73,13 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=id" class="active">Id</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=login" class="active">Login</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=role" class="active">Role</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=active" class="active">Active</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=name" class="active">Name</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=surname" class="active">Surname</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=profilePictureId" class="active">Profile Picture Id</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=id" class="active">${id}</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=login" class="active">${login}</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=role" class="active">${role}</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=active" class="active">${active}</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=name" class="active">${name}</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=surname" class="active">${surname}</a></th>
+                        <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=profilePictureId" class="active">${profilepictureid}</a></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,7 +97,7 @@
                 <nav>
                     <ul class="pagination justify-content-center">
                         <li class="page-item disabled">
-                            <a class="page-link">First</a>
+                            <a class="page-link">${first}</a>
                         </li>
                         <li class="page-item active" aria-current="page">
                             <a class="page-link">1</a>
@@ -95,7 +106,7 @@
                             <a class="page-link" href="/payments?command=show_admin_users&currentPage=2&sortBy=${requestScope.sortBy}">2</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">Last</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${last}</a>
                         </li>
                     </ul>
                 </nav>
@@ -105,7 +116,7 @@
                 <nav>
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=1&sortBy=${requestScope.sortBy}">First</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=1&sortBy=${requestScope.sortBy}">${first}</a>
                         </li>
                         <li class="page-item">
                             <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.lastPage-1}&sortBy=${requestScope.sortBy}">${requestScope.lastPage-1}</a>
@@ -114,7 +125,7 @@
                             <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${requestScope.lastPage}</a>
                         </li>
                         <li class="page-item disabled">
-                            <a class="page-link">Last</a>
+                            <a class="page-link">${last}</a>
                         </li>
                     </ul>
                 </nav>
@@ -124,13 +135,13 @@
                 <nav>
                     <ul class="pagination justify-content-center">
                         <li class="page-item disabled">
-                            <a class="page-link">First</a>
+                            <a class="page-link">${first}</a>
                         </li>
                         <li class="page-item active">
                             <a class="page-link">1</a>
                         </li>
                         <li class="page-item disabled">
-                            <a class="page-link">Last</a>
+                            <a class="page-link">${last}</a>
                         </li>
                     </ul>
                 </nav>
@@ -140,7 +151,7 @@
                 <nav>
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=1&sortBy=${requestScope.sortBy}">First</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=1&sortBy=${requestScope.sortBy}">${first}</a>
                         </li>
                         <li class="page-item">
                             <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage-1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage-1}</a>
@@ -153,7 +164,7 @@
                             <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage+1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage+1}</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">Last</a>
+                            <a class="page-link" href="/payments?command=show_admin_users&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${last}</a>
                         </li>
                     </ul>
                 </nav>
