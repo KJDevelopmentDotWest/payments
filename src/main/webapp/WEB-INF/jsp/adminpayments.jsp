@@ -32,7 +32,7 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
-    <body>
+    <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -176,5 +176,6 @@
         <c:if test="${requestScope.payments.size() == 0 || requestScope.payments == null}">
             <h3>{adminhavenopayments}</h3>
         </c:if>
+        <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 </html>

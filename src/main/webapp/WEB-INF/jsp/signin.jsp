@@ -16,9 +16,10 @@
         <style><%@include file="/WEB-INF/css/bootstrap.min.css"%></style>
         <style><%@include file="/WEB-INF/css/core.css"%></style>
         <style><%@include file="/WEB-INF/css/navbar.css"%></style>
+        <style><%@include file="/WEB-INF/css/footers.css"%></style>
     </head>
 
-    <body >
+    <body class="d-flex flex-column h-100">
         <form class="top-right" action="/payments?command=change_language" method="post" autocomplete="off">
             <div class="btn-group" role="group"action="/payments?command=signout">
                 <button type="submit" class="btn btn-primary" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>
@@ -40,5 +41,22 @@
                 <button class="w-100 btn btn-lg btn-primary" type="submit">${signin}</button>
             </form>
         </main>
+
+<div class="container">
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="col-md-4 d-flex align-items-center">
+      <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+      </a>
+      <span class="text-muted">&copy; 2021 Company, Inc</span>
+    </div>
+
+    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
+      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
+      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
+    </ul>
+  </footer>
+</div>
     </body>
 </html>
