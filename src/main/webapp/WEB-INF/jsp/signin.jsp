@@ -19,7 +19,7 @@
         <style><%@include file="/WEB-INF/css/footers.css"%></style>
     </head>
 
-    <body class="d-flex flex-column h-100">
+    <body class="d-flex flex-column h-100 primary-margin">
         <form class="top-right" action="/payments?command=change_language" method="post" autocomplete="off">
             <div class="btn-group" role="group"action="/payments?command=signout">
                 <button type="submit" class="btn btn-primary" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>

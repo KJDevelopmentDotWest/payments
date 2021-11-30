@@ -31,7 +31,7 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
-    <body class="d-flex flex-column h-100 ">
+    <body class="d-flex flex-column h-100 primary-margin">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -76,7 +76,7 @@
 
         <c:if test="${requestScope.creditcards.size() > 0}">
 
-            <table class="table primary-margin">
+            <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
