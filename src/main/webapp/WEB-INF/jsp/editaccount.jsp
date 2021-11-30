@@ -144,5 +144,6 @@
                 <button type="submit" class="btn btn-primary" >${savechanges}</button>
             </form>
         </main>
+        <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 <html>

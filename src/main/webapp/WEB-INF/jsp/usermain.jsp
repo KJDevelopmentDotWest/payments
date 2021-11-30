@@ -71,8 +71,7 @@
             <c:set var="user" scope="page" value="${UserService().getById(sessionScope.id)}"/>
             <c:if test="${user.accountId != null}">
                 <c:set var="account" scope="page" value="${AccountService().getById(user.getAccountId())}"/>
-                <section class="vh-100" >
-                    <div class="container py-5 h-100">
+                <section>
                         <div class="row d-flex justify-content-center align-items-center ">
                             <div class="col-md-12 col-xl-4">
                                 <div class="card" style="border-radius: 15px;">
@@ -90,7 +89,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </section>
             </c:if>
             <c:if test="${user.accountId == null}">
@@ -99,5 +97,6 @@
                 </h3>
             </c:if>
         </div>
+        <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 </html>

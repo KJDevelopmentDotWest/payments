@@ -46,5 +46,6 @@
                 <button type="submit" class="btn btn-primary">${create}</button>
             </form>
         </main>
+        <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 <html>

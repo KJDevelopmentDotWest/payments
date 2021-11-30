@@ -87,5 +87,6 @@
         <c:if test="${requestScope.creditcards == null}">
             <h4>${usernocreditcards} <a href="/payments?command=show_credit_cards"> ${addcreditcard}</a></h4>
         </c:if>
+        <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 </html>

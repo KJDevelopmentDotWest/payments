@@ -28,3 +28,7 @@
     top:10px;
     right: 10px;
  }
+
+.primary-margin{
+    margin:0 50px 0 50px;//top right bottom left
+}

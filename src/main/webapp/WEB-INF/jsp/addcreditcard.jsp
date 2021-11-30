@@ -68,5 +68,6 @@
                 <button class="w-100 btn btn-lg btn-primary" type="submit">${addcreditcard}</button>
             </form>
         </main>
+        <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 <html>
