@@ -89,14 +89,14 @@
                     <h1 class="h3 mb-3">${filldata}</h1>
                     <div class="form-floating">
                         <input type="text" class="form-control" id="name" placeholder="Password" name="name" oninput="validateform()">
-                        <label for="floatingInput">${name}</label>
+                        <label for="name">${name}</label>
                         <div class="hidden error-message" id="nametooshort">
                             ${nametooshort}
                         </div>
                     </div>
                     <div class="form-floating">
                         <input type="text" class="form-control" id="surname" placeholder="Password" name="surname" oninput="validateform()">
-                        <label for="floatingInput">${surname}</label>
+                        <label for="surname">${surname}</label>
                         <div class="hidden error-message" id="surnametooshort">
                             ${surnametooshort}
                         </div>

@@ -12,6 +12,8 @@
 <fmt:message bundle="${loc}" key="savechanges" var="savechanges"/>
 <fmt:message bundle="${loc}" key="choosenewprofilepicture" var="choosenewprofilepicture"/>
 <fmt:message bundle="${loc}" key="deleteuser" var="deleteuser"/>
+<fmt:message bundle="${loc}" key="nametooshort" var="nametooshort"/>
+<fmt:message bundle="${loc}" key="surnametooshort" var="surnametooshort"/>
 
 <html>
     <head>
@@ -22,8 +24,31 @@
         <style><%@include file="/WEB-INF/css/grid.css"%></style>
         <style><%@include file="/WEB-INF/css/core.css"%></style>
         <style><%@include file="/WEB-INF/css/navbar.css"%></style>
-
     </head>
+
+    <script>
+        function validateform(){
+        var name = document.getElementById("name").value;
+        var surname = document.getElementById("surname").value;
+        var nameFlag = (name == null || name == "" || name.length < 2);
+        var surnameFlag = (surname == null || surname == "" || surname.length < 2);
+            if(nameFlag){
+                document.getElementById("nametooshort").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("nametooshort").style.display = "none";
+            }
+            if (surnameFlag){
+                document.getElementById("surnametooshort").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("surnametooshort").style.display = "none";
+            }
+            if(!(nameFlag || surnameFlag)){
+                document.getElementById("submitbutton").disabled = false;
+            }
+        }
+    </script>
 
     <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -64,12 +89,18 @@
                 <form action="/payments?command=commit_account_changes" method="post" autocomplete="off">
                     <h1 class="h3 mb-3">${editaccount}</h1>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name" value="${requestScope.account.getName()}">
-                        <label for="floatingInput">${name}</label>
+                        <input type="text" class="form-control" id="name" placeholder="Password" name="name" value="${requestScope.account.getName()}" oninput="validateform()">
+                        <label for="name">${name}</label>
+                        <div class="hidden error-message" id="nametooshort">
+                            ${nametooshort}
+                        </div>
                     </div>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="surname" value="${requestScope.account.getSurname()}">
-                        <label for="floatingInput">${surname}</label>
+                        <input type="text" class="form-control" id="surname" placeholder="Password" name="surname" value="${requestScope.account.getSurname()}" oninput="validateform()">
+                        <label for="surname">${surname}</label>
+                        <div class="hidden error-message" id="surnametooshort">
+                            ${surnametooshort}
+                        </div>
                     </div>
                     <input type="hidden" name="accountId" value="${requestScope.account.getId()}">
                     <br/>
@@ -142,7 +173,7 @@
                         </div>
                     </div>
                     <br/>
-                    <button type="submit" class="btn btn-primary" >${savechanges}</button>
+                    <button id="submitbutton" type="submit" class="btn btn-primary" >${savechanges}</button>
                 </form>
             </main>
         </div>

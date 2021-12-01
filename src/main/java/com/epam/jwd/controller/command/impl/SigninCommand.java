@@ -29,7 +29,7 @@ public class SigninCommand implements Command {
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
 
         logger.info("command " + SigninCommand.class);
-
+        //todo restricted access to blocked account
         UserService service = new UserService();
         try {
             UserDto userDto = service.getByLogin(request.getParameter("login"));
