@@ -9,6 +9,8 @@
 <fmt:message bundle="${loc}" key="number" var="number"/>
 <fmt:message bundle="${loc}" key="filldata" var="filldata"/>
 <fmt:message bundle="${loc}" key="addcreditcard" var="addcreditcard"/>
+<fmt:message bundle="${loc}" key="nametooshort" var="nametooshort"/>
+<fmt:message bundle="${loc}" key="numberwronglength" var="numberwronglength"/>
 
 <html>
     <head>
@@ -20,6 +22,30 @@
         <style><%@include file="/WEB-INF/css/navbar.css"%></style>
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
+
+    <script>
+        function validateform(){
+        var name = document.getElementById("name").value;
+        var number = document.getElementById("number").value;
+        var nameFlag = (name == null || name == "" || name.length < 2);
+        var numberFlag = (number == null || number == "" || number.length != 16 || Number(number) < 0 || !Number.isInteger(Number(number)));
+            if(nameFlag){
+                document.getElementById("nametooshort").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("nametooshort").style.display = "none";
+            }
+            if (numberFlag){
+                document.getElementById("numberwronglength").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("numberwronglength").style.display = "none";
+            }
+            if(!(nameFlag || numberFlag)){
+                document.getElementById("submitbutton").disabled = false;
+            }
+        }
+    </script>
 
     <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -59,14 +85,20 @@
                 <form action="/payments?command=add_credit_card" method="post" autocomplete="off">
                     <h1 class="h5 mb-3">${filldata}</h1>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">
-                        <label for="floatingInput">${name}</label>
+                        <input type="text" class="form-control" id="name" placeholder="Password" name="name" oninput="validateform()">
+                        <label for="name">${name}</label>
+                        <div class="hidden error-message" id="nametooshort">
+                            ${nametooshort}
+                        </div>
                     </div>
                     <div class="form-floating">
-                        <input type="number" class="form-control" id="floatingInput" placeholder="Password" name="cardNumber">
-                        <label for="floatingInput">${number}</label>
+                        <input type="number" class="form-control" id="number" placeholder="Password" name="cardNumber" oninput="validateform()">
+                        <label for="number">${number}</label>
+                        <div class="hidden error-message" id="numberwronglength">
+                            ${numberwronglength}
+                        </div>
                     </div>
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">${addcreditcard}</button>
+                    <button id="submitbutton" class="w-100 btn btn-lg btn-primary" type="submit">${addcreditcard}</button>
                 </form>
             </main>
         </div>
