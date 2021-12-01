@@ -23,8 +23,8 @@
 
     <script>
         function validateform(){
-        var login = document.getElementById("floatingInput").value;
-        var password = document.getElementById("floatingPassword").value;
+        var login = document.getElementById("login").value;
+        var password = document.getElementById("password").value;
         var loginFlag = (login == null || login == "" || login.length < 3);
         var passwordFlag = (password == null || password == "" || password.length < 5);
             if(passwordFlag){
@@ -57,15 +57,15 @@
                 <form id= "form" action="/payments?command=signin" method="post">
                     <h1 class="h3 mb-3 fw-normal">${greeting}</h1>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="Login" name="login"  oninput="validateform()">
-                        <label for="floatingInput">${login}</label>
+                        <input type="text" class="form-control" id="login" placeholder="Login" name="login"  oninput="validateform()">
+                        <label for="login">${login}</label>
                         <div class="hidden error-message" id="logintooshort">
                             ${logintooshort}
                         </div>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"  oninput="validateform()">
-                        <label for="floatingPassword">${password}</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password" name="password"  oninput="validateform()">
+                        <label for="password">${password}</label>
                         <div class="hidden error-message" id="passwordtooshort">
                             ${passwordtooshort}
                         </div>

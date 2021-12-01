@@ -7,6 +7,8 @@
 <fmt:message bundle="${loc}" key="password" var="password"/>
 <fmt:message bundle="${loc}" key="filldata" var="filldata"/>
 <fmt:message bundle="${loc}" key="create" var="create"/>
+<fmt:message bundle="${loc}" key="logintooshort" var="logintooshort"/>
+<fmt:message bundle="${loc}" key="passwordtooshort" var="passwordtooshort"/>
 
 <html>
     <head>
@@ -18,6 +20,30 @@
         <style><%@include file="/WEB-INF/css/navbar.css"%></style>
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
+
+    <script>
+        function validateform(){
+        var login = document.getElementById("login").value;
+        var password = document.getElementById("password").value;
+        var loginFlag = (login == null || login == "" || login.length < 3);
+        var passwordFlag = (password == null || password == "" || password.length < 5);
+            if(passwordFlag){
+                document.getElementById("passwordtooshort").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("passwordtooshort").style.display = "none";
+            }
+            if (loginFlag){
+                document.getElementById("logintooshort").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("logintooshort").style.display = "none";
+            }
+            if(!(loginFlag || passwordFlag)){
+                document.getElementById("submitbutton").disabled = false;
+            }
+        }
+    </script>
 
     <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -37,14 +63,20 @@
                 <form action="/payments?command=commit_user_creation" method="post" autocomplete="off">
                     <h1 class="h3 mb-3">${filldata}</h1>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="login">
-                        <label for="floatingInput">${login}</label>
+                        <input type="text" class="form-control" id="login" placeholder="Password" name="login" oninput="validateform()">
+                        <label for="login">${login}</label>
+                        <div class="hidden error-message" id="logintooshort">
+                            ${logintooshort}
+                        </div>
                     </div>
                     <div class="form-floating">
-                        <input type="Password" class="form-control" id="floatingInput" placeholder="Password" name="password">
-                        <label for="floatingInput">${password}</label>
+                        <input type="Password" class="form-control" id="password" placeholder="Password" name="password" oninput="validateform()">
+                        <label for="password">${password}</label>
+                        <div class="hidden error-message" id="passwordtooshort">
+                            ${passwordtooshort}
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">${create}</button>
+                    <button id="submitbutton" type="submit" class="btn btn-primary">${create}</button>
                 </form>
             </main>
         </div>
