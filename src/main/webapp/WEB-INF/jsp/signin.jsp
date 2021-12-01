@@ -8,6 +8,8 @@
 <fmt:message bundle="${loc}" key="newto" var="newto"/>
 <fmt:message bundle="${loc}" key="signin" var="signin"/>
 <fmt:message bundle="${loc}" key="signup" var="signup"/>
+<fmt:message bundle="${loc}" key="logintoochort" var="logintoochort"/>
+<fmt:message bundle="${loc}" key="passwordtoochort" var="passwordtoochort"/>
 
 <html>
     <head>
@@ -19,6 +21,30 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
+    <script>
+        function validateform(){
+        var login = document.getElementById("floatingInput").value;
+        var password = document.getElementById("floatingPassword").value;
+        var loginFlag = (login == null || login == "" || login.length < 3);
+        var passwordFlag = (password == null || password == "" || password.length < 5);
+            if(passwordFlag){
+                document.getElementById("passwordtoochort").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("passwordtoochort").style.display = "none";
+            }
+            if (loginFlag){
+                document.getElementById("logintooshort").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("logintooshort").style.display = "none";
+            }
+            if(!(loginFlag || passwordFlag)){
+                document.getElementById("submitbutton").disabled = false;
+            }
+        }
+    </script>
+
     <body class="d-flex flex-column h-100">
         <form class="top-right" action="/payments?command=change_language" method="post" autocomplete="off">
             <div class="btn-group" role="group"action="/payments?command=signout">
@@ -28,18 +54,24 @@
         </form>
         <div class="primary-margin">
             <main class="form-signin form-margin-no-navbar" align="center">
-                <form action="/payments?command=signin" method="post">
+                <form id= "form" action="/payments?command=signin" method="post">
                     <h1 class="h3 mb-3 fw-normal">${greeting}</h1>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="Login" name="login">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Login" name="login"  oninput="validateform()">
                         <label for="floatingInput">${login}</label>
+                        <div class="hidden error-message" id="logintooshort">
+                            ${logintoochort}
+                        </div>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"  oninput="validateform()">
                         <label for="floatingPassword">${password}</label>
+                        <div class="hidden error-message" id="passwordtoochort">
+                            ${passwordtoochort}
+                        </div>
                     </div>
                     ${newto} <a href="/payments?command=show_create_user">${signup}</a>
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">${signin}</button>
+                    <button id="submitbutton" class="w-100 btn btn-lg btn-primary" type="submit">${signin}</button>
                 </form>
             </main>
         </div>
