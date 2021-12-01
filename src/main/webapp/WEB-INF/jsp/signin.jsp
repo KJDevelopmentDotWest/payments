@@ -8,8 +8,8 @@
 <fmt:message bundle="${loc}" key="newto" var="newto"/>
 <fmt:message bundle="${loc}" key="signin" var="signin"/>
 <fmt:message bundle="${loc}" key="signup" var="signup"/>
-<fmt:message bundle="${loc}" key="logintoochort" var="logintoochort"/>
-<fmt:message bundle="${loc}" key="passwordtoochort" var="passwordtoochort"/>
+<fmt:message bundle="${loc}" key="logintooshort" var="logintooshort"/>
+<fmt:message bundle="${loc}" key="passwordtooshort" var="passwordtooshort"/>
 
 <html>
     <head>
@@ -28,10 +28,10 @@
         var loginFlag = (login == null || login == "" || login.length < 3);
         var passwordFlag = (password == null || password == "" || password.length < 5);
             if(passwordFlag){
-                document.getElementById("passwordtoochort").style.display = "flex";
+                document.getElementById("passwordtooshort").style.display = "flex";
                 document.getElementById("submitbutton").disabled = true;
             } else {
-                document.getElementById("passwordtoochort").style.display = "none";
+                document.getElementById("passwordtooshort").style.display = "none";
             }
             if (loginFlag){
                 document.getElementById("logintooshort").style.display = "flex";
@@ -60,14 +60,14 @@
                         <input type="text" class="form-control" id="floatingInput" placeholder="Login" name="login"  oninput="validateform()">
                         <label for="floatingInput">${login}</label>
                         <div class="hidden error-message" id="logintooshort">
-                            ${logintoochort}
+                            ${logintooshort}
                         </div>
                     </div>
                     <div class="form-floating">
                         <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"  oninput="validateform()">
                         <label for="floatingPassword">${password}</label>
-                        <div class="hidden error-message" id="passwordtoochort">
-                            ${passwordtoochort}
+                        <div class="hidden error-message" id="passwordtooshort">
+                            ${passwordtooshort}
                         </div>
                     </div>
                     ${newto} <a href="/payments?command=show_create_user">${signup}</a>

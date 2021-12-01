@@ -43,6 +43,7 @@
 }
 
 .error-message{
+    font-size: 14px;
     align:left
     margin-left:10px;
     color:red
