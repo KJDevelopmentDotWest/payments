@@ -24,7 +24,7 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
-    <body class="d-flex flex-column h-100 primary-margin">
+    <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -57,90 +57,92 @@
                 </div>
             </div>
         </nav>
-        <main class="account-edit" align="center">
-            <form action="/payments?command=commit_account_creation" method="post" autocomplete="off">
-                <h1 class="h3 mb-3">${filldata}</h1>
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">
-                    <label for="floatingInput">${name}</label>
-                </div>
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="surname">
-                    <label for="floatingInput">${surname}</label>
-                </div>
-                <br/>
-                <h3>${chooseprofilepicture}</h3>
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <input class="btn btn-primary" type="radio" name="pictureId" value="1">
-                                <m:profileimage width="100" height="100" pictureId="${1}"/>
-                            </input>
+        <div class="primary-margin">
+            <main class="account-edit" align="center">
+                <form action="/payments?command=commit_account_creation" method="post" autocomplete="off">
+                    <h1 class="h3 mb-3">${filldata}</h1>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">
+                        <label for="floatingInput">${name}</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="surname">
+                        <label for="floatingInput">${surname}</label>
+                    </div>
+                    <br/>
+                    <h3>${chooseprofilepicture}</h3>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input class="btn btn-primary" type="radio" name="pictureId" value="1">
+                                    <m:profileimage width="100" height="100" pictureId="${1}"/>
+                                </input>
+                            </div>
+                            <div class="col">
+                                <input class="btn btn-primary" type="radio" name="pictureId" value="2">
+                                    <m:profileimage width="100" height="100" pictureId="${2}"/>
+                                </input>
+                            </div>
+                            <div class="col">
+                                <input class="btn btn-primary" type="radio" name="pictureId" value="3">
+                                    <m:profileimage width="100" height="100" pictureId="${3}"/>
+                                </input>
+                            </div>
+                            <div class="col">
+                                <input class="btn btn-primary" type="radio" name="pictureId" value="4">
+                                    <m:profileimage width="100" height="100" pictureId="${4}"/>
+                                </input>
+                            </div>
+                            <div class="col">
+                                <input class="btn btn-primary" type="radio" name="pictureId" value="5">
+                                    <m:profileimage width="100" height="100" pictureId="${5}"/>
+                                </input>
+                            </div>
+                            <div class="col">
+                                <input class="btn btn-primary" type="radio" name="pictureId" value="6">
+                                    <m:profileimage width="100" height="100" pictureId="${6}"/>
+                                </input>
+                            </div>
                         </div>
-                        <div class="col">
-                            <input class="btn btn-primary" type="radio" name="pictureId" value="2">
-                                <m:profileimage width="100" height="100" pictureId="${2}"/>
-                            </input>
-                        </div>
-                        <div class="col">
-                            <input class="btn btn-primary" type="radio" name="pictureId" value="3">
-                                <m:profileimage width="100" height="100" pictureId="${3}"/>
-                            </input>
-                        </div>
-                        <div class="col">
-                            <input class="btn btn-primary" type="radio" name="pictureId" value="4">
-                                <m:profileimage width="100" height="100" pictureId="${4}"/>
-                            </input>
-                        </div>
-                        <div class="col">
-                            <input class="btn btn-primary" type="radio" name="pictureId" value="5">
-                                <m:profileimage width="100" height="100" pictureId="${5}"/>
-                            </input>
-                        </div>
-                        <div class="col">
-                            <input class="btn btn-primary" type="radio" name="pictureId" value="6">
-                                <m:profileimage width="100" height="100" pictureId="${6}"/>
-                            </input>
+                        <br/>
+                        <div class="row">
+                            <div class="col">
+                                <input class="btn btn-primary" type="radio" name="pictureId" value="7">
+                                    <m:profileimage width="100" height="100" pictureId="${7}"/>
+                                </input>
+                            </div>
+                            <div class="col">
+                                <input class="btn btn-primary" type="radio" name="pictureId" value="8">
+                                    <m:profileimage width="100" height="100" pictureId="${8}"/>
+                                </input>
+                            </div>
+                            <div class="col">
+                                <input class="btn btn-primary" type="radio" name="pictureId" value="9">
+                                    <m:profileimage width="100" height="100" pictureId="${9}"/>
+                                </input>
+                            </div>
+                            <div class="col">
+                                <input class="btn btn-primary" type="radio" name="pictureId" value="10">
+                                    <m:profileimage width="100" height="100" pictureId="${10}"/>
+                                </input>
+                            </div>
+                            <div class="col">
+                                <input class="btn btn-primary" type="radio" name="pictureId" value="11">
+                                    <m:profileimage width="100" height="100" pictureId="${11}"/>
+                                </input>
+                            </div>
+                            <div class="col">
+                                <input class="btn btn-primary" type="radio" name="pictureId" value="12">
+                                    <m:profileimage width="100" height="100" pictureId="${12}"/>
+                                </input>
+                            </div>
                         </div>
                     </div>
                     <br/>
-                    <div class="row">
-                        <div class="col">
-                            <input class="btn btn-primary" type="radio" name="pictureId" value="7">
-                                <m:profileimage width="100" height="100" pictureId="${7}"/>
-                            </input>
-                        </div>
-                        <div class="col">
-                            <input class="btn btn-primary" type="radio" name="pictureId" value="8">
-                                <m:profileimage width="100" height="100" pictureId="${8}"/>
-                            </input>
-                        </div>
-                        <div class="col">
-                            <input class="btn btn-primary" type="radio" name="pictureId" value="9">
-                                <m:profileimage width="100" height="100" pictureId="${9}"/>
-                            </input>
-                        </div>
-                        <div class="col">
-                            <input class="btn btn-primary" type="radio" name="pictureId" value="10">
-                                <m:profileimage width="100" height="100" pictureId="${10}"/>
-                            </input>
-                        </div>
-                        <div class="col">
-                            <input class="btn btn-primary" type="radio" name="pictureId" value="11">
-                                <m:profileimage width="100" height="100" pictureId="${11}"/>
-                            </input>
-                        </div>
-                        <div class="col">
-                            <input class="btn btn-primary" type="radio" name="pictureId" value="12">
-                                <m:profileimage width="100" height="100" pictureId="${12}"/>
-                            </input>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <button type="submit" class="btn btn-primary" >${saveaccount}</button>
-            </form>
-        </main>
+                    <button type="submit" class="btn btn-primary" >${saveaccount}</button>
+                </form>
+            </main>
+        </div>
         <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 <html>

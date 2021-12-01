@@ -23,7 +23,7 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
-    <body class="d-flex flex-column h-100 primary-margin">
+   <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light" >
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -56,30 +56,32 @@
                 </div>
             </div>
         </nav>
-        <main class="form-signin form-margin-navbar" align="center" display="grid">
-            <form action="/payments?command=commit_payment_creation" method="post" autocomplete="off" vertical-align="bottom">
-                <h1 class="h3 mb-3">${filldata}</h1>
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">
-                    <label for="floatingInput">${name}</label>
-                </div>
-                <div class="form-floating">
-                    <input type="number" class="form-control" id="floatingInput" placeholder="Password" name="price">
-                    <label for="floatingInput">${price}</label>
-                </div>
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="destination">
-                    <label for="floatingPassword">${destination}</label>
-                </div>
-                <button type="submit" class="btn btn-primary w-100" name="action" value="checkout">${savepayment}</button>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="action" value="checkout" id="flexCheckDefault">
-                  <label class="form-check-label" for="flexCheckDefault">
-                    ${proceedtocheckout}
-                  </label>
-                </div>
-            </form>
-        </main>
+        <div class="primary-margin">
+            <main class="form-signin form-margin-navbar" align="center" display="grid">
+                <form action="/payments?command=commit_payment_creation" method="post" autocomplete="off" vertical-align="bottom">
+                    <h1 class="h3 mb-3">${filldata}</h1>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">
+                        <label for="floatingInput">${name}</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="floatingInput" placeholder="Password" name="price">
+                        <label for="floatingInput">${price}</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="destination">
+                        <label for="floatingPassword">${destination}</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" name="action" value="checkout">${savepayment}</button>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="action" value="checkout" id="flexCheckDefault">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        ${proceedtocheckout}
+                      </label>
+                    </div>
+                </form>
+            </main>
+        </div>
         <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 <html>

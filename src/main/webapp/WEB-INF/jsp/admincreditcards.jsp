@@ -31,7 +31,7 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
-    <body class="d-flex flex-column h-100 primary-margin">
+    <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -70,113 +70,114 @@
                 </div>
             </div>
         </nav>
+        <div class="primary-margin">
+            <c:if test="${requestScope.creditcards.size() > 0}">
 
-        <c:if test="${requestScope.creditcards.size() > 0}">
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=id" class="active">${id}</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=userId" class="active">${userid}</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=name" class="active">${name}</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=number" class="active">${number}</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=date" class="active">${date}</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=balance" class="active">${balance}</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=state" class="active">${state}</a></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="i" begin="0" end="${requestScope.creditcards.size()-1}">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
-                            <m:admincreditcardoutput creditCardDto="${requestScope.creditcards.get(i)}"/>
-                            <td></td>
+                            <th scope="col">#</th>
+                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=id" class="active">${id}</a></th>
+                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=userId" class="active">${userid}</a></th>
+                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=name" class="active">${name}</a></th>
+                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=number" class="active">${number}</a></th>
+                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=date" class="active">${date}</a></th>
+                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=balance" class="active">${balance}</a></th>
+                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=state" class="active">${state}</a></th>
                         </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="i" begin="0" end="${requestScope.creditcards.size()-1}">
+                            <tr>
+                                <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
+                                <m:admincreditcardoutput creditCardDto="${requestScope.creditcards.get(i)}"/>
+                                <td></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
 
-            <c:if test="${requestScope.currentPage == 1 && requestScope.lastPage != 1}">
-                <nav>
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <a class="page-link">${first}</a>
-                        </li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=2&sortBy=${requestScope.sortBy}">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${last}</a>
-                        </li>
-                    </ul>
-                </nav>
+                <c:if test="${requestScope.currentPage == 1 && requestScope.lastPage != 1}">
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link">${first}</a>
+                            </li>
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=2&sortBy=${requestScope.sortBy}">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${last}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </c:if>
+
+                <c:if test="${requestScope.currentPage == requestScope.lastPage && requestScope.lastPage != 1}">
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=1&sortBy=${requestScope.sortBy}">${first}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.lastPage-1}&sortBy=${requestScope.sortBy}">${requestScope.lastPage-1}</a>
+                            </li>
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${requestScope.lastPage}</a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link">${last}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </c:if>
+
+                <c:if test="${requestScope.lastPage == 1}">
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link">${first}</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link">1</a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link">${last}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </c:if>
+
+                <c:if test="${requestScope.currentPage > 1 && requestScope.currentPage < requestScope.lastPage}">
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=1&sortBy=${requestScope.sortBy}">${first}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage-1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage-1}</a>
+
+                            </li>
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=${requestScope.sortBy}">${requestScope.currentPage}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage+1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage+1}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${last}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </c:if>
             </c:if>
-
-            <c:if test="${requestScope.currentPage == requestScope.lastPage && requestScope.lastPage != 1}">
-                <nav>
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=1&sortBy=${requestScope.sortBy}">${first}</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.lastPage-1}&sortBy=${requestScope.sortBy}">${requestScope.lastPage-1}</a>
-                        </li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${requestScope.lastPage}</a>
-                        </li>
-                        <li class="page-item disabled">
-                            <a class="page-link">${last}</a>
-                        </li>
-                    </ul>
-                </nav>
+            <c:if test="${requestScope.creditcards.size() == 0 || requestScope.creditcards.size() == null}">
+                <h3>${adminhavenocreditcards}</h3>
             </c:if>
-
-            <c:if test="${requestScope.lastPage == 1}">
-                <nav>
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <a class="page-link">${first}</a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link">1</a>
-                        </li>
-                        <li class="page-item disabled">
-                            <a class="page-link">${last}</a>
-                        </li>
-                    </ul>
-                </nav>
-            </c:if>
-
-            <c:if test="${requestScope.currentPage > 1 && requestScope.currentPage < requestScope.lastPage}">
-                <nav>
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=1&sortBy=${requestScope.sortBy}">${first}</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage-1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage-1}</a>
-
-                        </li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=${requestScope.sortBy}">${requestScope.currentPage}</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage+1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage+1}</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${last}</a>
-                        </li>
-                    </ul>
-                </nav>
-            </c:if>
-        </c:if>
-        <c:if test="${requestScope.creditcards.size() == 0 || requestScope.creditcards.size() == null}">
-            <h3>${adminhavenocreditcards}</h3>
-        </c:if>
+        </div>
         <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 </html>

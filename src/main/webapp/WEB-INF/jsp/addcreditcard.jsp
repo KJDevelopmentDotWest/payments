@@ -21,7 +21,7 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
-    <body class="d-flex flex-column h-100 primary-margin">
+    <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -54,20 +54,22 @@
                 </div>
             </div>
         </nav>
-        <main class="form-signin form-margin-navbar" align="center">
-            <form action="/payments?command=add_credit_card" method="post" autocomplete="off">
-                <h1 class="h5 mb-3">${filldata}</h1>
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">
-                    <label for="floatingInput">${name}</label>
-                </div>
-                <div class="form-floating">
-                    <input type="number" class="form-control" id="floatingInput" placeholder="Password" name="cardNumber">
-                    <label for="floatingInput">${number}</label>
-                </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit">${addcreditcard}</button>
-            </form>
-        </main>
+        <div class="primary-margin">
+            <main class="form-signin form-margin-navbar" align="center">
+                <form action="/payments?command=add_credit_card" method="post" autocomplete="off">
+                    <h1 class="h5 mb-3">${filldata}</h1>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">
+                        <label for="floatingInput">${name}</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="floatingInput" placeholder="Password" name="cardNumber">
+                        <label for="floatingInput">${number}</label>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">${addcreditcard}</button>
+                </form>
+            </main>
+        </div>
         <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 <html>

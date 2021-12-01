@@ -28,7 +28,7 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
-    <body class="d-flex flex-column h-100 primary-margin">
+    <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </nav>
-        <div>
+        <div class="primary-margin">
             <c:set var="user" scope="page" value="${UserService().getById(sessionScope.id)}"/>
             <c:if test="${user.accountId != null}">
                 <c:set var="account" scope="page" value="${AccountService().getById(user.getAccountId())}"/>

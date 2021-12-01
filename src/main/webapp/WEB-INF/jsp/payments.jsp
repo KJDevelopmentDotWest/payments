@@ -32,7 +32,7 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
-    <body class="d-flex flex-column h-100 primary-margin">
+    <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -72,128 +72,129 @@
             </div>
         </nav>
 
-        <a href="/payments?command=show_create_payment" ><button class="btn btn-primary">${createpayment}</button></a>
+        <div class="primary-margin">
+            <a href="/payments?command=show_create_payment" ><button class="btn btn-primary">${createpayment}</button></a>
+            <c:if test="${requestScope.payments.size() > 0}">
 
-        <c:if test="${requestScope.payments.size() > 0}">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=name" class="active">${name}</a></th>
+                            <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=price" class="active">${price}</a></th>
+                            <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=destination" class="active">${destination}</a></th>
+                            <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=time" class="active">${time}</a></th>
+                            <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=committed" class="active">${committed}</a></th>
+                            <th scope="col">${edit}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="i" begin="0" end="${requestScope.payments.size()-1}">
+                            <c:choose>
+                                <c:when test="${requestScope.payments.get(i).getCommitted()}">
+                                    <tr>
+                                        <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
+                                        <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
+                                        <td></td>
+                                    </tr>
+                                </c:when>
+                                <c:otherwise>
+                                    <tr>
+                                        <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
+                                        <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
+                                        <td>
+                                            <form class="inline" method="post" action="/payments?command=show_edit_payment" >
+                                                <button class="btn btn-exsm btn-primary" type="submit">${edit}</button>
+                                                <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </tbody>
+                </table>
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=name" class="active">${name}</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=price" class="active">${price}</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=destination" class="active">${destination}</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=time" class="active">${time}</a></th>
-                        <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=committed" class="active">${committed}</a></th>
-                        <th scope="col">${edit}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="i" begin="0" end="${requestScope.payments.size()-1}">
-                        <c:choose>
-                            <c:when test="${requestScope.payments.get(i).getCommitted()}">
-                                <tr>
-                                    <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
-                                    <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
-                                    <td></td>
-                                </tr>
-                            </c:when>
-                            <c:otherwise>
-                                <tr>
-                                    <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
-                                    <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
-                                    <td>
-                                        <form class="inline" method="post" action="/payments?command=show_edit_payment" >
-                                            <button class="btn btn-exsm btn-primary" type="submit">${edit}</button>
-                                            <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
-                                        </form>
-                                    </td>
-                                </tr>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </tbody>
-            </table>
+                <c:if test="${requestScope.currentPage == 1 && requestScope.lastPage != 1}">
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link">${first}</a>
+                            </li>
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_payments&currentPage=2&sortBy=${requestScope.sortBy}">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${last}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </c:if>
 
-            <c:if test="${requestScope.currentPage == 1 && requestScope.lastPage != 1}">
-                <nav>
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <a class="page-link">${first}</a>
-                        </li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_payments&currentPage=2&sortBy=${requestScope.sortBy}">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${last}</a>
-                        </li>
-                    </ul>
-                </nav>
+                <c:if test="${requestScope.currentPage == requestScope.lastPage && requestScope.lastPage != 1}">
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_payments&currentPage=1&sortBy=${requestScope.sortBy}">${first}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage-1}&sortBy=${requestScope.sortBy}">${requestScope.lastPage-1}</a>
+                            </li>
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${requestScope.lastPage}</a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link">${last}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </c:if>
+
+                <c:if test="${requestScope.lastPage == 1}">
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link">${first}</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link">1</a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link">${last}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </c:if>
+
+                <c:if test="${requestScope.currentPage > 1 && requestScope.currentPage < requestScope.lastPage}">
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_payments&currentPage=1&sortBy=${requestScope.sortBy}">${first}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage-1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage-1}</a>
+                            </li>
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=${requestScope.sortBy}">${requestScope.currentPage}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage+1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage+1}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${last}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </c:if>
             </c:if>
-
-            <c:if test="${requestScope.currentPage == requestScope.lastPage && requestScope.lastPage != 1}">
-                <nav>
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_payments&currentPage=1&sortBy=${requestScope.sortBy}">${first}</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage-1}&sortBy=${requestScope.sortBy}">${requestScope.lastPage-1}</a>
-                        </li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${requestScope.lastPage}</a>
-                        </li>
-                        <li class="page-item disabled">
-                            <a class="page-link">${last}</a>
-                        </li>
-                    </ul>
-                </nav>
+            <c:if test="${requestScope.payments.size() == 0 || requestScope.payments == null}">
+                <h3>${usernopayments}</h3>
             </c:if>
-
-            <c:if test="${requestScope.lastPage == 1}">
-                <nav>
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <a class="page-link">${first}</a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link">1</a>
-                        </li>
-                        <li class="page-item disabled">
-                            <a class="page-link">${last}</a>
-                        </li>
-                    </ul>
-                </nav>
-            </c:if>
-
-            <c:if test="${requestScope.currentPage > 1 && requestScope.currentPage < requestScope.lastPage}">
-                <nav>
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_payments&currentPage=1&sortBy=${requestScope.sortBy}">${first}</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage-1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage-1}</a>
-                        </li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=${requestScope.sortBy}">${requestScope.currentPage}</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.currentPage+1}&sortBy=${requestScope.sortBy}">${requestScope.currentPage+1}</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/payments?command=show_payments&currentPage=${requestScope.lastPage}&sortBy=${requestScope.sortBy}">${last}</a>
-                        </li>
-                    </ul>
-                </nav>
-            </c:if>
-        </c:if>
-        <c:if test="${requestScope.payments.size() == 0 || requestScope.payments == null}">
-            <h3>${usernopayments}</h3>
-        </c:if>
+        </div>
         <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 </html>

@@ -19,28 +19,30 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
-    <body class="d-flex flex-column h-100 primary-margin">
+    <body class="d-flex flex-column h-100">
         <form class="top-right" action="/payments?command=change_language" method="post" autocomplete="off">
             <div class="btn-group" role="group"action="/payments?command=signout">
                 <button type="submit" class="btn btn-primary" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>
                 <button type="submit" class="btn btn-primary" name="lang" value="ru" id="btnradio2" autocomplete="off">Ru</button>
             </div>
         </form>
-        <main class="form-signin form-margin-no-navbar" align="center">
-            <form action="/payments?command=signin" method="post">
-                <h1 class="h3 mb-3 fw-normal">${greeting}</h1>
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Login" name="login">
-                    <label for="floatingInput">${login}</label>
-                </div>
-                <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
-                    <label for="floatingPassword">${password}</label>
-                </div>
-                ${newto} <a href="/payments?command=show_create_user">${signup}</a>
-                <button class="w-100 btn btn-lg btn-primary" type="submit">${signin}</button>
-            </form>
-        </main>
+        <div class="primary-margin">
+            <main class="form-signin form-margin-no-navbar" align="center">
+                <form action="/payments?command=signin" method="post">
+                    <h1 class="h3 mb-3 fw-normal">${greeting}</h1>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Login" name="login">
+                        <label for="floatingInput">${login}</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+                        <label for="floatingPassword">${password}</label>
+                    </div>
+                    ${newto} <a href="/payments?command=show_create_user">${signup}</a>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">${signin}</button>
+                </form>
+            </main>
+        </div>
         <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 </html>

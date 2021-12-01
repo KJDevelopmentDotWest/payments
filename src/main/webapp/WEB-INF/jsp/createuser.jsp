@@ -19,7 +19,7 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
-    <body class="d-flex flex-column h-100 primary-margin">
+    <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -32,20 +32,22 @@
                 </div>
             </div>
         </nav>
-        <main class="form-signin form-margin-no-navbar" align="center">
-            <form action="/payments?command=commit_user_creation" method="post" autocomplete="off">
-                <h1 class="h3 mb-3">${filldata}</h1>
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="login">
-                    <label for="floatingInput">${login}</label>
-                </div>
-                <div class="form-floating">
-                    <input type="Password" class="form-control" id="floatingInput" placeholder="Password" name="password">
-                    <label for="floatingInput">${password}</label>
-                </div>
-                <button type="submit" class="btn btn-primary">${create}</button>
-            </form>
-        </main>
+        <div class="primary-margin">
+            <main class="form-signin form-margin-no-navbar" align="center">
+                <form action="/payments?command=commit_user_creation" method="post" autocomplete="off">
+                    <h1 class="h3 mb-3">${filldata}</h1>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="login">
+                        <label for="floatingInput">${login}</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="Password" class="form-control" id="floatingInput" placeholder="Password" name="password">
+                        <label for="floatingInput">${password}</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">${create}</button>
+                </form>
+            </main>
+        </div>
         <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 <html>

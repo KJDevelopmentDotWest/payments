@@ -27,7 +27,8 @@
         <style><%@include file="/WEB-INF/css/navbar.css"%></style>
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
-    <body class="d-flex flex-column h-100 primary-margin">
+
+    <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -42,51 +43,53 @@
                 </div>
             </div>
         </nav>
-        <h4>${currentpaymentprice} ${requestScope.payment.price}</h4>
-        <c:if test="${requestScope.creditcards != null}">
-            <h4>${choosecreditcard}</h4>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">${name}</th>
-                        <th scope="col">${number}</th>
-                        <th scope="col">${balance}</th>
-                        <th scope="col">${pay}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="i" begin="0" end="${requestScope.creditcards.size()-1}">
-                        <c:if test="${!requestScope.creditcards.get(i).bankAccount.getBlocked()}">
-                            <tr>
-                                <td>${i + 1}</td>
-                                <td>${requestScope.creditcards.get(i).name}</td>
-                                <td>${requestScope.creditcards.get(i).cardNumber}</td>
-                                <td>${requestScope.creditcards.get(i).bankAccount.balance}</td>
-                                <c:choose>
-                                    <c:when test="${requestScope.creditcards.get(i).bankAccount.balance >= requestScope.payment.price}">
-                                        <td>
-                                            <form class="inline" method="post" action="/payments?command=checkout_payment" >
-                                                <button class="btn btn-exsm btn-primary" type="submit">Pay</button>
-                                                <input type="hidden" name="paymentId" value="${requestScope.payment.getId()}">
-                                                <input type="hidden" name="creditCardId" value="${requestScope.creditcards.get(i).getId()}">
-                                            </form>
-                                        </td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <td>Insufficient Balance</td>
-                                    </c:otherwise>
-                                </c:choose>
-                                <td></td>
-                            </tr>
-                        </c:if>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </c:if>
-        <c:if test="${requestScope.creditcards == null}">
-            <h4>${usernocreditcards} <a href="/payments?command=show_credit_cards"> ${addcreditcard}</a></h4>
-        </c:if>
+        <div class="primary-margin">
+            <h4>${currentpaymentprice} ${requestScope.payment.price}</h4>
+            <c:if test="${requestScope.creditcards != null}">
+                <h4>${choosecreditcard}</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">${name}</th>
+                            <th scope="col">${number}</th>
+                            <th scope="col">${balance}</th>
+                            <th scope="col">${pay}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="i" begin="0" end="${requestScope.creditcards.size()-1}">
+                            <c:if test="${!requestScope.creditcards.get(i).bankAccount.getBlocked()}">
+                                <tr>
+                                    <td>${i + 1}</td>
+                                    <td>${requestScope.creditcards.get(i).name}</td>
+                                    <td>${requestScope.creditcards.get(i).cardNumber}</td>
+                                    <td>${requestScope.creditcards.get(i).bankAccount.balance}</td>
+                                    <c:choose>
+                                        <c:when test="${requestScope.creditcards.get(i).bankAccount.balance >= requestScope.payment.price}">
+                                            <td>
+                                                <form class="inline" method="post" action="/payments?command=checkout_payment" >
+                                                    <button class="btn btn-exsm btn-primary" type="submit">Pay</button>
+                                                    <input type="hidden" name="paymentId" value="${requestScope.payment.getId()}">
+                                                    <input type="hidden" name="creditCardId" value="${requestScope.creditcards.get(i).getId()}">
+                                                </form>
+                                            </td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td>Insufficient Balance</td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <td></td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="${requestScope.creditcards == null}">
+                <h4>${usernocreditcards} <a href="/payments?command=show_credit_cards"> ${addcreditcard}</a></h4>
+            </c:if>
+        </div>
         <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 </html>
