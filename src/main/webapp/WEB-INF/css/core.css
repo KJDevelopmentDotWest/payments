@@ -32,3 +32,8 @@
 .primary-margin{
     margin:0 50px 0 50px;//top right bottom left
 }
+
+.center{
+    max-width: 1000px;
+    margin: auto
+}

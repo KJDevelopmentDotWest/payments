@@ -1,5 +1,6 @@
 package com.epam.jwd.controller.command.impl;
 
+import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.dao.model.user.Role;
@@ -46,7 +47,7 @@ public class SigninCommand implements Command {
             }
             logger.error(e.getErrorCode());
         }
-        return new CommandResponse(request.getContextPath() + ERROR_PAGE_URL, false);
+        return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, false);
     }
 
     private CommandResponse actionDataCorrect(HttpServletRequest request, UserDto userDto){
