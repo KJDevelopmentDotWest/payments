@@ -25,8 +25,8 @@
 
     <script>
         function validateform(){
-        var login = document.getElementById("login").value;
-        var password = document.getElementById("password").value;
+            var login = document.getElementById("login").value;
+            var password = document.getElementById("password").value;
             var loginShortFlag = (login == null || login == "" || login.length < 3);
             var loginLongFlag = (login == null || login == "" || login.length > 15);
             var passwordShortFlag = (password == null || password == "" || password.length < 5);
