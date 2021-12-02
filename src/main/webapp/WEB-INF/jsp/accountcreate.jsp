@@ -67,11 +67,11 @@
         function allowOnlyEngl(){
             var name = document.getElementById("name");
             var surname = document.getElementById("surname");
-            if (!/^[a-zA-Z]*$/g.test(name.value)) {
+            if (!/^[a-zA-Z\-]*$/g.test(name.value)) {
                 name.value = name.value.slice(0, -1);
                 return false;
             }
-            if (!/^[a-zA-Z]*$/g.test(surname.value)) {
+            if (!/^[a-zA-Z\-]*$/g.test(surname.value)) {
                 surname.value = surname.value.slice(0, -1);
                 return false;
             }
