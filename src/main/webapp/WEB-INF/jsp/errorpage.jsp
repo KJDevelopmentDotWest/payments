@@ -17,7 +17,7 @@
     </head>
 
     <body class="d-flex flex-column h-100 primary-margin">
-        <div class="center"><h3>${errormsg} ${main}</h3></div>
+        <div class="center"><h3>${errormsg} <a href="/payments?command=signout">${main}</a></h3></div>
         <jsp:include page="/WEB-INF/jsp/footer.html"></jsp:include>
     </body>
 <html>
