@@ -11,6 +11,9 @@
 <fmt:message bundle="${loc}" key="filldata" var="filldata"/>
 <fmt:message bundle="${loc}" key="proceedtocheckout" var="proceedtocheckout"/>
 <fmt:message bundle="${loc}" key="savepayment" var="savepayment"/>
+<fmt:message bundle="${loc}" key="nametooshort" var="nametooshort"/>
+<fmt:message bundle="${loc}" key="pricewronglength" var="pricewronglength"/>
+<fmt:message bundle="${loc}" key="destinationtooshort" var="destinationtooshort"/>
 
 <html>
     <head>
@@ -22,6 +25,38 @@
         <style><%@include file="/WEB-INF/css/navbar.css"%></style>
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
+
+    <script>
+        function validateform(){
+        var name = document.getElementById("name").value;
+        var price = document.getElementById("price").value;
+        var destination = document.getElementById("destination").value;
+        var nameFlag = (name == null || name == "" || name.length < 2);
+        var priceFlag = (price == null || price == "" || Number(price) < 0 || !Number.isInteger(Number(price)));
+        var destinationFlag = (destination == null || destination == "" || destination.length < 2);
+            if(nameFlag){
+                document.getElementById("nametooshort").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("nametooshort").style.display = "none";
+            }
+            if (priceFlag){
+                document.getElementById("pricewronglength").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("pricewronglength").style.display = "none";
+            }
+            if (destinationFlag){
+                document.getElementById("destinationtooshort").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("destinationtooshort").style.display = "none";
+            }
+            if(!(nameFlag || priceFlag || destinationFlag)){
+                document.getElementById("submitbutton").disabled = false;
+            }
+        }
+    </script>
 
    <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light" >
@@ -61,18 +96,27 @@
                 <form action="/payments?command=commit_payment_creation" method="post" autocomplete="off" vertical-align="bottom">
                     <h1 class="h3 mb-3">${filldata}</h1>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="name">
-                        <label for="floatingInput">${name}</label>
+                        <input type="text" class="form-control" id="name" placeholder="Password" name="name"  oninput="validateform()">
+                        <label for="name">${name}</label>
+                        <div class="hidden error-message" id="nametooshort">
+                            ${nametooshort}
+                        </div>
                     </div>
                     <div class="form-floating">
-                        <input type="number" class="form-control" id="floatingInput" placeholder="Password" name="price">
-                        <label for="floatingInput">${price}</label>
+                        <input type="number" class="form-control" id="price" placeholder="Password" name="price"  oninput="validateform()">
+                        <label for="price">${price}</label>
+                        <div class="hidden error-message" id="pricewronglength">
+                            ${pricewronglength}
+                        </div>
                     </div>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="Password" name="destination">
-                        <label for="floatingPassword">${destination}</label>
+                        <input type="text" class="form-control" id="destination" placeholder="Password" name="destination"  oninput="validateform()">
+                        <label for="destination">${destination}</label>
+                        <div class="hidden error-message" id="destinationtooshort">
+                            ${destinationtooshort}
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100" name="action" value="checkout">${savepayment}</button>
+                    <button id="submitbutton" type="submit" class="btn btn-primary w-100" name="action" value="checkout">${savepayment}</button>
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" name="action" value="checkout" id="flexCheckDefault">
                       <label class="form-check-label" for="flexCheckDefault">
