@@ -28,9 +28,9 @@
             var login = document.getElementById("login").value;
             var password = document.getElementById("password").value;
             var loginShortFlag = (login == null || login == "" || login.length < 3);
-            var loginLongFlag = (login == null || login == "" || login.length > 15);
+            var loginLongFlag = (login.length > 15);
             var passwordShortFlag = (password == null || password == "" || password.length < 5);
-            var passwordLongFlag = (password == null || password == "" || password.length > 15);
+            var passwordLongFlag = (password.length > 15);
 
             if (loginShortFlag){
                 document.getElementById("logintooshort").style.display = "flex";

@@ -34,8 +34,8 @@
             var surname = document.getElementById("surname").value;
             var nameShortFlag = (name == null || name == "" || name.length < 2);
             var surnameShortFlag = (surname == null || surname == "" || surname.length < 2);
-            var nameLongFlag = (name == null || name == "" || name.length > 15);
-            var surnameLongFlag = (surname == null || surname == "" || surname.length > 15);
+            var nameLongFlag = (name.length > 15);
+            var surnameLongFlag = (surname.length > 15);
             if(nameShortFlag){
                 document.getElementById("nametooshort").style.display = "flex";
                 document.getElementById("submitbutton").disabled = true;
