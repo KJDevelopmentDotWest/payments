@@ -10,6 +10,8 @@
 <fmt:message bundle="${loc}" key="signup" var="signup"/>
 <fmt:message bundle="${loc}" key="logintooshort" var="logintooshort"/>
 <fmt:message bundle="${loc}" key="passwordtooshort" var="passwordtooshort"/>
+<fmt:message bundle="${loc}" key="logintoolong" var="logintoolong"/>
+<fmt:message bundle="${loc}" key="passwordtoolong" var="passwordtoolong"/>
 
 <html>
     <head>
@@ -23,23 +25,38 @@
 
     <script>
         function validateform(){
-        var login = document.getElementById("login").value;
-        var password = document.getElementById("password").value;
-        var loginFlag = (login == null || login == "" || login.length < 3);
-        var passwordFlag = (password == null || password == "" || password.length < 5);
-            if(passwordFlag){
-                document.getElementById("passwordtooshort").style.display = "flex";
-                document.getElementById("submitbutton").disabled = true;
-            } else {
-                document.getElementById("passwordtooshort").style.display = "none";
-            }
-            if (loginFlag){
+            var login = document.getElementById("login").value;
+            var password = document.getElementById("password").value;
+            var loginShortFlag = (login == null || login == "" || login.length < 3);
+            var loginLongFlag = (login == null || login == "" || login.length > 15);
+            var passwordShortFlag = (password == null || password == "" || password.length < 5);
+            var passwordLongFlag = (password == null || password == "" || password.length > 15);
+
+            if (loginShortFlag){
                 document.getElementById("logintooshort").style.display = "flex";
                 document.getElementById("submitbutton").disabled = true;
             } else {
                 document.getElementById("logintooshort").style.display = "none";
             }
-            if(!(loginFlag || passwordFlag)){
+            if(passwordShortFlag){
+                document.getElementById("passwordtooshort").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("passwordtooshort").style.display = "none";
+            }
+            if (loginLongFlag){
+                document.getElementById("logintoolong").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("logintoolong").style.display = "none";
+            }
+            if(passwordLongFlag){
+                document.getElementById("passwordtoolong").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("passwordtoolong").style.display = "none";
+            }
+            if(!(loginShortFlag || passwordShortFlag || loginLongFlag || passwordLongFlag)){
                 document.getElementById("submitbutton").disabled = false;
             }
         }
@@ -62,12 +79,18 @@
                         <div class="hidden error-message" id="logintooshort">
                             ${logintooshort}
                         </div>
+                        <div class="hidden error-message" id="logintoolong">
+                            ${logintoolong}
+                        </div>
                     </div>
                     <div class="form-floating">
                         <input type="password" class="form-control" id="password" placeholder="Password" name="password"  oninput="validateform()">
                         <label for="password">${password}</label>
                         <div class="hidden error-message" id="passwordtooshort">
                             ${passwordtooshort}
+                        </div>
+                        <div class="hidden error-message" id="passwordtoolong">
+                            ${passwordtoolong}
                         </div>
                     </div>
                     ${newto} <a href="/payments?command=show_create_user">${signup}</a>
