@@ -59,7 +59,19 @@
             if(!(loginShortFlag || passwordShortFlag || loginLongFlag || passwordLongFlag)){
                 document.getElementById("submitbutton").disabled = false;
             }
-        }
+        };
+        function allowOnlyEngl(){
+            var login = document.getElementById("login");
+            var password = document.getElementById("password");
+            if (!/^[a-zA-Z]*$/g.test(login.value)) {
+                login.value = login.value.slice(0, -1);
+                return false;
+            }
+            if (!/^[a-zA-Z0-9]*$/g.test(password.value)) {
+                password.value = password.value.slice(0, -1);
+                return false;
+            }
+        };
     </script>
 
     <body class="d-flex flex-column h-100">
@@ -74,7 +86,7 @@
                 <form id= "form" action="/payments?command=signin" method="post">
                     <h1 class="h3 mb-3 fw-normal">${greeting}</h1>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="login" placeholder="Login" name="login"  oninput="validateform()">
+                        <input type="text" class="form-control" id="login" placeholder="Login" name="login"  oninput="validateform();allowOnlyEngl()">
                         <label for="login">${login}</label>
                         <div class="hidden error-message" id="logintooshort">
                             ${logintooshort}
@@ -84,7 +96,7 @@
                         </div>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" id="password" placeholder="Password" name="password"  oninput="validateform()">
+                        <input type="password" class="form-control" id="password" placeholder="Password" name="password"  oninput="validateform();allowOnlyEngl()">
                         <label for="password">${password}</label>
                         <div class="hidden error-message" id="passwordtooshort">
                             ${passwordtooshort}

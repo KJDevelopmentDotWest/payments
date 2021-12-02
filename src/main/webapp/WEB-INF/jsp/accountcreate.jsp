@@ -14,6 +14,8 @@
 <fmt:message bundle="${loc}" key="chooseprofilepicture" var="chooseprofilepicture"/>
 <fmt:message bundle="${loc}" key="nametooshort" var="nametooshort"/>
 <fmt:message bundle="${loc}" key="surnametooshort" var="surnametooshort"/>
+<fmt:message bundle="${loc}" key="nametoolong" var="nametoolong"/>
+<fmt:message bundle="${loc}" key="surnametoolong" var="surnametoolong"/>
 
 <html>
     <head>
@@ -28,26 +30,52 @@
 
     <script>
         function validateform(){
-        var name = document.getElementById("name").value;
-        var surname = document.getElementById("surname").value;
-        var nameFlag = (name == null || name == "" || name.length < 2);
-        var surnameFlag = (surname == null || surname == "" || surname.length < 2);
-            if(nameFlag){
+            var name = document.getElementById("name").value;
+            var surname = document.getElementById("surname").value;
+            var nameShortFlag = (name == null || name == "" || name.length < 2);
+            var surnameShortFlag = (surname == null || surname == "" || surname.length < 2);
+            var nameLongFlag = (name == null || name == "" || name.length > 15);
+            var surnameLongFlag = (surname == null || surname == "" || surname.length > 15);
+            if(nameShortFlag){
                 document.getElementById("nametooshort").style.display = "flex";
                 document.getElementById("submitbutton").disabled = true;
             } else {
                 document.getElementById("nametooshort").style.display = "none";
             }
-            if (surnameFlag){
+            if(nameLongFlag){
+                document.getElementById("nametoolong").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("nametoolong").style.display = "none";
+            }
+            if (surnameShortFlag){
                 document.getElementById("surnametooshort").style.display = "flex";
                 document.getElementById("submitbutton").disabled = true;
             } else {
                 document.getElementById("surnametooshort").style.display = "none";
             }
-            if(!(nameFlag || surnameFlag)){
+            if (surnameLongFlag){
+                document.getElementById("surnametoolong").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("surnametoolong").style.display = "none";
+            }
+            if(!(nameShortFlag || surnameShortFlag || nameLongFlag || surnameLongFlag)){
                 document.getElementById("submitbutton").disabled = false;
             }
-        }
+        };
+        function allowOnlyEngl(){
+            var name = document.getElementById("name");
+            var surname = document.getElementById("surname");
+            if (!/^[a-zA-Z]*$/g.test(name.value)) {
+                name.value = name.value.slice(0, -1);
+                return false;
+            }
+            if (!/^[a-zA-Z]*$/g.test(surname.value)) {
+                surname.value = surname.value.slice(0, -1);
+                return false;
+            }
+        };
     </script>
 
     <body class="d-flex flex-column h-100">
@@ -88,17 +116,23 @@
                 <form action="/payments?command=commit_account_creation" method="post" autocomplete="off">
                     <h1 class="h3 mb-3">${filldata}</h1>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="name" placeholder="Password" name="name" oninput="validateform()">
+                        <input type="text" class="form-control" id="name" placeholder="Password" name="name" oninput="validateform();allowOnlyEngl()">
                         <label for="name">${name}</label>
                         <div class="hidden error-message" id="nametooshort">
                             ${nametooshort}
                         </div>
+                        <div class="hidden error-message" id="nametoolong">
+                            ${nametoolong}
+                        </div>
                     </div>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="surname" placeholder="Password" name="surname" oninput="validateform()">
+                        <input type="text" class="form-control" id="surname" placeholder="Password" name="surname" oninput="validateform();allowOnlyEngl()">
                         <label for="surname">${surname}</label>
                         <div class="hidden error-message" id="surnametooshort">
                             ${surnametooshort}
+                        </div>
+                        <div class="hidden error-message" id="surnametoolong">
+                            ${surnametoolong}
                         </div>
                     </div>
                     <br/>
