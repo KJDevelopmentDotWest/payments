@@ -14,6 +14,9 @@
 <fmt:message bundle="${loc}" key="nametooshort" var="nametooshort"/>
 <fmt:message bundle="${loc}" key="pricewronglength" var="pricewronglength"/>
 <fmt:message bundle="${loc}" key="destinationtooshort" var="destinationtooshort"/>
+<fmt:message bundle="${loc}" key="nametoolong" var="nametoolong"/>
+<fmt:message bundle="${loc}" key="pricetoolong" var="pricetoolong"/>
+<fmt:message bundle="${loc}" key="destinationtoolong" var="destinationtoolong"/>
 
 <html>
     <head>
@@ -28,17 +31,26 @@
 
     <script>
         function validateform(){
-        var name = document.getElementById("name").value;
-        var price = document.getElementById("price").value;
-        var destination = document.getElementById("destination").value;
-        var nameFlag = (name == null || name == "" || name.length < 2);
-        var priceFlag = (price == null || price == "" || Number(price) < 0 || !Number.isInteger(Number(price)));
-        var destinationFlag = (destination == null || destination == "" || destination.length < 2);
-            if(nameFlag){
+            var name = document.getElementById("name").value;
+            var price = document.getElementById("price").value;
+            var destination = document.getElementById("destination").value;
+            var nameShortFlag = (name == null || name == "" || name.length < 2);
+            var nameLongFlag = (name.length > 15);
+            var priceFlag = (price == null || price == "" || Number(price) < 0 || !Number.isInteger(Number(price)));
+            var priceLongFlag = (price.length > 9);
+            var destinationShortFlag = (destination == null || destination == "" || destination.length < 2);
+            var destinationLongFlag = (destination.length > 15);
+            if(nameShortFlag){
                 document.getElementById("nametooshort").style.display = "flex";
                 document.getElementById("submitbutton").disabled = true;
             } else {
                 document.getElementById("nametooshort").style.display = "none";
+            }
+            if(nameLongFlag){
+                document.getElementById("nametoolong").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("nametoolong").style.display = "none";
             }
             if (priceFlag){
                 document.getElementById("pricewronglength").style.display = "flex";
@@ -46,16 +58,40 @@
             } else {
                 document.getElementById("pricewronglength").style.display = "none";
             }
-            if (destinationFlag){
+            if (priceLongFlag){
+                document.getElementById("pricetoolong").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("pricetoolong").style.display = "none";
+            }
+            if (destinationShortFlag){
                 document.getElementById("destinationtooshort").style.display = "flex";
                 document.getElementById("submitbutton").disabled = true;
             } else {
                 document.getElementById("destinationtooshort").style.display = "none";
             }
-            if(!(nameFlag || priceFlag || destinationFlag)){
+            if (destinationLongFlag){
+                document.getElementById("destinationtoolong").style.display = "flex";
+                document.getElementById("submitbutton").disabled = true;
+            } else {
+                document.getElementById("destinationtoolong").style.display = "none";
+            }
+            if(!(nameShortFlag || nameLongFlag || priceFlag || priceLongFlag || destinationShortFlag || destinationLongFlag)){
                 document.getElementById("submitbutton").disabled = false;
             }
-        }
+        };
+        function allowOnlyEngl(){
+            var name = document.getElementById("name");
+            var destination = document.getElementById("destination");
+            if (!/^[a-zA-Z]*$/g.test(name.value)) {
+                name.value = name.value.slice(0, -1);
+                return false;
+            }
+            if (!/^[a-zA-Z/-/.@]*$/g.test(destination.value)) {
+                destination.value = destination.value.slice(0, -1);
+                return false;
+            }
+        };
     </script>
 
    <body class="d-flex flex-column h-100">
@@ -96,10 +132,13 @@
                 <form action="/payments?command=commit_payment_creation" method="post" autocomplete="off" vertical-align="bottom">
                     <h1 class="h3 mb-3">${filldata}</h1>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="name" placeholder="Password" name="name"  oninput="validateform()">
+                        <input type="text" class="form-control" id="name" placeholder="Password" name="name"  oninput="validateform();allowOnlyEngl()">
                         <label for="name">${name}</label>
                         <div class="hidden error-message" id="nametooshort">
                             ${nametooshort}
+                        </div>
+                        <div class="hidden error-message" id="nametoolong">
+                            ${nametoolong}
                         </div>
                     </div>
                     <div class="form-floating">
@@ -108,20 +147,26 @@
                         <div class="hidden error-message" id="pricewronglength">
                             ${pricewronglength}
                         </div>
+                        <div class="hidden error-message" id="pricetoolong">
+                            ${pricetoolong}
+                        </div>
                     </div>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="destination" placeholder="Password" name="destination"  oninput="validateform()">
+                        <input type="text" class="form-control" id="destination" placeholder="Password" name="destination"  oninput="validateform();allowOnlyEngl()">
                         <label for="destination">${destination}</label>
                         <div class="hidden error-message" id="destinationtooshort">
                             ${destinationtooshort}
                         </div>
+                        <div class="hidden error-message" id="destinationtoolong">
+                            ${destinationtoolong}
+                        </div>
                     </div>
                     <button id="submitbutton" type="submit" class="btn btn-primary w-100" name="action" value="checkout">${savepayment}</button>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" name="action" value="checkout" id="flexCheckDefault">
-                      <label class="form-check-label" for="flexCheckDefault">
-                        ${proceedtocheckout}
-                      </label>
+                        <input class="form-check-input" type="checkbox" name="action" value="checkout" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            ${proceedtocheckout}
+                        </label>
                     </div>
                 </form>
             </main>
