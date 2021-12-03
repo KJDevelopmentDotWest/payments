@@ -4,6 +4,7 @@ import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,6 +17,9 @@ public class ShowAddCreditCardCommand implements Command {
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + ShowAddCreditCardCommand.class);
+        HttpSession session = request.getSession();
+        request.setAttribute("incorrect", session.getAttribute("incorrect"));
+        session.removeAttribute("incorrect");
         return new CommandResponse(request.getContextPath() + ADD_CREDIT_CARD_PAGE_URL, false);
     }
 }
