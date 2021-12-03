@@ -61,6 +61,7 @@ public class SigninCommand implements Command {
 
     private CommandResponse actionDataCorrect(HttpServletRequest request, UserDto userDto){
         HttpSession session = request.getSession();
+        session.removeAttribute("incorrect");
         session.setAttribute("role", userDto.getRole());
         session.setAttribute("id", userDto.getId());
 

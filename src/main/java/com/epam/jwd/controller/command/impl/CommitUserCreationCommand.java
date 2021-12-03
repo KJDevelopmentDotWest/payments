@@ -33,6 +33,7 @@ public class CommitUserCreationCommand implements Command {
 
         try {
             service.create(userDto);
+            request.getSession().removeAttribute("incorrect");
             return new CommandResponse(request.getContextPath() + SHOW_SIGNIN_PAGE_URL, true);
         } catch (ServiceException e) {
             logger.error(e.getErrorCode());

@@ -47,6 +47,7 @@ public class CommitCreditCardAddingCommand implements Command {
         CreditCardService service = new CreditCardService();
         try {
             service.create(creditCard);
+            request.getSession().removeAttribute("incorrect");
             return new CommandResponse(request.getContextPath() + USER_CREDIT_CARDS_PAGE_URL, true);
         } catch (ServiceException e) {
             logger.error(e.getErrorCode());
