@@ -63,7 +63,7 @@
         function allowOnlyEngl(){
             var login = document.getElementById("login");
             var password = document.getElementById("password");
-            if (!/^[a-zA-Z]*$/g.test(login.value)) {
+            if (!/^[a-zA-Z0-9]*$/g.test(login.value)) {
                 login.value = login.value.slice(0, -1);
                 return false;
             }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public enum ApplicationCommand {
 
-    SHOW_SIGNIN(new ShowSigninPage()),
+    SHOW_SIGNIN(new ShowSigninCommand()),
     SHOW_ACCOUNT(new ShowAccountCommand()),
     SHOW_ADMIN_USERS(new ShowAdminUsersCommand(), Role.ADMIN),
     SHOW_CREDIT_CARDS(new ShowCreditCardsCommand(), Role.CUSTOMER),

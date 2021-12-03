@@ -63,7 +63,7 @@
         function allowOnlyEngl(){
             var login = document.getElementById("login");
             var password = document.getElementById("password");
-            if (!/^[a-zA-Z]*$/g.test(login.value)) {
+            if (!/^[a-zA-Z0-9]*$/g.test(login.value)) {
                 login.value = login.value.slice(0, -1);
                 return false;
             }
@@ -72,9 +72,15 @@
                 return false;
             }
         };
+        function onLoad(){
+            var message = '${incorrect}';
+            if(message != null && message.length > 0){
+                alert(message);
+            }
+        }
     </script>
 
-    <body class="d-flex flex-column h-100">
+    <body class="d-flex flex-column h-100" onload="onLoad()">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
