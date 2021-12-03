@@ -30,12 +30,11 @@ public class SigninCommand implements Command {
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
 
         logger.info("command " + SigninCommand.class);
-        //todo restricted access to blocked account
         UserService service = new UserService();
         try {
             UserDto userDto = service.getByLogin(request.getParameter("login"));
             if (Objects.equals(userDto.getPassword(), request.getParameter("password"))){
-                logger.info("password is correct");
+                logger.info("login and password are correct");
                 return actionDataCorrect(request, userDto);
             } else {
                 logger.info("password is wrong");
@@ -47,7 +46,7 @@ public class SigninCommand implements Command {
                 logger.info("login is wrong");
                 return actionDataIncorrect(request, "Login is wrong");
             } else {
-                logger.info("something else is wrong");
+                logger.info("something wrong");
                 return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
             }
 
@@ -66,7 +65,11 @@ public class SigninCommand implements Command {
         session.setAttribute("id", userDto.getId());
 
         if (userDto.getRole().equals(Role.CUSTOMER)){
-            return new CommandResponse(request.getContextPath() + SHOW_USER_MAIN_PAGE_URL, true);
+            if (userDto.getActive()) {
+                return new CommandResponse(request.getContextPath() + SHOW_USER_MAIN_PAGE_URL, true);
+            } else {
+                return actionDataIncorrect(request, "User is blocked");
+            }
         } else {
             return new CommandResponse(request.getContextPath() + SHOW_ADMIN_MAIN_PAGE_URL, true);
         }
