@@ -17,30 +17,30 @@ public enum ApplicationCommand {
     SHOW_ADMIN_CREDIT_CARDS(new ShowAdminCreditCardsCommand(), Role.ADMIN),
     SHOW_PAYMENTS(new ShowPaymentsCommand(), Role.CUSTOMER),
     SHOW_ADMIN_PAYMENTS(new ShowAdminPaymentsCommand(), Role.ADMIN),
-    SHOW_ADD_CREDIT_CARD(new ShowAddCreditCardCommand()),
-    SHOW_CREATE_PAYMENT(new ShowCreatePaymentCommand()),
-    SHOW_CREATE_ACCOUNT(new ShowCreateAccountCommand()),
-    SHOW_CREATE_USER(new ShowCreateUserCommand()),
-    SHOW_CHECKOUT(new ShowCheckoutCommand()),
+    SHOW_ADD_CREDIT_CARD(new ShowAddCreditCardCommand(), Role.CUSTOMER),
+    SHOW_CREATE_PAYMENT(new ShowCreatePaymentCommand(), Role.CUSTOMER),
+    SHOW_CREATE_ACCOUNT(new ShowCreateAccountCommand(), Role.CUSTOMER),
+    SHOW_CREATE_USER(new ShowCreateUserCommand(), Role.CUSTOMER),
+    SHOW_CHECKOUT(new ShowCheckoutCommand(), Role.CUSTOMER),
     SHOW_ERROR(new ShowErrorPageCommand()),
-    SHOW_EDIT_PAYMENT(new ShowEditPaymentCommand()),
-    SHOW_EDIT_ACCOUNT(new ShowEditAccountCommand()),
+    SHOW_EDIT_PAYMENT(new ShowEditPaymentCommand(), Role.CUSTOMER),
+    SHOW_EDIT_ACCOUNT(new ShowEditAccountCommand(), Role.CUSTOMER),
 
     SIGNIN(new SigninCommand()),
     SIGNOUT(new SignoutCommand()),
     CHANGE_LANGUAGE(new ChangeLanguageCommand()),
-    COMMIT_PAYMENT_CREATION(new CommitPaymentCreationCommand()),
-    COMMIT_PAYMENT_CHANGES(new CommitPaymentChangesCommand()),
-    COMMIT_ACCOUNT_CHANGES(new CommitAccountChangesCommand()),
-    COMMIT_ACCOUNT_CREATION(new CommitAccountCreationCommand()),
-    COMMIT_USER_CREATION(new CommitUserCreationCommand()),
-    ADD_CREDIT_CARD(new CommitCreditCardAddingCommand()),
-    BLOCK_CREDIT_CARD(new BlockCreditCardCommand()),
-    BLOCK_USER(new BlockUserCommand()),
-    UNBLOCK_CREDIT_CARD(new UnblockCreditCardCommand()),
-    UNBLOCK_USER(new UnblockUserCommand()),
-    ADD_FUNDS(new AddFundsCommand()),
-    CHECKOUT_PAYMENT(new CheckoutPaymentCommand()),
+    COMMIT_PAYMENT_CREATION(new CommitPaymentCreationCommand(), Role.CUSTOMER),
+    COMMIT_PAYMENT_CHANGES(new CommitPaymentChangesCommand(), Role.CUSTOMER),
+    COMMIT_ACCOUNT_CHANGES(new CommitAccountChangesCommand(), Role.CUSTOMER),
+    COMMIT_ACCOUNT_CREATION(new CommitAccountCreationCommand(), Role.CUSTOMER),
+    COMMIT_USER_CREATION(new CommitUserCreationCommand(), Role.CUSTOMER),
+    ADD_CREDIT_CARD(new CommitCreditCardAddingCommand(), Role.CUSTOMER),
+    BLOCK_CREDIT_CARD(new BlockCreditCardCommand(), Role.CUSTOMER),
+    BLOCK_USER(new BlockUserCommand(), Role.CUSTOMER),
+    UNBLOCK_CREDIT_CARD(new UnblockCreditCardCommand(), Role.ADMIN),
+    UNBLOCK_USER(new UnblockUserCommand(), Role.ADMIN),
+    ADD_FUNDS(new AddFundsCommand(), Role.CUSTOMER),
+    CHECKOUT_PAYMENT(new CheckoutPaymentCommand(), Role.CUSTOMER),
     DEFAULT(defaultCommandImpl());
 
     private final Command command;
@@ -65,7 +65,7 @@ public enum ApplicationCommand {
                 .orElse(DEFAULT);
     }
 
-    private List<Role> getAllowedRoles(){
+    public List<Role> getAllowedRoles(){
         return allowedRoles;
     }
 

@@ -36,7 +36,7 @@ public class AddFundsCommand implements Command {
             BigInteger currentBalanceBig = new BigInteger(String.valueOf(currentBalance));
             BigInteger fundsToAddBig = new BigInteger(String.valueOf(funds));
             BigInteger sum = currentBalanceBig.add(fundsToAddBig);
-            if (sum.compareTo(new BigInteger(String.valueOf(Long.MAX_VALUE))) > 0){
+            if (sum.compareTo(new BigInteger(String.valueOf(Long.MAX_VALUE))) <= 0){
                 creditCard.getBankAccount().setBalance(currentBalance + funds);
             } else {
                 creditCard.getBankAccount().setBalance(Long.MAX_VALUE);
