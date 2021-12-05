@@ -23,12 +23,21 @@ public class CommitPaymentChangesCommand implements Command {
     private static final String SHOW_CHECKOUT_PAGE_URL = "/payments?command=show_checkout";
     private static final String SAVE_AND_PAY_ACTION = "checkout";
 
+    private static final String PAYMENT_ID_PARAMETER_NAME = "paymentId";
+    private static final String DESTINATION_PARAMETER_NAME = "destination";
+    private static final String PRICE_PARAMETER_NAME = "price";
+    private static final String NAME_PARAMETER_NAME = "name";
+    private static final String ACTION_PARAMETER_NAME = "action";
+    private static final String PAYMENT_PARAMETER_NAME = "payment";
+    private static final String CREDIT_CARDS_PARAMETER_NAME = "creditcards";
+
+
     PaymentService service = new PaymentService();
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + CommitPaymentChangesCommand.class);
-        Integer paymentId = Integer.valueOf(request.getParameter("paymentId"));
+        Integer paymentId = Integer.valueOf(request.getParameter(PAYMENT_ID_PARAMETER_NAME));
         try {
             PaymentDto payment = service.getById(paymentId);
             return updatePayment(payment, request);
@@ -40,19 +49,19 @@ public class CommitPaymentChangesCommand implements Command {
 
     private CommandResponse updatePayment(PaymentDto paymentDto, HttpServletRequest request) throws ServiceException{
 
-        paymentDto.setDestinationAddress(request.getParameter("destination"));
-        paymentDto.setPrice(Long.valueOf(request.getParameter("price")));
-        paymentDto.setName(request.getParameter("name"));
+        paymentDto.setDestinationAddress(request.getParameter(DESTINATION_PARAMETER_NAME));
+        paymentDto.setPrice(Long.valueOf(request.getParameter(PRICE_PARAMETER_NAME)));
+        paymentDto.setName(request.getParameter(NAME_PARAMETER_NAME));
         service.update(paymentDto);
-        if (Objects.equals(request.getParameter("action"), SAVE_AND_PAY_ACTION)){
-            request.setAttribute("payment", paymentDto);
+        if (Objects.equals(request.getParameter(ACTION_PARAMETER_NAME), SAVE_AND_PAY_ACTION)){
+            request.setAttribute(PAYMENT_PARAMETER_NAME, paymentDto);
             try {
-                request.setAttribute("creditcards",
+                request.setAttribute(CREDIT_CARDS_PARAMETER_NAME,
                         new CreditCardService().getByUserId(paymentDto.getUserId()));
             } catch (ServiceException e){
                 logger.error(e);
                 if (e.getErrorCode() == ExceptionCode.CREDIT_CARD_IS_NOT_FOUND_EXCEPTION_CODE){
-                    request.setAttribute("creditcards",
+                    request.setAttribute(CREDIT_CARDS_PARAMETER_NAME,
                             null);
                 } else {
                     return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);

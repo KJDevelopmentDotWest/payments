@@ -1,5 +1,6 @@
 package com.epam.jwd.controller.command.impl.showpage;
 
+import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.paymentdto.PaymentDto;
@@ -16,6 +17,10 @@ public class ShowEditPaymentCommand implements Command {
 
     private static final String EDIT_PAYMENT_PAGE_URL = "/WEB-INF/jsp/editpayment.jsp";
 
+    private static final String PAYMENT_ID_PARAMETER_NAME = "paymentId";
+    private static final String PAYMENT_ATTRIBUTE_NAME = "payment";
+
+
     PaymentService service = new PaymentService();
 
     @Override
@@ -23,20 +28,20 @@ public class ShowEditPaymentCommand implements Command {
 
         logger.info("command " + ShowEditPaymentCommand.class);
 
-        Integer paymentId = Integer.valueOf(request.getParameter("paymentId"));
+        Integer paymentId = Integer.valueOf(request.getParameter(PAYMENT_ID_PARAMETER_NAME));
 
         PaymentDto payment = null;
 
         try {
             payment = service.getById(paymentId);
             if (payment.getCommitted()){
-                return new CommandResponse(request.getContextPath() + ERROR_PAGE_URL, true);
+                return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
             }
         } catch (ServiceException e) {
             logger.error(e.getErrorCode());
         }
 
-        request.setAttribute("payment", payment);
+        request.setAttribute(PAYMENT_ATTRIBUTE_NAME, payment);
 
         return new CommandResponse(request.getContextPath() + EDIT_PAYMENT_PAGE_URL, false);
     }

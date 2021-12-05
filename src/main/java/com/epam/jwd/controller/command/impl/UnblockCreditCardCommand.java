@@ -15,11 +15,13 @@ public class UnblockCreditCardCommand implements Command {
 
     private static final String SHOW_ADMIN_CREDIT_CARDS_PAGE_URL = "/payments?command=show_admin_credit_cards&currentPage=1";
 
+    private static final String CREDIT_CARD_ID_PARAMETER_NAME = "creditCardId";
+
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + UnblockCreditCardCommand.class);
 
-        Integer creditCardId = Integer.valueOf( request.getParameter("creditCardId"));
+        Integer creditCardId = Integer.valueOf( request.getParameter(CREDIT_CARD_ID_PARAMETER_NAME));
         CreditCardService service = new CreditCardService();
         try {
             CreditCardDto creditCard = service.getById(creditCardId);

@@ -25,7 +25,7 @@ public class BlockUserCommand implements Command {
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + BlockUserCommand.class);
         HttpSession session = request.getSession();
-        Integer id = (Integer) session.getAttribute("id");
+        Integer id = (Integer) session.getAttribute(ID_ATTRIBUTE_NAME);
         try {
             UserDto userDto = userService.getById(id);
             userDto.setActive(false);

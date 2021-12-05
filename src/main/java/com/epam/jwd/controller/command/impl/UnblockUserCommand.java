@@ -15,11 +15,13 @@ public class UnblockUserCommand implements Command {
 
     private static final String SHOW_ADMIN_USERS_PAGE_URL = "/payments?command=show_admin_users&currentPage=1";
 
+    private static final String USER_ID_PARAMETER_NAME = "userId";
+
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + UnblockUserCommand.class);
 
-        Integer creditCardId = Integer.valueOf( request.getParameter("userId"));
+        Integer creditCardId = Integer.valueOf( request.getParameter(USER_ID_PARAMETER_NAME));
         UserService service = new UserService();
         try {
             UserDto userDto = service.getById(creditCardId);

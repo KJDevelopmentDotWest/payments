@@ -14,12 +14,14 @@ public class ShowCreateUserCommand implements Command {
 
     private static final String CREATE_USER_PAGE_URL = "/WEB-INF/jsp/createuser.jsp";
 
+    private static final String INCORRECT_ATTRIBUTE_NAME = "incorrect";
+
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + ShowCreateUserCommand.class);
         HttpSession session = request.getSession();
-        request.setAttribute("incorrect", session.getAttribute("incorrect"));
-        session.removeAttribute("incorrect");
+        request.setAttribute(INCORRECT_ATTRIBUTE_NAME, session.getAttribute(INCORRECT_ATTRIBUTE_NAME));
+        session.removeAttribute(INCORRECT_ATTRIBUTE_NAME);
         return new CommandResponse(request.getContextPath() + CREATE_USER_PAGE_URL, false);
     }
 }

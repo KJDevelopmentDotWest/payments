@@ -22,6 +22,9 @@ public class CheckoutPaymentCommand implements Command {
 
     private static final String SHOW_PAYMENTS_PAGE_URL = "/payments?command=show_payments&currentPage=1";
 
+    private static final String CREDIT_CARD_ID_PARAMETER_NAME = "creditCardId";
+    private static final String PAYMENT_ID_PARAMETER_NAME = "paymentId";
+
     PaymentService paymentService = new PaymentService();
     CreditCardService creditCardService = new CreditCardService();
 
@@ -29,8 +32,8 @@ public class CheckoutPaymentCommand implements Command {
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + CheckoutPaymentCommand.class);
 
-        Integer paymentId = Integer.valueOf( request.getParameter("paymentId"));
-        Integer creditCardId = Integer.valueOf( request.getParameter("creditCardId"));
+        Integer paymentId = Integer.valueOf(request.getParameter(PAYMENT_ID_PARAMETER_NAME));
+        Integer creditCardId = Integer.valueOf(request.getParameter(CREDIT_CARD_ID_PARAMETER_NAME));
 
         try {
             PaymentDto payment = paymentService.getById(paymentId);

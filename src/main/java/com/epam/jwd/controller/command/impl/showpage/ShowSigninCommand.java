@@ -12,14 +12,16 @@ public class ShowSigninCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(ShowSigninCommand.class);
 
+    private static final String INCORRECT_ATTRIBUTE_NAME = "incorrect";
+
     private static final String LOGIN_PAGE_URL = "/WEB-INF/jsp/signin.jsp";
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + ShowSigninCommand.class);
         HttpSession session = request.getSession();
-        request.setAttribute("incorrect", session.getAttribute("incorrect"));
-        session.removeAttribute("incorrect");
+        request.setAttribute(INCORRECT_ATTRIBUTE_NAME, session.getAttribute(INCORRECT_ATTRIBUTE_NAME));
+        session.removeAttribute(INCORRECT_ATTRIBUTE_NAME);
         return new CommandResponse(request.getContextPath() + LOGIN_PAGE_URL, false);
     }
 }

@@ -25,6 +25,13 @@ public class CommitPaymentCreationCommand implements Command {
     private static final String SHOW_CHECKOUT_PAGE_URL = "/payments?command=show_checkout";
     private static final String SAVE_AND_PAY_ACTION = "checkout";
 
+    private static final String DESTINATION_PARAMETER_NAME = "destination";
+    private static final String PRICE_PARAMETER_NAME = "price";
+    private static final String NAME_PARAMETER_NAME = "name";
+    private static final String ACTION_PARAMETER_NAME = "action";
+    private static final String PAYMENT_PARAMETER_NAME = "payment";
+    private static final String CREDIT_CARDS_PARAMETER_NAME = "creditcards";
+
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
 
@@ -32,26 +39,26 @@ public class CommitPaymentCreationCommand implements Command {
 
         HttpSession session = request.getSession();
 
-        PaymentDto paymentDto = new PaymentDto((Integer) session.getAttribute("id"),
-                request.getParameter("destination"),
-                Long.valueOf(request.getParameter("price")),
+        PaymentDto paymentDto = new PaymentDto((Integer) session.getAttribute(ID_ATTRIBUTE_NAME),
+                request.getParameter(DESTINATION_PARAMETER_NAME),
+                Long.valueOf(request.getParameter(PRICE_PARAMETER_NAME)),
                 false,
                 null,
-                request.getParameter("name"));
+                request.getParameter(NAME_PARAMETER_NAME));
 
         PaymentService service = new PaymentService();
 
-        if (Objects.equals(request.getParameter("action"), SAVE_AND_PAY_ACTION)){
+        if (Objects.equals(request.getParameter(ACTION_PARAMETER_NAME), SAVE_AND_PAY_ACTION)){
 
             try {
                 PaymentDto createdPayment = service.create(paymentDto);
-                request.setAttribute("payment", createdPayment);
-                request.setAttribute("creditcards",
+                request.setAttribute(PAYMENT_PARAMETER_NAME, createdPayment);
+                request.setAttribute(CREDIT_CARDS_PARAMETER_NAME,
                         new CreditCardService().getByUserId(createdPayment.getUserId()));
             } catch (ServiceException e) {
                 logger.error(e.getErrorCode());
                 if (e.getErrorCode() == ExceptionCode.CREDIT_CARD_IS_NOT_FOUND_EXCEPTION_CODE){
-                    request.setAttribute("creditcards",
+                    request.setAttribute(CREDIT_CARDS_PARAMETER_NAME,
                             null);
                 } else {
                     return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);

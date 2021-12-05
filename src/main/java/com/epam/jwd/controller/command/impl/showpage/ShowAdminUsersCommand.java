@@ -23,6 +23,9 @@ public class ShowAdminUsersCommand implements Command {
     private static final String ADMIN_PAYMENTS_PAGE_URL = "/WEB-INF/jsp/adminusers.jsp";
     private static final Integer MAX_ITEMS_IN_PAGE = 5;
 
+    private static final String USERS_ATTRIBUTE_NAME = "users";
+    private static final String STRING_NUM_1 = "1";
+
     private final UserService service = new UserService();
 
     private static final String KEY_ORDER_BY_ID = "id";
@@ -50,7 +53,7 @@ public class ShowAdminUsersCommand implements Command {
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + ShowAdminUsersCommand.class);
 
-        Integer pageNumber = Integer.valueOf(!Objects.isNull(request.getParameter("currentPage")) ? request.getParameter("currentPage") : "1");
+        Integer pageNumber = Integer.valueOf(!Objects.isNull(request.getParameter(CURRENT_PAGE_PARAMETER_NAME)) ? request.getParameter(CURRENT_PAGE_PARAMETER_NAME) : STRING_NUM_1);
         Integer lastPage = getLastPage(request);
         List<UserDto> userDto;
 
@@ -58,27 +61,27 @@ public class ShowAdminUsersCommand implements Command {
             pageNumber = 1;
         }
 
-        String sortBy = request.getParameter("sortBy");
+        String sortBy = request.getParameter(SORT_BY_PARAMETER_NAME);
 
         try {
             userDto = orderByKeyToMethodMap.getOrDefault(sortBy, service::getSortedByIdWithinRange)
-                    .apply(MAX_ITEMS_IN_PAGE, (pageNumber -1) * MAX_ITEMS_IN_PAGE);
+                    .apply(MAX_ITEMS_IN_PAGE, (pageNumber - 1) * MAX_ITEMS_IN_PAGE);
         } catch (ServiceException e) {
             logger.error(e.getErrorCode());
             userDto = new ArrayList<>();
         }
 
 
-        request.setAttribute("users", userDto);
-        request.setAttribute("currentPage", pageNumber);
-        request.setAttribute("sortBy", sortBy);
+        request.setAttribute(USERS_ATTRIBUTE_NAME, userDto);
+        request.setAttribute(CURRENT_PAGE_PARAMETER_NAME, pageNumber);
+        request.setAttribute(SORT_BY_PARAMETER_NAME, sortBy);
 
         return new CommandResponse(request.getContextPath() + ADMIN_PAYMENTS_PAGE_URL, false);
     }
 
     private Integer getLastPage(HttpServletRequest request){
         Integer maxPage;
-        if (Objects.isNull(request.getAttribute("lastPage"))){
+        if (Objects.isNull(request.getAttribute(LAST_PAGE_PARAMETER_NAME))){
             Integer creditCardsAmount;
             creditCardsAmount = service.getAmount();
             if (Double.compare(creditCardsAmount / MAX_ITEMS_IN_PAGE.doubleValue(), creditCardsAmount / MAX_ITEMS_IN_PAGE) == 0){
@@ -86,9 +89,9 @@ public class ShowAdminUsersCommand implements Command {
             } else {
                 maxPage = creditCardsAmount / MAX_ITEMS_IN_PAGE + 1;
             }
-            request.setAttribute("lastPage", maxPage);
+            request.setAttribute(LAST_PAGE_PARAMETER_NAME, maxPage);
         } else {
-            maxPage = (Integer) request.getAttribute("lastPage");
+            maxPage = (Integer) request.getAttribute(LAST_PAGE_PARAMETER_NAME);
         }
         return maxPage;
     }

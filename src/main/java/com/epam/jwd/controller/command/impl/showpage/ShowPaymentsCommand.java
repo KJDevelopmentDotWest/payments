@@ -22,6 +22,9 @@ public class ShowPaymentsCommand implements Command {
     private static final String USER_PAYMENTS_PAGE_URL = "/WEB-INF/jsp/payments.jsp";
     private static final Integer MAX_ITEMS_IN_PAGE = 5;
 
+    private static final String PAYMENTS_ATTRIBUTE_NAME = "payments";
+    private static final String STRING_NUM_1 = "1";
+
     private final PaymentService service = new PaymentService();
 
     private static final String KEY_ORDER_BY_NAME = "name";
@@ -46,21 +49,18 @@ public class ShowPaymentsCommand implements Command {
         logger.info("command " + ShowPaymentsCommand.class);
 
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute("id");
-        Integer pageNumber = Integer.valueOf(!Objects.isNull(request.getParameter("currentPage")) ? request.getParameter("currentPage") : "1");
+        Integer userId = (Integer) session.getAttribute(ID_ATTRIBUTE_NAME);
+        Integer pageNumber = Integer.valueOf(!Objects.isNull(request.getParameter(CURRENT_PAGE_PARAMETER_NAME)) ? request.getParameter(CURRENT_PAGE_PARAMETER_NAME) : STRING_NUM_1);
         Integer lastPage = getLastPage(request, userId);
         List<PaymentDto> payments;
 
-        String sortBy = request.getParameter("sortBy");
+        String sortBy = request.getParameter(SORT_BY_PARAMETER_NAME);
 
         if (pageNumber > lastPage){
             pageNumber = 1;
         }
 
         try {
-            payments = service.getByUserIdWithinRange(userId,
-                    MAX_ITEMS_IN_PAGE,
-                    (pageNumber -1) * MAX_ITEMS_IN_PAGE);
             payments = orderByKeyToMethodMap.getOrDefault(sortBy, service::getByUserIdSortedByNameWithinRange)
                     .apply(userId, MAX_ITEMS_IN_PAGE, (pageNumber -1) * MAX_ITEMS_IN_PAGE);
         } catch (ServiceException e) {
@@ -68,9 +68,9 @@ public class ShowPaymentsCommand implements Command {
             payments = new ArrayList<>();
         }
 
-        request.setAttribute("payments", payments);
-        request.setAttribute("currentPage", pageNumber);
-        request.setAttribute("sortBy", sortBy);
+        request.setAttribute(PAYMENTS_ATTRIBUTE_NAME, payments);
+        request.setAttribute(CURRENT_PAGE_PARAMETER_NAME, pageNumber);
+        request.setAttribute(SORT_BY_PARAMETER_NAME, sortBy);
 
         return new CommandResponse(request.getContextPath() + USER_PAYMENTS_PAGE_URL, false);
     }
@@ -89,7 +89,7 @@ public class ShowPaymentsCommand implements Command {
         } else {
             lastPage = paymentsAmount / MAX_ITEMS_IN_PAGE + 1;
         }
-        request.setAttribute("lastPage", lastPage);
+        request.setAttribute(LAST_PAGE_PARAMETER_NAME, lastPage);
         return lastPage;
     }
 }

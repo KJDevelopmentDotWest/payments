@@ -19,6 +19,10 @@ public class CommitAccountChangesCommand implements Command {
 
     private static final String SHOW_ACCOUNT_PAGE_URL = "/payments?command=show_account";
 
+    private static final String NAME_PARAMETER_NAME = "name";
+    private static final String SURNAME_PARAMETER_NAME = "surname";
+    private static final String PICTURE_ID_PARAMETER_NAME = "pictureId";
+
     AccountService accountService = new AccountService();
     UserService userService = new UserService();
 
@@ -27,12 +31,12 @@ public class CommitAccountChangesCommand implements Command {
         logger.info("command " + CommitAccountChangesCommand.class);
 
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute("id");
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
+        Integer userId = (Integer) session.getAttribute(ID_ATTRIBUTE_NAME);
+        String name = request.getParameter(NAME_PARAMETER_NAME);
+        String surname = request.getParameter(SURNAME_PARAMETER_NAME);
         Integer pictureId;
         try{
-            pictureId = Integer.valueOf(request.getParameter("pictureId"));
+            pictureId = Integer.valueOf(request.getParameter(PICTURE_ID_PARAMETER_NAME));
         } catch ( NumberFormatException e){
             logger.error(e);
             pictureId = -1;

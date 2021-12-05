@@ -21,6 +21,9 @@ public class ShowCreditCardsCommand implements Command {
     private static final String USER_CREDIT_CARDS_PAGE_URL = "/WEB-INF/jsp/creditcards.jsp";
     private static final Integer MAX_ITEMS_IN_PAGE = 5;
 
+    private static final String CREDIT_CARDS_ATTRIBUTE_NAME = "creditcards";
+    private static final String STRING_NUM_1 = "1";
+
     CreditCardService service = new CreditCardService();
 
     private static final String KEY_ORDER_BY_NAME = "name";
@@ -45,12 +48,12 @@ public class ShowCreditCardsCommand implements Command {
         logger.info("command " + ShowCreditCardsCommand.class);
 
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute("id");
-        Integer pageNumber = Integer.valueOf(!Objects.isNull(request.getParameter("currentPage")) ? request.getParameter("currentPage") : "1");
+        Integer userId = (Integer) session.getAttribute(ID_ATTRIBUTE_NAME);
+        Integer pageNumber = Integer.valueOf(!Objects.isNull(request.getParameter(CURRENT_PAGE_PARAMETER_NAME)) ? request.getParameter(CURRENT_PAGE_PARAMETER_NAME) : STRING_NUM_1);
         Integer lastPage = getLastPage(request, userId);
         List<CreditCardDto> creditCards;
 
-        String sortBy = request.getParameter("sortBy");
+        String sortBy = request.getParameter(SORT_BY_PARAMETER_NAME);
 
         if (pageNumber > lastPage){
             pageNumber = 1;
@@ -64,9 +67,9 @@ public class ShowCreditCardsCommand implements Command {
             creditCards = new ArrayList<>();
         }
 
-        request.setAttribute("sortBy", sortBy);
-        request.setAttribute("creditcards", creditCards);
-        request.setAttribute("currentPage", pageNumber);
+        request.setAttribute(SORT_BY_PARAMETER_NAME, sortBy);
+        request.setAttribute(CREDIT_CARDS_ATTRIBUTE_NAME, creditCards);
+        request.setAttribute(CURRENT_PAGE_PARAMETER_NAME, pageNumber);
 
         return new CommandResponse(request.getContextPath() + USER_CREDIT_CARDS_PAGE_URL, false);
     }
@@ -85,7 +88,7 @@ public class ShowCreditCardsCommand implements Command {
         } else {
             lastPage = paymentsAmount / MAX_ITEMS_IN_PAGE + 1;
         }
-        request.setAttribute("lastPage", lastPage);
+        request.setAttribute(LAST_PAGE_PARAMETER_NAME, lastPage);
         return lastPage;
     }
 }

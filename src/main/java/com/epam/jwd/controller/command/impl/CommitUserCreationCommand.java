@@ -19,6 +19,12 @@ public class CommitUserCreationCommand implements Command {
     private static final String SHOW_SIGNIN_PAGE_URL = "/payments?command=show_signin";
     private static final String SHOW_CREATE_USER_PAGE_URL = "/payments?command=show_create_user";
 
+    private static final String INCORRECT_ATTRIBUTE_NAME = "incorrect";
+    private static final String LOGIN_PARAMETER_NAME = "login";
+    private static final String PASSWORD_PARAMETER_NAME = "password";
+
+    private static final String LOGIN_NOT_UNIQUE_MESSAGE = "User with provided login already exists";
+
     UserService service = new UserService();
 
     @Override
@@ -26,19 +32,19 @@ public class CommitUserCreationCommand implements Command {
 
         logger.info("command " + CommitUserCreationCommand.class);
 
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
+        String login = request.getParameter(LOGIN_PARAMETER_NAME);
+        String password = request.getParameter(PASSWORD_PARAMETER_NAME);
 
         UserDto userDto = new UserDto(login, password, null, true, Role.CUSTOMER);
 
         try {
             service.create(userDto);
-            request.getSession().removeAttribute("incorrect");
+            request.getSession().removeAttribute(INCORRECT_ATTRIBUTE_NAME);
             return new CommandResponse(request.getContextPath() + SHOW_SIGNIN_PAGE_URL, true);
         } catch (ServiceException e) {
             logger.error(e.getErrorCode());
             if (e.getErrorCode() == ExceptionCode.USER_LOGIN_IS_NOT_UNIQUE_EXCEPTION_CODE){
-                request.getSession().setAttribute("incorrect", "User with provided login already exists");
+                request.getSession().setAttribute(INCORRECT_ATTRIBUTE_NAME, LOGIN_NOT_UNIQUE_MESSAGE);
                 return new CommandResponse(request.getContextPath() + SHOW_CREATE_USER_PAGE_URL, true);
             }
         }

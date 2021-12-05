@@ -6,7 +6,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public interface Command {
 
-    String ERROR_PAGE_URL = "/jsp/errorpage.jsp";
+    String ID_ATTRIBUTE_NAME = "id";
+
+    String CURRENT_PAGE_PARAMETER_NAME = "currentPage";
+    String LAST_PAGE_PARAMETER_NAME = "lastPage";
+    String SORT_BY_PARAMETER_NAME = "sortBy";
 
     CommandResponse execute(HttpServletRequest request, HttpServletResponse response);
 

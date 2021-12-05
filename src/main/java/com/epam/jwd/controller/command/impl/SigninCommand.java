@@ -25,6 +25,14 @@ public class SigninCommand implements Command {
     private static final String SHOW_USER_MAIN_PAGE_URL = "/payments?command=show_account";
     private static final String SHOW_ADMIN_MAIN_PAGE_URL = "/payments?command=show_admin_users";
 
+    private static final String LOGIN_PARAMETER_NAME = "login";
+    private static final String PASSWORD_PARAMETER_NAME = "password";
+    private static final String INCORRECT_ATTRIBUTE_NAME = "incorrect";
+
+    private static final String LOGIN_WRONG_MESSAGE = "Login is wrong";
+    private static final String PASSWORD_WRONG_MESSAGE = "Password is wrong";
+    private static final String USER_BLOCKED_MESSAGE = "User is blocked";
+
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
@@ -32,19 +40,19 @@ public class SigninCommand implements Command {
         logger.info("command " + SigninCommand.class);
         UserService service = new UserService();
         try {
-            UserDto userDto = service.getByLogin(request.getParameter("login"));
-            if (Objects.equals(userDto.getPassword(), request.getParameter("password"))){
+            UserDto userDto = service.getByLogin(request.getParameter(LOGIN_PARAMETER_NAME));
+            if (Objects.equals(userDto.getPassword(), request.getParameter(PASSWORD_PARAMETER_NAME))){
                 logger.info("login and password are correct");
                 return actionDataCorrect(request, userDto);
             } else {
                 logger.info("password is wrong");
-                return actionDataIncorrect(request, "Password is wrong");
+                return actionDataIncorrect(request, PASSWORD_WRONG_MESSAGE);
             }
         } catch (ServiceException e) {
             logger.error(e.getErrorCode());
             if (e.getErrorCode() == ExceptionCode.USER_IS_NOT_FOUND_EXCEPTION_CODE){
                 logger.info("login is wrong");
-                return actionDataIncorrect(request, "Login is wrong");
+                return actionDataIncorrect(request, LOGIN_WRONG_MESSAGE);
             } else {
                 logger.info("something wrong");
                 return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
@@ -55,13 +63,13 @@ public class SigninCommand implements Command {
 
     private CommandResponse actionDataIncorrect(HttpServletRequest request, String message){
         logger.info("data incorrect");
-        request.getSession().setAttribute("incorrect", message);
+        request.getSession().setAttribute(INCORRECT_ATTRIBUTE_NAME, message);
         return new CommandResponse(request.getContextPath() + SHOW_SIGNIN_PAGE_URL, true);
     }
 
     private CommandResponse actionDataCorrect(HttpServletRequest request, UserDto userDto){
         HttpSession session = request.getSession();
-        session.removeAttribute("incorrect");
+        session.removeAttribute(INCORRECT_ATTRIBUTE_NAME);
         session.setAttribute("role", userDto.getRole());
         session.setAttribute("id", userDto.getId());
 
@@ -69,7 +77,7 @@ public class SigninCommand implements Command {
             if (userDto.getActive()) {
                 return new CommandResponse(request.getContextPath() + SHOW_USER_MAIN_PAGE_URL, true);
             } else {
-                return actionDataIncorrect(request, "User is blocked");
+                return actionDataIncorrect(request, USER_BLOCKED_MESSAGE);
             }
         } else {
             return new CommandResponse(request.getContextPath() + SHOW_ADMIN_MAIN_PAGE_URL, true);

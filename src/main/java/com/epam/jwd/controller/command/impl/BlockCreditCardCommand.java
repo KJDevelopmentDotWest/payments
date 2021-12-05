@@ -14,13 +14,15 @@ import org.apache.logging.log4j.Logger;
 public class BlockCreditCardCommand implements Command {
     private static final Logger logger = LogManager.getLogger(BlockCreditCardCommand.class);
 
+    private static final String CREDIT_CARD_ID_PARAMETER_NAME = "creditCardId";
+
     private static final String SHOW_CREDIT_CARDS_PAGE_URL = "/payments?command=show_credit_cards&currentPage=1";
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + BlockCreditCardCommand.class);
 
-        Integer creditCardId = Integer.valueOf( request.getParameter("creditCardId"));
+        Integer creditCardId = Integer.valueOf( request.getParameter(CREDIT_CARD_ID_PARAMETER_NAME));
         CreditCardService service = new CreditCardService();
         try {
             CreditCardDto creditCard = service.getById(creditCardId);

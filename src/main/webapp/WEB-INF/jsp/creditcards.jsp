@@ -31,6 +31,19 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
+    <script>
+        function validateform(){
+            var funds = document.getElementById("funds").value;
+            var fundsFlag = (funds == null || funds == "" || !Number.isInteger(Number(funds)));
+            var fundsLongFlag = (funds.length > 9);
+            if(!(fundsLongFlag || fundsFlag)){
+                document.getElementById("submitbutton").disabled = false;
+            } else {
+                document.getElementById("submitbutton").disabled = true;
+            }
+        };
+    </script>
+
     <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
