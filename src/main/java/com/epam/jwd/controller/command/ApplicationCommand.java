@@ -1,7 +1,7 @@
 package com.epam.jwd.controller.command;
 
 import com.epam.jwd.controller.command.api.Command;
-import com.epam.jwd.controller.command.impl.*;
+import com.epam.jwd.controller.command.impl.action.*;
 import com.epam.jwd.controller.command.impl.showpage.*;
 import com.epam.jwd.dao.model.user.Role;
 

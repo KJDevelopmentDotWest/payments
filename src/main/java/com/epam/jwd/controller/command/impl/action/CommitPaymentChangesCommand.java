@@ -1,12 +1,10 @@
-package com.epam.jwd.controller.command.impl;
+package com.epam.jwd.controller.command.impl.action;
 
 import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.paymentdto.PaymentDto;
-import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
-import com.epam.jwd.service.impl.CreditCardService;
 import com.epam.jwd.service.impl.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

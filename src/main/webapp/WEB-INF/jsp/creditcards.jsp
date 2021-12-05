@@ -98,7 +98,7 @@
                             <th class="active"scope="col"><a href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=date" class="active">${date}</a></th>
                             <th class="active"scope="col"><a href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=balance" class="active">${balance}</a></th>
                             <th class="active"scope="col"><a href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=state" class="active">${state}</a></th>
-                            <th scope="col">${addfunds}</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>

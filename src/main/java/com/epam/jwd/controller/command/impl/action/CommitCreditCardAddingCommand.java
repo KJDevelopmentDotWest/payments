@@ -1,4 +1,4 @@
-package com.epam.jwd.controller.command.impl;
+package com.epam.jwd.controller.command.impl.action;
 
 import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;

@@ -1,8 +1,7 @@
-package com.epam.jwd.controller.command.impl;
+package com.epam.jwd.controller.command.impl.action;
 
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
-import com.epam.jwd.controller.command.impl.showpage.ShowCreditCardsCommand;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;

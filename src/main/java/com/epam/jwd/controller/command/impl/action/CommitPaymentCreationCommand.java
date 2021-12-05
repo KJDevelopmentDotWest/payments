@@ -1,12 +1,10 @@
-package com.epam.jwd.controller.command.impl;
+package com.epam.jwd.controller.command.impl.action;
 
 import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.paymentdto.PaymentDto;
-import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
-import com.epam.jwd.service.impl.CreditCardService;
 import com.epam.jwd.service.impl.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +12,6 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class CommitPaymentCreationCommand implements Command {

@@ -1,8 +1,7 @@
-package com.epam.jwd.controller.command.impl;
+package com.epam.jwd.controller.command.impl.action;
 
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
-import com.epam.jwd.controller.command.impl.showpage.ShowEditPaymentCommand;
 import com.epam.jwd.service.dto.userdto.AccountDto;
 import com.epam.jwd.service.dto.userdto.UserDto;
 import com.epam.jwd.service.exception.ServiceException;
