@@ -30,7 +30,6 @@ public class CommitPaymentCreationCommand implements Command {
     private static final String NAME_PARAMETER_NAME = "name";
     private static final String ACTION_PARAMETER_NAME = "action";
     private static final String PAYMENT_PARAMETER_NAME = "payment";
-    private static final String CREDIT_CARDS_PARAMETER_NAME = "creditcards";
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
@@ -53,16 +52,9 @@ public class CommitPaymentCreationCommand implements Command {
             try {
                 PaymentDto createdPayment = service.create(paymentDto);
                 request.setAttribute(PAYMENT_PARAMETER_NAME, createdPayment);
-                request.setAttribute(CREDIT_CARDS_PARAMETER_NAME,
-                        new CreditCardService().getByUserId(createdPayment.getUserId()));
             } catch (ServiceException e) {
                 logger.error(e.getErrorCode());
-                if (e.getErrorCode() == ExceptionCode.CREDIT_CARD_IS_NOT_FOUND_EXCEPTION_CODE){
-                    request.setAttribute(CREDIT_CARDS_PARAMETER_NAME,
-                            null);
-                } else {
-                    return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
-                }
+                return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
             }
             return new CommandResponse(request.getContextPath() + SHOW_CHECKOUT_PAGE_URL, false);
         } else {

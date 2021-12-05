@@ -29,8 +29,6 @@ public class CommitPaymentChangesCommand implements Command {
     private static final String NAME_PARAMETER_NAME = "name";
     private static final String ACTION_PARAMETER_NAME = "action";
     private static final String PAYMENT_PARAMETER_NAME = "payment";
-    private static final String CREDIT_CARDS_PARAMETER_NAME = "creditcards";
-
 
     PaymentService service = new PaymentService();
 
@@ -55,18 +53,6 @@ public class CommitPaymentChangesCommand implements Command {
         service.update(paymentDto);
         if (Objects.equals(request.getParameter(ACTION_PARAMETER_NAME), SAVE_AND_PAY_ACTION)){
             request.setAttribute(PAYMENT_PARAMETER_NAME, paymentDto);
-            try {
-                request.setAttribute(CREDIT_CARDS_PARAMETER_NAME,
-                        new CreditCardService().getByUserId(paymentDto.getUserId()));
-            } catch (ServiceException e){
-                logger.error(e);
-                if (e.getErrorCode() == ExceptionCode.CREDIT_CARD_IS_NOT_FOUND_EXCEPTION_CODE){
-                    request.setAttribute(CREDIT_CARDS_PARAMETER_NAME,
-                            null);
-                } else {
-                    return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
-                }
-            }
             return new CommandResponse(request.getContextPath() + SHOW_CHECKOUT_PAGE_URL, false);
         }
         return new CommandResponse(request.getContextPath() + USER_PAYMENTS_PAGE_URL, true);

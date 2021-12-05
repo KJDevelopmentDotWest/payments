@@ -85,7 +85,8 @@
                             <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=destination" class="active">${destination}</a></th>
                             <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=time" class="active">${time}</a></th>
                             <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=committed" class="active">${committed}</a></th>
-                            <th scope="col">${edit}</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -96,6 +97,7 @@
                                         <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
                                         <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
                                         <td></td>
+                                        <td></td>
                                     </tr>
                                 </c:when>
                                 <c:otherwise>
@@ -105,6 +107,12 @@
                                         <td>
                                             <form class="inline" method="post" action="/payments?command=show_edit_payment" >
                                                 <button class="btn btn-exsm btn-primary" type="submit">${edit}</button>
+                                                <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form class="inline" method="post" action="/payments?command=show_checkout" >
+                                                <button class="btn btn-exsm btn-primary" type="submit">Pay</button>
                                                 <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
                                             </form>
                                         </td>
