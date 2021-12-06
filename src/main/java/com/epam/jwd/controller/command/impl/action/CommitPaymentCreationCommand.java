@@ -35,12 +35,28 @@ public class CommitPaymentCreationCommand implements Command {
 
         HttpSession session = request.getSession();
 
+        String destination = request.getParameter(DESTINATION_PARAMETER_NAME);
+        String name = request.getParameter(NAME_PARAMETER_NAME);
+        Long price;
+
+        if (Objects.isNull(destination) || Objects.isNull(name)){
+            logger.error("required data not exists");
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
+
+        try {
+            price = Long.valueOf(request.getParameter(PRICE_PARAMETER_NAME));
+        } catch (NumberFormatException e){
+            logger.error(e);
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
+
         PaymentDto paymentDto = new PaymentDto((Integer) session.getAttribute(ID_ATTRIBUTE_NAME),
-                request.getParameter(DESTINATION_PARAMETER_NAME),
-                Long.valueOf(request.getParameter(PRICE_PARAMETER_NAME)),
+                destination,
+                price,
                 false,
                 null,
-                request.getParameter(NAME_PARAMETER_NAME));
+                name);
 
         PaymentService service = new PaymentService();
 

@@ -1,5 +1,6 @@
 package com.epam.jwd.controller.command.impl.action;
 
+import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.creditcarddto.CreditCardDto;
@@ -21,7 +22,13 @@ public class BlockCreditCardCommand implements Command {
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + BlockCreditCardCommand.class);
 
-        Integer creditCardId = Integer.valueOf( request.getParameter(CREDIT_CARD_ID_PARAMETER_NAME));
+        Integer creditCardId;
+        try {
+            creditCardId = Integer.valueOf( request.getParameter(CREDIT_CARD_ID_PARAMETER_NAME));
+        } catch (NumberFormatException e){
+            logger.error(e);
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
         CreditCardService service = new CreditCardService();
         try {
             CreditCardDto creditCard = service.getById(creditCardId);

@@ -17,11 +17,14 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @WebFilter("/*")
 public class AccessFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger(AccessFilter.class);
+
+    String ID_ATTRIBUTE_NAME = "id";
 
     private static final String ROLE_ATTRIBUTE_NAME = "role";
     private static final String COMMAND_PARAMETER_NAME = "command";
@@ -36,7 +39,7 @@ public class AccessFilter implements Filter {
                     .getAllowedRoles();
             if (!roles.isEmpty()){
                 HttpSession session = ((HttpServletRequest) request).getSession();
-                if (roles.get(0) == session.getAttribute(ROLE_ATTRIBUTE_NAME)){
+                if (roles.get(0) == session.getAttribute(ROLE_ATTRIBUTE_NAME) && !Objects.isNull(session.getAttribute(ID_ATTRIBUTE_NAME))){
                     forwardToNextFilter(request, response, chain);
                 } else {
                     forwardToLoginPage(request, response);

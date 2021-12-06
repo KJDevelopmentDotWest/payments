@@ -33,7 +33,15 @@ public class CommitPaymentChangesCommand implements Command {
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + CommitPaymentChangesCommand.class);
-        Integer paymentId = Integer.valueOf(request.getParameter(PAYMENT_ID_PARAMETER_NAME));
+        Integer paymentId;
+
+        try {
+            paymentId = Integer.valueOf(request.getParameter(PAYMENT_ID_PARAMETER_NAME));
+        } catch (NumberFormatException e){
+            logger.error(e);
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
+
         try {
             PaymentDto payment = service.getById(paymentId);
             return updatePayment(payment, request);

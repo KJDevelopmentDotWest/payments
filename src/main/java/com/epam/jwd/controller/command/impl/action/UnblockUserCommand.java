@@ -1,5 +1,6 @@
 package com.epam.jwd.controller.command.impl.action;
 
+import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.userdto.UserDto;
@@ -21,10 +22,18 @@ public class UnblockUserCommand implements Command {
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + UnblockUserCommand.class);
 
-        Integer creditCardId = Integer.valueOf( request.getParameter(USER_ID_PARAMETER_NAME));
+        Integer userId;
+
+        try {
+            userId = Integer.valueOf( request.getParameter(USER_ID_PARAMETER_NAME));
+        } catch (NumberFormatException e){
+            logger.error(e);
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
+
         UserService service = new UserService();
         try {
-            UserDto userDto = service.getById(creditCardId);
+            UserDto userDto = service.getById(userId);
             userDto.setActive(true);
             service.update(userDto);
         } catch (ServiceException e) {

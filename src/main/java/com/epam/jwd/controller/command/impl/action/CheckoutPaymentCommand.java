@@ -1,5 +1,6 @@
 package com.epam.jwd.controller.command.impl.action;
 
+import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.creditcarddto.BankAccountDto;
@@ -31,8 +32,15 @@ public class CheckoutPaymentCommand implements Command {
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + CheckoutPaymentCommand.class);
 
-        Integer paymentId = Integer.valueOf(request.getParameter(PAYMENT_ID_PARAMETER_NAME));
-        Integer creditCardId = Integer.valueOf(request.getParameter(CREDIT_CARD_ID_PARAMETER_NAME));
+        Integer paymentId;
+        Integer creditCardId;
+        try {
+            paymentId = Integer.valueOf(request.getParameter(PAYMENT_ID_PARAMETER_NAME));
+            creditCardId = Integer.valueOf(request.getParameter(CREDIT_CARD_ID_PARAMETER_NAME));
+        } catch (NumberFormatException e){
+            logger.error(e);
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
 
         try {
             PaymentDto payment = paymentService.getById(paymentId);

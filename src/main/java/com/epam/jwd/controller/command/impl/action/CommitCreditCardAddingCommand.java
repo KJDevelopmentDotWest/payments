@@ -39,15 +39,31 @@ public class CommitCreditCardAddingCommand implements Command {
         Date date = new Date();
         date.setYear(date.getYear()+3);
 
+        Integer userId = (Integer) session.getAttribute(ID_ATTRIBUTE_NAME);
+        String name = request.getParameter(NAME_PARAMETER_NAME);
+        Long cardNumber;
+
+        if (name.isEmpty()){
+            logger.error("required data not exists");
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
+
+        try {
+            cardNumber = Long.valueOf(request.getParameter(CURD_NUMBER_PARAMETER_NAME));
+        }  catch ( NumberFormatException e){
+            logger.error(e);
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
+
         CreditCardDto creditCard = new CreditCardDto(
                 new BankAccountDto(
                         0L,
                         false
                 ),
-                request.getParameter(NAME_PARAMETER_NAME),
+                name,
                 date,
-                (Integer) session.getAttribute(ID_ATTRIBUTE_NAME),
-                Long.valueOf(request.getParameter(CURD_NUMBER_PARAMETER_NAME))
+                userId,
+                cardNumber
         );
 
         CreditCardService service = new CreditCardService();

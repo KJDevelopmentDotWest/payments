@@ -1,5 +1,6 @@
 package com.epam.jwd.controller.command.impl.action;
 
+import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.userdto.AccountDto;
@@ -12,6 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Objects;
 
 public class CommitAccountCreationCommand implements Command {
 
@@ -31,10 +34,24 @@ public class CommitAccountCreationCommand implements Command {
         logger.info("command " + CommitAccountCreationCommand.class);
 
         HttpSession session = request.getSession();
+
         Integer userId = (Integer) session.getAttribute(ID_ATTRIBUTE_NAME);
-        String name = request.getParameter(NAME_PARAMETER_NAME);
-        String surname = request.getParameter(SURNAME_PARAMETER_NAME);
+        String name;
+        String surname;
         Integer pictureId;
+
+        if (Objects.isNull(userId)){
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
+
+        try {
+            name = request.getParameter(NAME_PARAMETER_NAME);
+            surname = request.getParameter(SURNAME_PARAMETER_NAME);
+        } catch (NumberFormatException e){
+            logger.error(e);
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
+
         try{
             pictureId = Integer.valueOf(request.getParameter(PICTURE_ID_PARAMETER_NAME));
         } catch ( NumberFormatException e){

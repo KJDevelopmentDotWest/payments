@@ -39,6 +39,15 @@ public class SigninCommand implements Command {
 
         logger.info("command " + SigninCommand.class);
         UserService service = new UserService();
+
+        String login = request.getParameter(LOGIN_PARAMETER_NAME);
+        String password = request.getParameter(PASSWORD_PARAMETER_NAME);
+
+        if (Objects.isNull(login) || Objects.isNull(password)){
+            logger.error("required data not exists");
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
+
         try {
             UserDto userDto = service.getByLogin(request.getParameter(LOGIN_PARAMETER_NAME));
             if (Objects.equals(userDto.getPassword(), request.getParameter(PASSWORD_PARAMETER_NAME))){

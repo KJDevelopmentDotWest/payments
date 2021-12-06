@@ -1,5 +1,6 @@
 package com.epam.jwd.controller.command.impl.action;
 
+import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.dao.model.user.Role;
@@ -11,6 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Objects;
 
 public class CommitUserCreationCommand implements Command {
 
@@ -34,6 +37,11 @@ public class CommitUserCreationCommand implements Command {
 
         String login = request.getParameter(LOGIN_PARAMETER_NAME);
         String password = request.getParameter(PASSWORD_PARAMETER_NAME);
+
+        if (Objects.isNull(login) || Objects.isNull(password)){
+            logger.error("required data not exists");
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
 
         UserDto userDto = new UserDto(login, password, null, true, Role.CUSTOMER);
 

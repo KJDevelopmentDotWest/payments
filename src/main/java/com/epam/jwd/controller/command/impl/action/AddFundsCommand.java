@@ -1,5 +1,6 @@
 package com.epam.jwd.controller.command.impl.action;
 
+import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.creditcarddto.CreditCardDto;
@@ -26,8 +27,15 @@ public class AddFundsCommand implements Command {
 
         logger.info("command " + AddFundsCommand.class);
 
-        Integer creditCardId = Integer.valueOf( request.getParameter(CREDIT_CARD_ID_PARAMETER_NAME));
-        Integer funds = Integer.valueOf(request.getParameter(FUNDS_PARAMETER_NAME));
+        Integer creditCardId;
+        Integer funds;
+        try {
+            creditCardId = Integer.valueOf( request.getParameter(CREDIT_CARD_ID_PARAMETER_NAME));
+            funds = Integer.valueOf(request.getParameter(FUNDS_PARAMETER_NAME));
+        } catch (NumberFormatException e){
+            logger.error(e);
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
         CreditCardService service = new CreditCardService();
 
         try {

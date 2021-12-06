@@ -1,5 +1,6 @@
 package com.epam.jwd.controller.command.impl.action;
 
+import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
 import com.epam.jwd.service.dto.userdto.AccountDto;
@@ -30,10 +31,20 @@ public class CommitAccountChangesCommand implements Command {
         logger.info("command " + CommitAccountChangesCommand.class);
 
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute(ID_ATTRIBUTE_NAME);
-        String name = request.getParameter(NAME_PARAMETER_NAME);
-        String surname = request.getParameter(SURNAME_PARAMETER_NAME);
+        Integer userId;
+        String name;
+        String surname;
         Integer pictureId;
+
+        try {
+            userId = (Integer) session.getAttribute(ID_ATTRIBUTE_NAME);
+            name = request.getParameter(NAME_PARAMETER_NAME);
+            surname = request.getParameter(SURNAME_PARAMETER_NAME);
+        } catch ( NumberFormatException e){
+            logger.error(e);
+            return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
+        }
+
         try{
             pictureId = Integer.valueOf(request.getParameter(PICTURE_ID_PARAMETER_NAME));
         } catch ( NumberFormatException e){
