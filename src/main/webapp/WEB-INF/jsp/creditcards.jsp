@@ -42,9 +42,27 @@
                 document.getElementById("submitbutton").disabled = true;
             }
         };
+        function setSortedBy(){
+            var sortBy = '${sortBy}';
+            if(sortBy == "" || sortBy == "name"){
+                document.getElementById("name").classList.add('col-chosen');
+            }
+            if(sortBy == "number"){
+                document.getElementById("number").classList.add('col-chosen');
+            }
+            if(sortBy == "date"){
+                document.getElementById("date").classList.add('col-chosen');
+            }
+            if(sortBy == "balance"){
+                document.getElementById("balance").classList.add('col-chosen');
+            }
+            if(sortBy == "state"){
+                document.getElementById("state").classList.add('col-chosen');
+            }
+        }
     </script>
 
-    <body class="d-flex flex-column h-100">
+    <body class="d-flex flex-column h-100" onload="setSortedBy()">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -93,11 +111,11 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th class="active"scope="col"><a href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=name" class="active">${name}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=number" class="active">${number}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=date" class="active">${date}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=balance" class="active">${balance}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=state" class="active">${state}</a></th>
+                            <th id="name" class="active"scope="col"><a class="href-unchanged" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=name">${name}</a></th>
+                            <th id="number" class="active"scope="col"><a class="href-unchanged" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=number">${number}</a></th>
+                            <th id="date" class="active"scope="col"><a class="href-unchanged" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=date">${date}</a></th>
+                            <th id="balance" class="active"scope="col"><a class="href-unchanged" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=balance">${balance}</a></th>
+                            <th id="state" class="active"scope="col"><a class="href-unchanged" href="/payments?command=show_credit_cards&currentPage=${requestScope.currentPage}&sortBy=state">${state}</a></th>
                             <th scope="col"></th>
                         </tr>
                     </thead>

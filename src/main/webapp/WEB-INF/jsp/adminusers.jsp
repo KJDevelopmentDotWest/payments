@@ -31,7 +31,34 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
-    <body class="d-flex flex-column h-100">
+    <script>
+        function setSortedBy(){
+            var sortBy = '${sortBy}';
+            if(sortBy == "id"  || sortBy == ""){
+                document.getElementById("id").classList.add('col-chosen');
+            }
+            if(sortBy == "login"){
+                document.getElementById("login").classList.add('col-chosen');
+            }
+            if(sortBy == "role"){
+                document.getElementById("role").classList.add('col-chosen');
+            }
+            if(sortBy == "active"){
+                document.getElementById("active").classList.add('col-chosen');
+            }
+            if(sortBy == "name"){
+                document.getElementById("name").classList.add('col-chosen');
+            }
+            if(sortBy == "surname"){
+                document.getElementById("surname").classList.add('col-chosen');
+            }
+            if(sortBy == "profilePictureId"){
+                document.getElementById("pictureId").classList.add('col-chosen');
+            }
+        }
+    </script>
+
+    <body class="d-flex flex-column h-100" onload="setSortedBy()">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -77,13 +104,13 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=id" class="active">${id}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=login" class="active">${login}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=role" class="active">${role}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=active" class="active">${active}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=name" class="active">${name}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=surname" class="active">${surname}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=profilePictureId" class="active">${profilepictureid}</a></th>
+                            <th id="id" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=id">${id}</a></th>
+                            <th id="login" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=login">${login}</a></th>
+                            <th id="role" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=role">${role}</a></th>
+                            <th id="active" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=active">${active}</a></th>
+                            <th id="name" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=name">${name}</a></th>
+                            <th id="surname" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=surname">${surname}</a></th>
+                            <th id="pictureId" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_users&currentPage=${requestScope.currentPage}&sortBy=profilePictureId">${profilepictureid}</a></th>
                         </tr>
                     </thead>
                     <tbody>

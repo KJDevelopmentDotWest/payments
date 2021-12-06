@@ -31,7 +31,34 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
-    <body class="d-flex flex-column h-100">
+    <script>
+        function setSortedBy(){
+            var sortBy = '${sortBy}';
+            if(sortBy == "id" || sortBy == ""){
+                document.getElementById("id").classList.add('col-chosen');
+            }
+            if(sortBy == "userId"){
+                document.getElementById("userid").classList.add('col-chosen');
+            }
+            if(sortBy == "name"){
+                document.getElementById("name").classList.add('col-chosen');
+            }
+            if(sortBy == "number"){
+                document.getElementById("number").classList.add('col-chosen');
+            }
+            if(sortBy == "date"){
+                document.getElementById("date").classList.add('col-chosen');
+            }
+            if(sortBy == "balance"){
+                document.getElementById("balance").classList.add('col-chosen');
+            }
+            if(sortBy == "state"){
+                document.getElementById("state").classList.add('col-chosen');
+            }
+        }
+    </script>
+
+    <body class="d-flex flex-column h-100" onload="setSortedBy()">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -77,13 +104,13 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=id" class="active">${id}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=userId" class="active">${userid}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=name" class="active">${name}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=number" class="active">${number}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=date" class="active">${date}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=balance" class="active">${balance}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=state" class="active">${state}</a></th>
+                            <th id="id" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=id">${id}</a></th>
+                            <th id="userid" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=userId">${userid}</a></th>
+                            <th id="name" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=name">${name}</a></th>
+                            <th id="number" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=number">${number}</a></th>
+                            <th id="date" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=date">${date}</a></th>
+                            <th id="balance" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=balance">${balance}</a></th>
+                            <th id="state" scope="col"><a class="href-unchanged" href="/payments?command=show_admin_credit_cards&currentPage=${requestScope.currentPage}&sortBy=state">${state}</a></th>
                         </tr>
                     </thead>
                     <tbody>

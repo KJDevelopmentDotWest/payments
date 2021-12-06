@@ -33,7 +33,28 @@
         <style><%@include file="/WEB-INF/css/core.css"%></style>
     </head>
 
-    <body class="d-flex flex-column h-100">
+    <script>
+        function setSortedBy(){
+            var sortBy = '${sortBy}';
+            if(sortBy == "name" || sortBy == ""){
+                document.getElementById("name").classList.add('col-chosen');
+            }
+            if(sortBy == "price"){
+                document.getElementById("price").classList.add('col-chosen');
+            }
+            if(sortBy == "destination"){
+                document.getElementById("destination").classList.add('col-chosen');
+            }
+            if(sortBy == "time"){
+                document.getElementById("time").classList.add('col-chosen');
+            }
+            if(sortBy == "committed"){
+                document.getElementById("committed").classList.add('col-chosen');
+            }
+        }
+    </script>
+
+    <body class="d-flex flex-column h-100" onload="setSortedBy()">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -81,11 +102,11 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=name" class="active">${name}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=price" class="active">${price}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=destination" class="active">${destination}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=time" class="active">${time}</a></th>
-                            <th class="active"scope="col"><a href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=committed" class="active">${committed}</a></th>
+                            <th id="name" scope="col"><a class="href-unchanged" href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=name">${name}</a></th>
+                            <th id="price" scope="col"><a class="href-unchanged" href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=price">${price}</a></th>
+                            <th id="destination" scope="col"><a class="href-unchanged" href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=destination">${destination}</a></th>
+                            <th id="time" scope="col"><a class="href-unchanged" href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=time">${time}</a></th>
+                            <th id="committed" scope="col"><a class="href-unchanged" href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=committed">${committed}</a></th>
                             <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>

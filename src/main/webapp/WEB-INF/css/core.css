@@ -48,3 +48,13 @@
     margin-left:10px;
     color:red
 }
+
+.col-chosen{
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.href-unchanged{
+    color: #000000;
+    text-decoration: none;
+}
