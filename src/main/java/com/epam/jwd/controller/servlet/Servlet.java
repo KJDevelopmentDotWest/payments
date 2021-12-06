@@ -15,8 +15,10 @@ import java.io.IOException;
 @WebServlet("/payments")
 public class Servlet extends HttpServlet {
 
+    private static final String COMMAND_PARAMETER_NAME = "command";
+
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CommandResponse commandResponse = ApplicationCommand.getByString(request.getParameter("command"))
+        CommandResponse commandResponse = ApplicationCommand.getByString(request.getParameter(COMMAND_PARAMETER_NAME))
                 .getCommand()
                 .execute(request, response);
 
