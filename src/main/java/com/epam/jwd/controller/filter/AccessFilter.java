@@ -3,6 +3,9 @@ package com.epam.jwd.controller.filter;
 
 import com.epam.jwd.controller.command.ApplicationCommand;
 import com.epam.jwd.dao.model.user.Role;
+import com.epam.jwd.service.dto.userdto.UserDto;
+import com.epam.jwd.service.exception.ServiceException;
+import com.epam.jwd.service.impl.UserService;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletRequest;
@@ -43,6 +46,18 @@ public class AccessFilter implements Filter {
                     forwardToNextFilter(request, response, chain);
                 } else {
                     forwardToLoginPage(request, response);
+                }
+                if (roles.get(0) == Role.CUSTOMER){
+                    UserService service = new UserService();
+                    try {
+                        UserDto userDto = service.getById((Integer) session.getAttribute(ID_ATTRIBUTE_NAME));
+                        if (!userDto.getActive()){
+                            forwardToLoginPage(request, response);
+                        }
+                    } catch (ServiceException e) {
+                        logger.error(e);
+                        forwardToLoginPage(request, response);
+                    }
                 }
             } else {
                 forwardToNextFilter(request, response, chain);
