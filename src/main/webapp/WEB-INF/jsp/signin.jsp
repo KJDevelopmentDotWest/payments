@@ -72,15 +72,23 @@
                 return false;
             }
         };
-        function onLoad(){
+        function tempAlert() {
             var message = '${incorrect}';
             if(message != null && message.length > 0){
-                alert(message);
+                var el = document.createElement("div");
+                el.setAttribute("style","position: absolute; text-align: center; top:70%; margin-right:10%; right:0px");
+                el.classList.add('alert');
+                el.classList.add('alert-danger');
+                el.innerHTML = message;
+                setTimeout(function(){
+                    el.parentNode.removeChild(el);
+                },3000);
+                document.body.appendChild(el);
             }
-        }
+        };
     </script>
 
-    <body class="d-flex flex-column h-100" onload="onLoad()">
+    <body class="d-flex flex-column h-100" onload="tempAlert()">
         <form class="top-right" action="/payments?command=change_language" method="post" autocomplete="off">
             <div class="btn-group" role="group"action="/payments?command=signout">
                 <button type="submit" class="btn btn-primary" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>
