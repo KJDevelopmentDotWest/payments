@@ -44,10 +44,12 @@ public class CreditCardOutputTag extends SimpleTagSupport {
                 .append(COLUMN_START_TAG)
                 .append(creditCardDto.getName())
                 .append(COLUMN_END_TAG);
+
         stringBuilder
                 .append(COLUMN_START_TAG)
                 .append(creditCardDto.getCardNumber())
                 .append(COLUMN_END_TAG);
+
         stringBuilder
                 .append(COLUMN_START_TAG);
         if (!Objects.isNull(creditCardDto.getExpireDate())){
@@ -57,20 +59,22 @@ public class CreditCardOutputTag extends SimpleTagSupport {
         }
         stringBuilder
                 .append(COLUMN_END_TAG);
+
         stringBuilder.append(COLUMN_START_TAG)
                 .append(creditCardDto.getBankAccount().getBalance())
                 .append(COLUMN_END_TAG);
-        stringBuilder.append(COLUMN_START_TAG);
+
         if (creditCardDto.getBankAccount().getBlocked()){
-            stringBuilder.append(STRING_BLOCKED)
-                    .append(COLUMN_END_TAG)
-                    .append(COLUMN_START_TAG)
+            stringBuilder.append(COLUMN_START_TAG)
+                    .append(STRING_BLOCKED)
                     .append(COLUMN_END_TAG);
         } else {
-            stringBuilder.append(STRING_LINK_BLOCK_CREDIT_CARD_START)
+            stringBuilder.append(COLUMN_START_TAG)
+                    .append(STRING_LINK_BLOCK_CREDIT_CARD_START)
                     .append(creditCardDto.getId())
                     .append(STRING_FORM_TAG_END)
                     .append(COLUMN_END_TAG);
+
             stringBuilder.append(COLUMN_START_TAG)
                     .append(STRING_LINK_ADD_FOUNDS_START)
                     .append(creditCardDto.getId())

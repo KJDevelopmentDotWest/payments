@@ -124,7 +124,6 @@
                             <tr>
                                 <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
                                 <m:creditcardoutput creditCardDto="${requestScope.creditcards.get(i)}"/>
-                                <td></td>
                             </tr>
                         </c:forEach>
                     </tbody>

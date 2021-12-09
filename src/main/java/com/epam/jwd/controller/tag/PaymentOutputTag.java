@@ -12,8 +12,6 @@ import java.text.DateFormat;
 import java.util.Objects;
 
 public class PaymentOutputTag extends SimpleTagSupport {
-    private static final Logger logger = LogManager.getLogger(PaymentOutputTag.class);
-
     private static final String COLUMN_START_TAG = "<td>";
     private static final String COLUMN_END_TAG = "</td>";
     private static final String STRING_YES = "YES";

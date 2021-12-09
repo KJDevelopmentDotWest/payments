@@ -41,6 +41,7 @@ public enum ApplicationCommand {
     UNBLOCK_USER(new UnblockUserCommand(), Role.ADMIN),
     ADD_FUNDS(new AddFundsCommand(), Role.CUSTOMER),
     CHECKOUT_PAYMENT(new CheckoutPaymentCommand(), Role.CUSTOMER),
+    DELETE_PAYMENT(new DeletePaymentCommand(), Role.CUSTOMER),
     DEFAULT(defaultCommandImpl());
 
     private final Command command;

@@ -34,6 +34,8 @@ public class AccessFilter implements Filter {
 
     private static final String SIGNIN_PAGE_URL = "/payments?command=show_signin";
 
+    private Boolean isPassed = false;
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         logger.info("filter " + AccessFilter.class);
@@ -42,26 +44,27 @@ public class AccessFilter implements Filter {
                     .getAllowedRoles();
             if (!roles.isEmpty()){
                 HttpSession session = ((HttpServletRequest) request).getSession();
-                if (roles.get(0) == session.getAttribute(ROLE_ATTRIBUTE_NAME) && !Objects.isNull(session.getAttribute(ID_ATTRIBUTE_NAME))){
-                    forwardToNextFilter(request, response, chain);
-                } else {
-                    forwardToLoginPage(request, response);
-                }
+                isPassed = roles.get(0) == session.getAttribute(ROLE_ATTRIBUTE_NAME) && !Objects.isNull(session.getAttribute(ID_ATTRIBUTE_NAME));
                 if (roles.get(0) == Role.CUSTOMER){
                     UserService service = new UserService();
                     try {
                         UserDto userDto = service.getById((Integer) session.getAttribute(ID_ATTRIBUTE_NAME));
                         if (!userDto.getActive()){
-                            forwardToLoginPage(request, response);
+                            isPassed = true;
                         }
                     } catch (ServiceException e) {
-                        logger.error(e);
-                        forwardToLoginPage(request, response);
+                        logger.error(e.getErrorCode());
+                        isPassed = false;
                     }
                 }
             } else {
-                forwardToNextFilter(request, response, chain);
+                isPassed = true;
             }
+        }
+        if (isPassed){
+            forwardToNextFilter(request, response, chain);
+        } else {
+            forwardToLoginPage(request, response);
         }
     }
 

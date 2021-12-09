@@ -21,6 +21,7 @@
 <fmt:message bundle="${loc}" key="createpayment" var="createpayment"/>
 <fmt:message bundle="${loc}" key="usernopayments" var="usernopayments"/>
 <fmt:message bundle="${loc}" key="pay" var="pay"/>
+<fmt:message bundle="${loc}" key="delete" var="delete"/>
 
 
 <html>
@@ -135,6 +136,12 @@
                                         <td>
                                             <form class="inline" method="post" action="/payments?command=show_checkout" >
                                                 <button class="btn btn-exsm btn-primary" type="submit">${pay}</button>
+                                                <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form class="inline" method="post" action="/payments?command=delete_payment" >
+                                                <button class="btn btn-exsm btn-primary" type="submit">${delete}</button>
                                                 <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
                                             </form>
                                         </td>
