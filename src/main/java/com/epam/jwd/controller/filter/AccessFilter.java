@@ -50,7 +50,7 @@ public class AccessFilter implements Filter {
                     try {
                         UserDto userDto = service.getById((Integer) session.getAttribute(ID_ATTRIBUTE_NAME));
                         if (!userDto.getActive()){
-                            isPassed = true;
+                            isPassed = false;
                         }
                     } catch (ServiceException e) {
                         logger.error(e.getErrorCode());

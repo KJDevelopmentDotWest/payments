@@ -8,11 +8,16 @@ import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class UserValidator implements Validator<UserDto, Integer> {
 
     private static final Integer LOGIN_MIN_LENGTH = 3;
+    private static final Integer LOGIN_MAX_LENGTH = 15;
     private static final Integer PASSWORD_MIN_LENGTH = 5;
+    private static final Integer PASSWORD_MAX_LENGTH = 15;
+
+    private static final String ONLY_ENG_AND_NUM_PATTERN = "^[a-zA-Z0-9]*$";
 
     @Override
     public void validate(UserDto value, Boolean checkId) throws ServiceException {
@@ -44,12 +49,24 @@ public class UserValidator implements Validator<UserDto, Integer> {
                 || login.length() < LOGIN_MIN_LENGTH) {
             throw new ServiceException(ExceptionCode.USER_LOGIN_TOO_SHORT_EXCEPTION_CODE);
         }
+        if (login.length() > LOGIN_MAX_LENGTH) {
+            throw new ServiceException(ExceptionCode.USER_LOGIN_TOO_LONG_EXCEPTION_CODE);
+        }
+        if (!login.matches(ONLY_ENG_AND_NUM_PATTERN)){
+            throw new ServiceException(ExceptionCode.USER_LOGIN_CONTAINS_FORBIDDEN_CHARACTERS_EXCEPTION_CODE);
+        }
     }
 
     private void validatePassword(String password) throws ServiceException {
         if (Objects.isNull(password)
                 || password.length() < PASSWORD_MIN_LENGTH){
             throw new ServiceException(ExceptionCode.USER_PASSWORD_TOO_SHORT_EXCEPTION_CODE);
+        }
+        if (password.length() > PASSWORD_MAX_LENGTH){
+            throw new ServiceException(ExceptionCode.USER_PASSWORD_TOO_LONG_EXCEPTION_CODE);
+        }
+        if (!password.matches(ONLY_ENG_AND_NUM_PATTERN)){
+            throw new ServiceException(ExceptionCode.USER_PASSWORD_CONTAINS_FORBIDDEN_CHARACTERS_EXCEPTION_CODE);
         }
     }
 

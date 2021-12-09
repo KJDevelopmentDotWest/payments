@@ -19,6 +19,7 @@ public class ShowSigninCommand implements Command {
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
         logger.info("command " + ShowSigninCommand.class);
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         HttpSession session = request.getSession();
         request.setAttribute(INCORRECT_ATTRIBUTE_NAME, session.getAttribute(INCORRECT_ATTRIBUTE_NAME));
         session.removeAttribute(INCORRECT_ATTRIBUTE_NAME);

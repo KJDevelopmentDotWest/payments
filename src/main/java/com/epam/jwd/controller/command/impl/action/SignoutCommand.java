@@ -20,7 +20,7 @@ public class SignoutCommand implements Command {
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
 
         logger.info("command " + SignoutCommand.class);
-
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         HttpSession session = request.getSession();
         Collections.list(session.getAttributeNames())
                 .forEach(session::removeAttribute);

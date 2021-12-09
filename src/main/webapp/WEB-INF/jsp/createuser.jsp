@@ -88,7 +88,7 @@
         };
     </script>
 
-    <body class="d-flex flex-column h-100" onload="tempAlert()">
+    <body class="d-flex flex-column h-100" onload="tempAlert(); validateform(); clearFields()">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -103,10 +103,10 @@
         </nav>
         <div class="primary-margin">
             <main class="form-signin form-margin-no-navbar" align="center">
-                <form action="/payments?command=commit_user_creation" method="post" autocomplete="off">
+                <form action="/payments?command=commit_user_creation" method="post" autocomplete="new-password">
                     <h1 class="h3 mb-3">${filldata}</h1>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="login" placeholder="Password" name="login" oninput="validateform();allowOnlyEngl()">
+                        <input type="text" class="form-control" id="login" name="login" oninput="validateform();allowOnlyEngl()" autocomplete="ofvngjhf">
                         <label for="login">${login}</label>
                         <div class="hidden error-message" id="logintooshort">
                             ${logintooshort}
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                     <div class="form-floating">
-                        <input type="Password" class="form-control" id="password" placeholder="Password" name="password" oninput="validateform();allowOnlyEngl()">
+                        <input type="Password" class="form-control" id="password" name="password" oninput="validateform();allowOnlyEngl()" autocomplete="new-password">
                         <label for="password">${password}</label>
                         <div class="hidden error-message" id="passwordtooshort">
                             ${passwordtooshort}
