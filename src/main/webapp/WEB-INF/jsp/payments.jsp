@@ -110,6 +110,7 @@
                             <th id="committed" scope="col"><a class="href-unchanged" href="/payments?command=show_payments&currentPage=${requestScope.currentPage}&sortBy=committed">${committed}</a></th>
                             <th scope="col"></th>
                             <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -121,30 +122,14 @@
                                         <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                     </tr>
                                 </c:when>
                                 <c:otherwise>
                                     <tr>
                                         <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
                                         <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
-                                        <td>
-                                            <form class="inline" method="post" action="/payments?command=show_edit_payment" >
-                                                <button class="btn btn-exsm btn-primary" type="submit">${edit}</button>
-                                                <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <form class="inline" method="post" action="/payments?command=show_checkout" >
-                                                <button class="btn btn-exsm btn-primary" type="submit">${pay}</button>
-                                                <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <form class="inline" method="post" action="/payments?command=delete_payment" >
-                                                <button class="btn btn-exsm btn-primary" type="submit">${delete}</button>
-                                                <input type="hidden" name="paymentId" value="${requestScope.payments.get(i).getId()}">
-                                            </form>
-                                        </td>
+
                                     </tr>
                                 </c:otherwise>
                             </c:choose>

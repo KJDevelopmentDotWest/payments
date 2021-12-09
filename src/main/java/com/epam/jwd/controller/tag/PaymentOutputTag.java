@@ -1,11 +1,8 @@
 package com.epam.jwd.controller.tag;
 
 import com.epam.jwd.service.dto.paymentdto.PaymentDto;
-import com.epam.jwd.service.impl.PaymentService;
 import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.SimpleTagSupport;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -16,6 +13,27 @@ public class PaymentOutputTag extends SimpleTagSupport {
     private static final String COLUMN_END_TAG = "</td>";
     private static final String STRING_YES = "YES";
     private static final String STRING_NO = "NO";
+    private static final String DASH_SYMBOL = "-";
+
+    private static final String STRING_LINK_EDIT_START = """
+            <form class="inline" method="post" action="/payments?command=show_edit_payment" >
+                <button class="btn btn-exsm btn-primary" type="submit">Edit</button>
+                <input type="hidden" name="paymentId" value=
+            """;
+
+    private static final String STRING_LINK_CHECKOUT_START = """
+            <form class="inline" method="post" action="/payments?command=show_checkout" >
+                <button class="btn btn-exsm btn-primary" type="submit">Pay</button>
+                <input type="hidden" name="paymentId" value=
+            """;
+
+    private static final String STRING_LINK_DELETE_START = """
+            <form class="inline" method="post" action="/payments?command=delete_payment" >
+                <button class="btn btn-exsm btn-primary" type="submit">Delete</button>
+                <input type="hidden" name="paymentId" value=
+            """;
+
+    private static final String STRING_FORM_TAG_END = "></form>";
 
     private PaymentDto paymentDto;
 
@@ -46,15 +64,35 @@ public class PaymentOutputTag extends SimpleTagSupport {
         if (!Objects.isNull(paymentDto.getTime())){
             stringBuilder.append(DateFormat.getInstance().format(paymentDto.getTime()));
         } else {
-            stringBuilder.append("-");
+            stringBuilder.append(DASH_SYMBOL);
         }
-        stringBuilder.append(COLUMN_START_TAG);
         if (paymentDto.getCommitted()){
-            stringBuilder.append(STRING_YES);
+            stringBuilder.append(COLUMN_START_TAG)
+                    .append(STRING_YES)
+                    .append(COLUMN_END_TAG);
         } else {
-            stringBuilder.append(STRING_NO);
+            stringBuilder.append(COLUMN_START_TAG)
+                    .append(STRING_NO)
+                    .append(COLUMN_END_TAG);
+
+            stringBuilder.append(COLUMN_START_TAG)
+                    .append(STRING_LINK_EDIT_START)
+                    .append(paymentDto.getId())
+                    .append(STRING_FORM_TAG_END)
+                    .append(COLUMN_END_TAG);
+
+            stringBuilder.append(COLUMN_START_TAG)
+                    .append(STRING_LINK_CHECKOUT_START)
+                    .append(paymentDto.getId())
+                    .append(STRING_FORM_TAG_END)
+                    .append(COLUMN_END_TAG);
+
+            stringBuilder.append(COLUMN_START_TAG)
+                    .append(STRING_LINK_DELETE_START)
+                    .append(paymentDto.getId())
+                    .append(STRING_FORM_TAG_END)
+                    .append(COLUMN_END_TAG);
         }
-        stringBuilder.append(COLUMN_END_TAG);
         return stringBuilder.toString();
     }
 }
