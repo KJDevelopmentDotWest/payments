@@ -10,7 +10,12 @@ import java.util.Objects;
 public class AccountValidator implements Validator<AccountDto, Integer> {
 
     private static final Integer NAME_MIN_LENGTH = 2;
+    private static final Integer NAME_MAX_LENGTH = 15;
     private static final Integer SURNAME_MIN_LENGTH = 2;
+    private static final Integer SURNAME_MAX_LENGTH = 15;
+
+    private static final String PATTERN = "^[a-zA-Z-]*$";
+
 
     @Override
     public void validate(AccountDto value, Boolean checkId) throws ServiceException {
@@ -29,12 +34,24 @@ public class AccountValidator implements Validator<AccountDto, Integer> {
                 || name.length() < NAME_MIN_LENGTH) {
             throw new ServiceException(ExceptionCode.ACCOUNT_NAME_TOO_SHORT_EXCEPTION_CODE);
         }
+        if (name.length() > NAME_MAX_LENGTH){
+            throw new ServiceException(ExceptionCode.ACCOUNT_NAME_TOO_LONG_EXCEPTION_CODE);
+        }
+        if (!name.matches(PATTERN)){
+            throw new ServiceException(ExceptionCode.ACCOUNT_NAME_CONTAINS_FORBIDDEN_CHARACTERS_EXCEPTION_CODE);
+        }
     }
 
     private void validateSurname(String surname) throws ServiceException {
         if (Objects.isNull(surname)
                 || surname.length() < SURNAME_MIN_LENGTH) {
             throw new ServiceException(ExceptionCode.ACCOUNT_SURNAME_TOO_SHORT_EXCEPTION_CODE);
+        }
+        if (surname.length() > SURNAME_MAX_LENGTH){
+            throw new ServiceException(ExceptionCode.ACCOUNT_SURNAME_TOO_LONG_EXCEPTION_CODE);
+        }
+        if (!surname.matches(PATTERN)){
+            throw new ServiceException(ExceptionCode.ACCOUNT_SURNAME_CONTAINS_FORBIDDEN_CHARACTERS_EXCEPTION_CODE);
         }
     }
 

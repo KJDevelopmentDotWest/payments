@@ -11,6 +11,11 @@ import java.util.Objects;
 public class PaymentValidator implements Validator<PaymentDto, Integer> {
 
     private static final Integer NAME_MIN_LENGTH = 2;
+    private static final Integer NAME_MAX_LENGTH = 15;
+    private static final Integer ADDRESS_MIN_LENGTH = 2;
+    private static final Integer ADDRESS_MAX_LENGTH = 15;
+    private static final String NAME_PATTERN = "^[a-zA-Z]*$";
+    private static final String ADDRESS_PATTERN = "^[a-zA-Z-/.@]*$";
 
     @Override
     public void validate(PaymentDto value, Boolean checkId) throws ServiceException {
@@ -40,8 +45,14 @@ public class PaymentValidator implements Validator<PaymentDto, Integer> {
     }
 
     private void validateAddress(String address) throws ServiceException {
-        if (Objects.isNull(address)){
-            throw new ServiceException(ExceptionCode.PAYMENT_ADDRESS_IS_NULL_EXCEPTION_CODE);
+        if (Objects.isNull(address) || address.length() < ADDRESS_MIN_LENGTH){
+            throw new ServiceException(ExceptionCode.PAYMENT_ADDRESS_TOO_SHORT_EXCEPTION_CODE);
+        }
+        if (address.length() > ADDRESS_MAX_LENGTH){
+            throw new ServiceException(ExceptionCode.PAYMENT_ADDRESS_TOO_LONG_EXCEPTION_CODE);
+        }
+        if (!address.matches(ADDRESS_PATTERN)){
+            throw new ServiceException(ExceptionCode.PAYMENT_ADDRESS_CONTAINS_FORBIDDEN_CHARACTERS_EXCEPTION_CODE);
         }
     }
 
@@ -64,6 +75,12 @@ public class PaymentValidator implements Validator<PaymentDto, Integer> {
         if (Objects.isNull(name)
                 || name.length() < NAME_MIN_LENGTH) {
             throw new ServiceException(ExceptionCode.PAYMENT_NAME_TOO_SHORT_EXCEPTION_CODE);
+        }
+        if (name.length() > NAME_MAX_LENGTH){
+            throw new ServiceException(ExceptionCode.PAYMENT_NAME_TOO_LONG_EXCEPTION_CODE);
+        }
+        if (!name.matches(NAME_PATTERN)){
+            throw new ServiceException(ExceptionCode.PAYMENT_NAME_CONTAINS_FORBIDDEN_CHARACTERS_EXCEPTION_CODE);
         }
     }
 

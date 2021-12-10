@@ -13,6 +13,10 @@ import java.util.Objects;
 public class CreditCardValidator implements Validator<CreditCardDto, Integer> {
 
     private static final Integer NAME_MIN_LENGTH = 2;
+    private static final Integer NAME_MAX_LENGTH = 15;
+
+    private static final String NAME_PATTERN = "^[a-zA-Z]*$";
+    private static final Integer NUMBER_LENGTH = 16;
 
     @Override
     public void validate(CreditCardDto value, Boolean checkId) throws ServiceException {
@@ -26,6 +30,7 @@ public class CreditCardValidator implements Validator<CreditCardDto, Integer> {
         validateName(value.getName());
         validateDate(value.getExpireDate());
         validateUserId(value.getUserId());
+        validateNumber(value.getCardNumber());
     }
 
     public void validateCardNumberUnique(CreditCard creditCard) throws ServiceException {
@@ -43,7 +48,13 @@ public class CreditCardValidator implements Validator<CreditCardDto, Integer> {
     private void validateName(String name) throws ServiceException {
         if (Objects.isNull(name)
                 || name.length() < NAME_MIN_LENGTH){
-            throw new ServiceException(ExceptionCode.USER_LOGIN_TOO_SHORT_EXCEPTION_CODE);
+            throw new ServiceException(ExceptionCode.CREDIT_CARD_NAME_TOO_SHORT_EXCEPTION_CODE);
+        }
+        if (name.length() > NAME_MAX_LENGTH){
+            throw new ServiceException(ExceptionCode.CREDIT_CARD_NAME_TOO_LONG_EXCEPTION_CODE);
+        }
+        if (!name.matches(NAME_PATTERN)){
+            throw new ServiceException(ExceptionCode.CREDIT_CARD_NAME_CONTAINS_FORBIDDEN_CHARACTERS_EXCEPTION_CODE);
         }
     }
 
@@ -82,6 +93,12 @@ public class CreditCardValidator implements Validator<CreditCardDto, Integer> {
     private void validateBlocked(Boolean blocked) throws ServiceException {
         if (Objects.isNull(blocked)){
             throw new ServiceException(ExceptionCode.BANK_ACCOUNT_BLOCKED_IS_NULL_EXCEPTION_CODE);
+        }
+    }
+
+    private void validateNumber(Long number) throws ServiceException {
+        if (number.toString().length() != NUMBER_LENGTH || number < 0){
+            throw new ServiceException(ExceptionCode.CREDIT_CARD_NUMBER_IS_ILLEGAL_EXCEPTION_CODE);
         }
     }
 }
