@@ -40,7 +40,7 @@ public interface Dao<T extends Entity<K>, K> {
     /**
      *
      * @param id entity id
-     * @return list of entities with id == entity.id
+     * @return entity with id == entity.id
      */
     T findById(K id);
 

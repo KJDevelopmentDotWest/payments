@@ -4,7 +4,6 @@ import com.epam.jwd.dao.api.Dao;
 import com.epam.jwd.dao.impl.UserDao;
 import com.epam.jwd.dao.model.user.User;
 import com.epam.jwd.service.api.Service;
-import com.epam.jwd.service.comparator.usercomparator.RoleSortingComparator;
 import com.epam.jwd.service.converter.api.Converter;
 import com.epam.jwd.service.converter.impl.UserConverter;
 import com.epam.jwd.service.dto.userdto.UserDto;
@@ -27,6 +26,11 @@ public class UserService implements Service<UserDto, Integer> {
     private final Validator<UserDto, Integer> validator = new UserValidator();
     private final Converter<User, UserDto, Integer> converter = new UserConverter();
 
+    /**
+     * @param value user to be saved
+     * @return saved user
+     * @throws ServiceException if user is invalid or user cannot be created
+     */
     @Override
     public UserDto create(UserDto value) throws ServiceException {
         logger.info("create method " + UserService.class);
@@ -34,13 +38,24 @@ public class UserService implements Service<UserDto, Integer> {
         validator.validate(value, false);
 
         User checkUser = ((UserDao)dao).findByLogin(value.getLogin());
-        ((UserValidator)validator).validateLoginUnique(checkUser);
+        if (!Objects.isNull(checkUser)){
+            throw new ServiceException(ExceptionCode.USER_LOGIN_IS_NOT_UNIQUE_EXCEPTION_CODE);
+        }
 
-        User createdUser = converter.convert(value);
+        User savedUser = dao.save(converter.convert(value));
 
-        return converter.convert(dao.save(createdUser));
+        if (Objects.isNull(savedUser)){
+            throw new ServiceException(ExceptionCode.USER_WAS_NOT_CREATED_EXCEPTION_CODE);
+        }
+
+        return converter.convert(savedUser);
     }
 
+    /**
+     * @param value user to be updated
+     * @return true if user updated successfully, false otherwise
+     * @throws ServiceException if user is invalid
+     */
     @Override
     public Boolean update(UserDto value) throws ServiceException {
         logger.info("update method " + UserService.class);
@@ -48,6 +63,11 @@ public class UserService implements Service<UserDto, Integer> {
         return dao.update(converter.convert(value));
     }
 
+    /**
+     * @param value user to be deleted
+     * @return true if user deleted successfully, false otherwise
+     * @throws ServiceException if user is invalid
+     */
     @Override
     public Boolean delete(UserDto value) throws ServiceException {
         logger.info("delete method " + UserService.class);
@@ -55,6 +75,11 @@ public class UserService implements Service<UserDto, Integer> {
         return dao.delete(converter.convert(value));
     }
 
+    /**
+     * @param id user id
+     * @return user with id == user.id
+     * @throws ServiceException if there is no user with provided id or id is null
+     */
     @Override
     public UserDto getById(Integer id) throws ServiceException {
         logger.info("get by id method " + UserService.class);
@@ -66,6 +91,11 @@ public class UserService implements Service<UserDto, Integer> {
         return converter.convert(result);
     }
 
+    /**
+     *
+     * @return list of users
+     * @throws ServiceException if database is empty
+     */
     @Override
     public List<UserDto> getAll() throws ServiceException {
         logger.info("get all method " + UserService.class);
@@ -78,12 +108,21 @@ public class UserService implements Service<UserDto, Integer> {
         return result;
     }
 
+    /**
+     * @return number of users in database
+     */
     @Override
     public Integer getAmount() {
         logger.info("get amount method " + UserService.class);
         return dao.getRowsNumber();
     }
 
+    /**
+     *
+     * @param login login of user
+     * @return user with provided login
+     * @throws ServiceException if there is no user with provided login
+     */
     public UserDto getByLogin(String login) throws ServiceException {
         logger.info("get by login method " + UserService.class);
         ((UserValidator)validator).validateLoginNotNull(login);
@@ -94,8 +133,13 @@ public class UserService implements Service<UserDto, Integer> {
         return converter.convert(result);
     }
 
-
-
+    /**
+     *
+     * @param limit amount of credit cards
+     * @param offset offset from start of list in database
+     * @return list of all users ordered by id
+     * @throws ServiceException if repository is empty
+     */
     public List<UserDto> getSortedByIdWithinRange(Integer limit, Integer offset) throws ServiceException {
         logger.info("get sorted by id within range method " + UserService.class);
         List<UserDto> result = new ArrayList<>();
@@ -107,6 +151,13 @@ public class UserService implements Service<UserDto, Integer> {
         return result;
     }
 
+    /**
+     *
+     * @param limit amount of users
+     * @param offset offset from start of list in database
+     * @return list of all users ordered by login
+     * @throws ServiceException if repository is empty
+     */
     public List<UserDto> getSortedByLoginWithinRange(Integer limit, Integer offset) throws ServiceException {
         logger.info("get sorted by login within range method " + UserService.class);
         List<UserDto> result = new ArrayList<>();
@@ -118,6 +169,13 @@ public class UserService implements Service<UserDto, Integer> {
         return result;
     }
 
+    /**
+     *
+     * @param limit amount of users
+     * @param offset offset from start of list in database
+     * @return list of all users ordered by role
+     * @throws ServiceException if repository is empty
+     */
     public List<UserDto> getSortedByRoleWithinRange(Integer limit, Integer offset) throws ServiceException {
         logger.info("get sorted by role within range method " + UserService.class);
         List<UserDto> result = new ArrayList<>();
@@ -129,6 +187,13 @@ public class UserService implements Service<UserDto, Integer> {
         return result;
     }
 
+    /**
+     *
+     * @param limit amount of users
+     * @param offset offset from start of list in database
+     * @return list of all users ordered by active
+     * @throws ServiceException if repository is empty
+     */
     public List<UserDto> getSortedByActiveWithinRange(Integer limit, Integer offset) throws ServiceException {
         logger.info("get sorted by active within range method " + UserService.class);
         List<UserDto> result = new ArrayList<>();
@@ -140,6 +205,13 @@ public class UserService implements Service<UserDto, Integer> {
         return result;
     }
 
+    /**
+     *
+     * @param limit amount of users
+     * @param offset offset from start of list in database
+     * @return list of all users ordered by account name
+     * @throws ServiceException if repository is empty
+     */
     public List<UserDto> getSortedByAccountNameWithinRange(Integer limit, Integer offset) throws ServiceException {
         logger.info("get sorted by account name within range method " + UserService.class);
         List<UserDto> result = new ArrayList<>();
@@ -151,6 +223,13 @@ public class UserService implements Service<UserDto, Integer> {
         return result;
     }
 
+    /**
+     *
+     * @param limit amount of users
+     * @param offset offset from start of list in database
+     * @return list of all users ordered by account surname
+     * @throws ServiceException if repository is empty
+     */
     public List<UserDto> getSortedByAccountSurnameWithinRange(Integer limit, Integer offset) throws ServiceException {
         logger.info("get sorted by account surname within range method " + UserService.class);
         List<UserDto> result = new ArrayList<>();
@@ -162,6 +241,13 @@ public class UserService implements Service<UserDto, Integer> {
         return result;
     }
 
+    /**
+     *
+     * @param limit amount of users
+     * @param offset offset from start of list in database
+     * @return list of all users ordered by profile picture id
+     * @throws ServiceException if repository is empty
+     */
     public List<UserDto> getSortedByAccountProfilePictureIdWithinRange(Integer limit, Integer offset) throws ServiceException {
         logger.info("get sorted by account profile picture id within range method " + UserService.class);
         List<UserDto> result = new ArrayList<>();
@@ -171,11 +257,5 @@ public class UserService implements Service<UserDto, Integer> {
         }
         daoResult.forEach(user -> result.add(converter.convert(user)));
         return result;
-    }
-
-    public List<UserDto> sortByRole (List<UserDto> users){
-        logger.info("sorted by role " + UserService.class);
-        users.sort(new RoleSortingComparator());
-        return users;
     }
 }

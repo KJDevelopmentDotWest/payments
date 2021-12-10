@@ -207,9 +207,9 @@ public class UserDao implements Dao<User, java.lang.Integer> {
 
     /**
      *
-     * @param limit amount of credit cards
+     * @param limit amount of users
      * @param offset offset from start of list in database
-     * @return list of credit cards ordered by id
+     * @return list of users ordered by id
      */
     public List<User> findAllOrderedByIdWithinRange(Integer limit, Integer offset){
         logger.info("find all ordered by id within range method " + UserDao.class);
@@ -230,7 +230,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
      *
      * @param limit amount of credit cards
      * @param offset offset from start of list in database
-     * @return list of credit cards ordered by login
+     * @return list of users ordered by login
      */
     public List<User> findAllOrderedByLoginWithinRange(Integer limit, Integer offset){
         logger.info("find all ordered by login within range method " + UserDao.class);
@@ -251,7 +251,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
      *
      * @param limit amount of credit cards
      * @param offset offset from start of list in database
-     * @return list of credit cards ordered by role
+     * @return list of users ordered by role
      */
     public List<User> findAllOrderedByRoleWithinRange(Integer limit, Integer offset){
         logger.info("find all ordered by role within range method " + UserDao.class);
@@ -272,7 +272,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
      *
      * @param limit amount of credit cards
      * @param offset offset from start of list in database
-     * @return list of credit cards ordered by active
+     * @return list of users ordered by active
      */
     public List<User> findAllOrderedByActiveWithinRange(Integer limit, Integer offset){
         logger.info("find all ordered by active within range method " + UserDao.class);
@@ -293,7 +293,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
      *
      * @param limit amount of credit cards
      * @param offset offset from start of list in database
-     * @return list of credit cards ordered by account name
+     * @return list of users ordered by account name
      */
     public List<User> findAllOrderedByAccountNameWithinRange(Integer limit, Integer offset){
         logger.info("find all ordered by account name within range method " + UserDao.class);
@@ -314,7 +314,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
      *
      * @param limit amount of credit cards
      * @param offset offset from start of list in database
-     * @return list of credit cards ordered by account surname
+     * @return list of users ordered by account surname
      */
     public List<User> findAllOrderedByAccountSurnameWithinRange(Integer limit, Integer offset){
         logger.info("find all ordered by account surname within range method " + UserDao.class);
@@ -335,7 +335,7 @@ public class UserDao implements Dao<User, java.lang.Integer> {
      *
      * @param limit amount of credit cards
      * @param offset offset from start of list in database
-     * @return list of credit cards ordered by account profile picture id
+     * @return list of users ordered by account profile picture id
      */
     public List<User> findAllOrderedByAccountProfilePictureIdWithinRange(Integer limit, Integer offset){
         logger.info("find all ordered by account profile picture id within range method " + UserDao.class);

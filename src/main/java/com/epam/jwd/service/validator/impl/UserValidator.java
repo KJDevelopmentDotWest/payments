@@ -32,15 +32,14 @@ public class UserValidator implements Validator<UserDto, Integer> {
         validateRole(value.getRole());
     }
 
+    /**
+     *
+     * @param login login to be validated
+     * @throws ServiceException if login is null
+     */
     public void validateLoginNotNull(String login) throws ServiceException{
         if (Objects.isNull(login)){
             throw new ServiceException(ExceptionCode.USER_LOGIN_IS_NULL_EXCEPTION_CODE);
-        }
-    }
-
-    public void validateLoginUnique(User user) throws ServiceException{
-        if (!Objects.isNull(user)){
-            throw new ServiceException(ExceptionCode.USER_LOGIN_IS_NOT_UNIQUE_EXCEPTION_CODE);
         }
     }
 

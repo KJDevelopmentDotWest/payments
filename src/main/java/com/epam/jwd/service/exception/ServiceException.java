@@ -2,7 +2,6 @@ package com.epam.jwd.service.exception;
 
 public class ServiceException extends Exception{
 
-
     private ExceptionCode errorCode = ExceptionCode.UNKNOWN_EXCEPTION_CODE;
 
     public ServiceException() {

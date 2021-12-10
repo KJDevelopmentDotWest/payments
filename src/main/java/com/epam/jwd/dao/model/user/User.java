@@ -4,6 +4,9 @@ import com.epam.jwd.dao.model.Entity;
 
 import java.util.Objects;
 
+/**
+ * This class represents user
+ */
 public class User extends Entity<Integer> {
 
     private String login;

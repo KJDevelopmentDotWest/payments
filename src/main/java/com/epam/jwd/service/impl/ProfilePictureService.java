@@ -12,10 +12,13 @@ import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.validator.api.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Blocking;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ProfilePictureService implements Service<ProfilePictureDto, Integer> {
 
@@ -24,21 +27,38 @@ public class ProfilePictureService implements Service<ProfilePictureDto, Integer
     private final Dao<ProfilePicture, Integer> dao = new ProfilePictureDao();
     private final Converter<ProfilePicture, ProfilePictureDto, Integer> converter = new ProfilePictureConverter();
 
+    /**
+     *
+     * @throws ServiceException always, this operation is not supported
+     */
     @Override
     public ProfilePictureDto create(ProfilePictureDto value) throws ServiceException {
         throw new ServiceException(ExceptionCode.OPERATION_IS_NOT_SUPPORTED_EXCEPTION_CODE);
     }
 
+    /**
+     *
+     * @throws ServiceException always, this operation is not supported
+     */
     @Override
     public Boolean update(ProfilePictureDto value) throws ServiceException {
         throw new ServiceException(ExceptionCode.OPERATION_IS_NOT_SUPPORTED_EXCEPTION_CODE);
     }
 
+    /**
+     *
+     * @throws ServiceException always, this operation is not supported
+     */
     @Override
     public Boolean delete(ProfilePictureDto value) throws ServiceException {
         throw new ServiceException(ExceptionCode.OPERATION_IS_NOT_SUPPORTED_EXCEPTION_CODE);
     }
 
+    /**
+     * @param id profile picture id
+     * @return user with id == (profile pictures).id
+     * @throws ServiceException if there is no profile picture with provided id or id is null
+     */
     @Override
     public ProfilePictureDto getById(Integer id) throws ServiceException {
         logger.info("get by id method " + ProfilePictureService.class);
@@ -51,6 +71,11 @@ public class ProfilePictureService implements Service<ProfilePictureDto, Integer
         return converter.convert(result);
     }
 
+    /**
+     *
+     * @return list of profile pictures
+     * @throws ServiceException if database is empty
+     */
     @Override
     public List<ProfilePictureDto> getAll() throws ServiceException {
         logger.info("get all method " + ProfilePictureService.class);
@@ -63,6 +88,9 @@ public class ProfilePictureService implements Service<ProfilePictureDto, Integer
         return result;
     }
 
+    /**
+     * @return number of profile pictures in database
+     */
     @Override
     public Integer getAmount() {
         logger.info("get amount method " + ProfilePictureService.class);

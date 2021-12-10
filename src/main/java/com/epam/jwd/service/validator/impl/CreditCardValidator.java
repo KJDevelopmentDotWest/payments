@@ -33,12 +33,6 @@ public class CreditCardValidator implements Validator<CreditCardDto, Integer> {
         validateNumber(value.getCardNumber());
     }
 
-    public void validateCardNumberUnique(CreditCard creditCard) throws ServiceException {
-        if (!Objects.isNull(creditCard)){
-            throw new ServiceException(ExceptionCode.CREDIT_CARD_NUMBER_IS_NOT_UNIQUE_EXCEPTION_CODE);
-        }
-    }
-
     private void validateId(Integer id) throws ServiceException {
         if (Objects.isNull(id)){
             throw new ServiceException(ExceptionCode.CREDIT_CARD_ID_IS_NULL_EXCEPTION_CODE);
