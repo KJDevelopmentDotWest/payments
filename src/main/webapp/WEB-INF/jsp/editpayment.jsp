@@ -95,7 +95,7 @@
         };
     </script>
 
-    <body class="d-flex flex-column h-100">
+    <body class="d-flex flex-column h-100" onload="validateform()">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -145,7 +145,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="paymentId" value="${requestScope.payment.getId()}">
-                    <button id="submitbutton" type="submit" class="btn btn-primary w-100" name="action" value="checkout">${savepayment}</button>
+                    <button id="submitbutton" type="submit" class="btn btn-primary w-100">${savepayment}</button>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="action" value="checkout" id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">

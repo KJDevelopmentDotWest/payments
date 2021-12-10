@@ -22,8 +22,8 @@ public class CreditCardOutputTag extends SimpleTagSupport {
             """;
     private static final String STRING_LINK_ADD_FOUNDS_START = """
             <form class="inline" method="post" action="/payments?command=add_funds" >
-                <input id="funds" type="number" name="funds" oninput="validateform()">
-                <button id="submitbutton" class="btn btn-exsm btn-primary" type="submit">add</button>
+                <input class="funds" id="funds" type="number" name="funds" oninput="validateform()">
+                <button id="submitbutton" class="btn btn-exsm btn-primary submitbutton" type="submit">add</button>
                 <input type="hidden" name="creditCardId" value=
             """;
     private static final String STRING_FORM_TAG_END = "></form>";

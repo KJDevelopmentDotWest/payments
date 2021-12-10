@@ -78,7 +78,7 @@
         };
     </script>
 
-    <body class="d-flex flex-column h-100">
+    <body class="d-flex flex-column h-100" onload="validateform()">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">

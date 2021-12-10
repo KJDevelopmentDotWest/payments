@@ -115,24 +115,10 @@
                     </thead>
                     <tbody>
                         <c:forEach var="i" begin="0" end="${requestScope.payments.size()-1}">
-                            <c:choose>
-                                <c:when test="${requestScope.payments.get(i).getCommitted()}">
-                                    <tr>
-                                        <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
-                                        <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </c:when>
-                                <c:otherwise>
-                                    <tr>
-                                        <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
-                                        <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
-
-                                    </tr>
-                                </c:otherwise>
-                            </c:choose>
+                            <tr>
+                                <td>${(requestScope.currentPage - 1) * 5 + i + 1}</td>
+                                <m:paymentoutput paymentDto="${requestScope.payments.get(i)}"/>
+                            </tr>
                         </c:forEach>
                     </tbody>
                 </table>

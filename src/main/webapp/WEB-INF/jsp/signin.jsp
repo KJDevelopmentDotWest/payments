@@ -88,7 +88,7 @@
         };
     </script>
 
-    <body class="d-flex flex-column h-100" onload="tempAlert()">
+    <body class="d-flex flex-column h-100" onload="tempAlert(); validateform()">
         <form class="top-right" action="/payments?command=change_language" method="post" autocomplete="off">
             <div class="btn-group" role="group"action="/payments?command=signout">
                 <button type="submit" class="btn btn-primary" name="lang" value="eng" id="btnradio1" autocomplete="off">Eng</button>

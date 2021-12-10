@@ -69,6 +69,10 @@ public class PaymentOutputTag extends SimpleTagSupport {
         if (paymentDto.getCommitted()){
             stringBuilder.append(COLUMN_START_TAG)
                     .append(STRING_YES)
+                    .append(COLUMN_END_TAG)
+                    .append(COLUMN_START_TAG)
+                    .append(COLUMN_END_TAG)
+                    .append(COLUMN_START_TAG)
                     .append(COLUMN_END_TAG);
         } else {
             stringBuilder.append(COLUMN_START_TAG)
@@ -86,13 +90,13 @@ public class PaymentOutputTag extends SimpleTagSupport {
                     .append(paymentDto.getId())
                     .append(STRING_FORM_TAG_END)
                     .append(COLUMN_END_TAG);
-
-            stringBuilder.append(COLUMN_START_TAG)
-                    .append(STRING_LINK_DELETE_START)
-                    .append(paymentDto.getId())
-                    .append(STRING_FORM_TAG_END)
-                    .append(COLUMN_END_TAG);
         }
+
+        stringBuilder.append(COLUMN_START_TAG)
+                .append(STRING_LINK_DELETE_START)
+                .append(paymentDto.getId())
+                .append(STRING_FORM_TAG_END)
+                .append(COLUMN_END_TAG);
         return stringBuilder.toString();
     }
 }

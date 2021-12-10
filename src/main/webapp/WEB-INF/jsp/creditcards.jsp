@@ -33,13 +33,16 @@
 
     <script>
         function validateform(){
-            var funds = document.getElementById("funds").value;
-            var fundsFlag = (funds == null || funds == "" || !Number.isInteger(Number(funds)));
-            var fundsLongFlag = (funds.length > 9);
-            if(!(fundsLongFlag || fundsFlag)){
-                document.getElementById("submitbutton").disabled = false;
-            } else {
-                document.getElementById("submitbutton").disabled = true;
+            var funds = document.getElementsByClassName("funds");
+            var submitbuttons = document.getElementsByClassName("submitbutton");
+            for(var i = 0; i < funds.length; i++){
+                var fundsFlag = (funds[i].value == null || funds[i].value == "" || !Number.isInteger(Number(funds[i].value)));
+                var fundsLongFlag = (funds[i].value.length > 9);
+                if(!(fundsLongFlag || fundsFlag)){
+                    submitbuttons[i].disabled = false;
+                } else {
+                    submitbuttons[i].disabled = true;
+                }
             }
         };
         function setSortedBy(){
@@ -62,7 +65,7 @@
         }
     </script>
 
-    <body class="d-flex flex-column h-100" onload="setSortedBy()">
+    <body class="d-flex flex-column h-100" onload="setSortedBy(); validateform()">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
