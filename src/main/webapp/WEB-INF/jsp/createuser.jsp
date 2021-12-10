@@ -103,7 +103,7 @@
         </nav>
         <div class="primary-margin">
             <main class="form-signin form-margin-no-navbar" align="center">
-                <form action="/payments?command=commit_user_creation" method="post" autocomplete="new-password">
+                <form action="/payments?command=commit_user_creation" method="post" autocomplete="off">
                     <h1 class="h3 mb-3">${filldata}</h1>
                     <div class="form-floating">
                         <input type="text" class="form-control" id="login" name="login" oninput="validateform();allowOnlyEngl()" autocomplete="ofvngjhf">
