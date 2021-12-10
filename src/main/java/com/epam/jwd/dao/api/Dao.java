@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  *
- * @param <T> type of entity that class will operate
+ * @param <T> entity that class will operate
  * @param <K> id type of entity that class will operate
  */
 public interface Dao<T extends Entity<K>, K> {
