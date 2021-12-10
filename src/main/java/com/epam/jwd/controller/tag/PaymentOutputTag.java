@@ -66,6 +66,7 @@ public class PaymentOutputTag extends SimpleTagSupport {
         } else {
             stringBuilder.append(DASH_SYMBOL);
         }
+        stringBuilder.append(COLUMN_END_TAG);
         if (paymentDto.getCommitted()){
             stringBuilder.append(COLUMN_START_TAG)
                     .append(STRING_YES)

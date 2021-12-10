@@ -13,7 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class CommitUserCreationCommand implements Command {
 
@@ -23,8 +25,13 @@ public class CommitUserCreationCommand implements Command {
     private static final String SHOW_CREATE_USER_PAGE_URL = "/payments?command=show_create_user";
 
     private static final String INCORRECT_ATTRIBUTE_NAME = "incorrect";
+    private static final String SUCCESS_ATTRIBUTE_NAME = "success";
     private static final String LOGIN_PARAMETER_NAME = "login";
     private static final String PASSWORD_PARAMETER_NAME = "password";
+
+    private static final String LANG_ATTRIBUTE_NAME = "lang";
+    private static final String LOCALE_BUNDLE_NAME = "locale";
+    private static final String USER_CREATE_SUCCESS_PROPERTY_NAME = "usercreatingsuccess";
 
     private static final String LOGIN_NOT_UNIQUE_MESSAGE = "User with provided login already exists";
 
@@ -47,7 +54,7 @@ public class CommitUserCreationCommand implements Command {
 
         try {
             service.create(userDto);
-            request.getSession().removeAttribute(INCORRECT_ATTRIBUTE_NAME);
+            sendMessage(request);
             return new CommandResponse(request.getContextPath() + SHOW_SIGNIN_PAGE_URL, true);
         } catch (ServiceException e) {
             logger.error(e.getErrorCode());
@@ -58,5 +65,17 @@ public class CommitUserCreationCommand implements Command {
         }
 
         return new CommandResponse(request.getContextPath() + SHOW_SIGNIN_PAGE_URL, true);
+    }
+
+    private void sendMessage(HttpServletRequest request){
+        request.getSession().removeAttribute(INCORRECT_ATTRIBUTE_NAME);
+        String localeName = (String) request.getSession().getAttribute(LANG_ATTRIBUTE_NAME);
+        ResourceBundle locale;
+        if (!Objects.isNull(localeName)){
+            locale = ResourceBundle.getBundle(LOCALE_BUNDLE_NAME, new Locale(localeName));
+        } else {
+            locale = ResourceBundle.getBundle(LOCALE_BUNDLE_NAME, Locale.US);
+        }
+        request.getSession().setAttribute(SUCCESS_ATTRIBUTE_NAME, locale.getString(USER_CREATE_SUCCESS_PROPERTY_NAME));
     }
 }

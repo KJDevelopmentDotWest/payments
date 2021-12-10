@@ -73,13 +73,25 @@
             }
         };
         function tempAlert() {
-            var message = '${incorrect}';
-            if(message != null && message.length > 0){
+            var incorrect = '${incorrect}';
+            var success = '${success}';
+            if(incorrect != null && incorrect.length > 0){
                 var el = document.createElement("div");
                 el.setAttribute("style","position: absolute; text-align: center; top:70%; margin-right:10%; right:0px");
                 el.classList.add('alert');
                 el.classList.add('alert-danger');
-                el.innerHTML = message;
+                el.innerHTML = incorrect;
+                setTimeout(function(){
+                    el.parentNode.removeChild(el);
+                },3000);
+                document.body.appendChild(el);
+            }
+            if(success != null && success.length > 0){
+                var el = document.createElement("div");
+                el.setAttribute("style","position: absolute; text-align: center; top:60%; margin-right:10%; right:0px");
+                el.classList.add('alert');
+                el.classList.add('alert-success');
+                el.innerHTML = success;
                 setTimeout(function(){
                     el.parentNode.removeChild(el);
                 },3000);
