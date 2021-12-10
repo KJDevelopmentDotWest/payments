@@ -8,16 +8,28 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * this class represents proxy for real connection
+ */
 public class ProxyConnection implements Connection {
 
     private final Connection connection;
     private final ConnectionPool pool;
 
+    /**
+     *
+     * @param connection real connection
+     * @param pool pool that contains this proxy connection
+     */
     public ProxyConnection(Connection connection, ConnectionPool pool) {
         this.connection = connection;
         this.pool = pool;
     }
 
+    /**
+     * method calls close method from connection
+     * @throws SQLException if a database access error occurs
+     */
     void realClose() throws SQLException {
         connection.close();
     }
@@ -35,6 +47,9 @@ public class ProxyConnection implements Connection {
         return Objects.hash(connection, pool);
     }
 
+    /**
+     * override close method so external classes cannot close connection. connection will be returned to pool instead
+     */
     @Override
     public void close() {
         pool.returnConnection(this);

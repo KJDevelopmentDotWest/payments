@@ -13,6 +13,9 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * THis class represents connection pool
+ */
 public class ConnectionPoolImpl implements ConnectionPool {
 
     private static final Logger logger = LogManager.getLogger(ConnectionPoolImpl.class);
@@ -35,6 +38,10 @@ public class ConnectionPoolImpl implements ConnectionPool {
 
     private ConnectionPoolImpl(){}
 
+    /**
+     *
+     * @return instance of connection pool
+     */
     public static ConnectionPool getInstance(){
         getInstanceLock.lock();
         if(Objects.isNull(instance)){
@@ -45,7 +52,10 @@ public class ConnectionPoolImpl implements ConnectionPool {
         return instance;
     }
 
-
+    /**
+     *
+     * @return taken connection
+     */
     @Override
     public synchronized Connection takeConnection() {
 
@@ -84,6 +94,10 @@ public class ConnectionPoolImpl implements ConnectionPool {
         return connection;
     }
 
+    /**
+     *
+     * @param connection connection to be returned
+     */
     @Override
     public synchronized void returnConnection(Connection connection) {
         if (givenAwayConnections.remove((ProxyConnection) connection)){
@@ -108,6 +122,9 @@ public class ConnectionPoolImpl implements ConnectionPool {
         notify();
     }
 
+    /**
+     * method shutdowns connection pool
+     */
     @Override
     public void shutdown() {
         closeConnection(availableConnections);
@@ -117,6 +134,9 @@ public class ConnectionPoolImpl implements ConnectionPool {
         initialized = false;
     }
 
+    /**
+     * method initializes connection pool
+     */
     @Override
     public void initialize() {
         if (!initialized){

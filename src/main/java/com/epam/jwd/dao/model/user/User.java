@@ -12,6 +12,14 @@ public class User extends Entity<Integer> {
     private Integer accountId;
     private Boolean isActive;
 
+    /**
+     *
+     * @param login login iof user
+     * @param password password of user
+     * @param accountId id of account
+     * @param isActive is user active
+     * @param role role of user
+     */
     public User(String login, String password, Integer accountId, Boolean isActive, Role role) {
         this.login = login;
         this.password = password;
@@ -20,6 +28,15 @@ public class User extends Entity<Integer> {
         this.isActive = isActive;
     }
 
+    /**
+     *
+     * @param id id of user
+     * @param login login iof user
+     * @param password password of user
+     * @param accountId id of account
+     * @param isActive is user active
+     * @param role role of user
+     */
     public User(Integer id, String login, String password, Integer accountId, Boolean isActive, Role role) {
         this.login = login;
         this.password = password;
@@ -29,42 +46,82 @@ public class User extends Entity<Integer> {
         this.id = id;
     }
 
+    /**
+     *
+     * @return true if user active, false otherwise
+     */
     public Boolean getActive() {
         return isActive;
     }
 
+    /**
+     *
+     * @param active true to unblock user, false to block user
+     */
     public void setActive(Boolean active) {
         isActive = active;
     }
 
+    /**
+     *
+     * @return id of account
+     */
     public Integer getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Integer integer) {
-        this.accountId = integer;
+    /**
+     *
+     * @param accountId id of account to be set
+     */
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 
+    /**
+     *
+     * @param login login to be set
+     */
     public void setLogin(String login){
         this.login = login;
     }
 
+    /**
+     *
+     * @param password password to be set
+     */
     public void setPassword(String password){
         this.password = password;
     }
 
+    /**
+     *
+     * @return login of user
+     */
     public String getLogin() {
         return login;
     }
 
+    /**
+     *
+     * @return password to be set
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     *
+     * @return role of user
+     */
     public Role getRole() {
         return role;
     }
 
+    /**
+     *
+     * @param role role to be set
+     */
     public void setRole(Role role) {
         this.role = role;
     }
