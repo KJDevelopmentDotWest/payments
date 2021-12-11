@@ -8,6 +8,7 @@ import com.epam.jwd.service.dto.userdto.UserDto;
 import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.impl.UserService;
+import com.epam.jwd.service.security.Security;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
@@ -34,8 +35,9 @@ public class CommitUserCreationCommand implements Command {
     private static final String USER_CREATE_SUCCESS_PROPERTY_NAME = "usercreatingsuccess";
 
     private static final String LOGIN_NOT_UNIQUE_MESSAGE = "User with provided login already exists";
+    private static final String SOMETHING_WENT_WRONG_MESSAGE = "Something went wrong, user was not created";
 
-    UserService service = new UserService();
+    private final UserService service = new UserService();
 
     @Override
     public CommandResponse execute(HttpServletRequest request, HttpServletResponse response) {
@@ -50,7 +52,7 @@ public class CommitUserCreationCommand implements Command {
             return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
         }
 
-        UserDto userDto = new UserDto(login, password, null, true, Role.CUSTOMER);
+        UserDto userDto = new UserDto(login, Security.getInstance().generateHashForPassword(password), null, true, Role.CUSTOMER);
 
         try {
             service.create(userDto);
@@ -60,6 +62,10 @@ public class CommitUserCreationCommand implements Command {
             logger.error(e.getErrorCode());
             if (e.getErrorCode() == ExceptionCode.USER_LOGIN_IS_NOT_UNIQUE_EXCEPTION_CODE){
                 request.getSession().setAttribute(INCORRECT_ATTRIBUTE_NAME, LOGIN_NOT_UNIQUE_MESSAGE);
+                return new CommandResponse(request.getContextPath() + SHOW_CREATE_USER_PAGE_URL, true);
+            }
+            if (e.getErrorCode() == ExceptionCode.USER_WAS_NOT_CREATED_EXCEPTION_CODE){
+                request.getSession().setAttribute(INCORRECT_ATTRIBUTE_NAME, SOMETHING_WENT_WRONG_MESSAGE);
                 return new CommandResponse(request.getContextPath() + SHOW_CREATE_USER_PAGE_URL, true);
             }
         }

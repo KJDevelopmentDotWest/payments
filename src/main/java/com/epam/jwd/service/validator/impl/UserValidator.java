@@ -64,9 +64,6 @@ public class UserValidator implements Validator<UserDto, Integer> {
         if (password.length() > PASSWORD_MAX_LENGTH){
             throw new ServiceException(ExceptionCode.USER_PASSWORD_TOO_LONG_EXCEPTION_CODE);
         }
-        if (!password.matches(ONLY_ENG_AND_NUM_PATTERN)){
-            throw new ServiceException(ExceptionCode.USER_PASSWORD_CONTAINS_FORBIDDEN_CHARACTERS_EXCEPTION_CODE);
-        }
     }
 
     private void validateRole(Role role) throws ServiceException {

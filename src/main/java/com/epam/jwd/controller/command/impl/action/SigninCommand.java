@@ -8,6 +8,7 @@ import com.epam.jwd.service.dto.userdto.UserDto;
 import com.epam.jwd.service.exception.ExceptionCode;
 import com.epam.jwd.service.exception.ServiceException;
 import com.epam.jwd.service.impl.UserService;
+import com.epam.jwd.service.security.Security;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -49,8 +50,8 @@ public class SigninCommand implements Command {
         }
 
         try {
-            UserDto userDto = service.getByLogin(request.getParameter(LOGIN_PARAMETER_NAME));
-            if (Objects.equals(userDto.getPassword(), request.getParameter(PASSWORD_PARAMETER_NAME))){
+            UserDto userDto = service.getByLogin(login);
+            if(Security.getInstance().isPasswordMatches(password, userDto.getPassword())){
                 logger.info("login and password are correct");
                 return actionDataCorrect(request, userDto);
             } else {
