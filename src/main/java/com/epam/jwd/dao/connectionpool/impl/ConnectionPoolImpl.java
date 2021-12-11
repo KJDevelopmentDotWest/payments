@@ -59,7 +59,6 @@ public class ConnectionPoolImpl implements ConnectionPool {
     @Override
     public synchronized Connection takeConnection() {
 
-        //todo refactor (same code)
         if (!availableConnections.isEmpty()){
             ProxyConnection connection = availableConnections.poll();
             givenAwayConnections.add(connection);
@@ -69,12 +68,10 @@ public class ConnectionPoolImpl implements ConnectionPool {
             try {
                 createConnectionAndAddToPool();
                 ProxyConnection connection = availableConnections.poll();
-                assert connection != null;
                 givenAwayConnections.add(connection);
                 logger.info("Connection taken");
                 return connection;
             } catch (SQLException e) {
-                //todo implement logger and custom exception
                 logger.error(e);
             }
         }
@@ -83,7 +80,6 @@ public class ConnectionPoolImpl implements ConnectionPool {
             try {
                 wait();
             } catch (InterruptedException e) {
-                //todo implement logger and custom exception
                 Thread.currentThread().interrupt();
                 logger.error(e);
             }
@@ -108,8 +104,8 @@ public class ConnectionPoolImpl implements ConnectionPool {
                     connection.setAutoCommit(true);
                 }
             } catch (SQLException e) {
-                //todo implement logger and custom exception
-                e.printStackTrace();
+                logger.error(e);
+                closeConnection((ProxyConnection) connection);
             }
 
             if (availableConnections.size() + givenAwayConnections.size() < PREFERRED_CONNECTIONS
@@ -143,8 +139,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
             try {
                 Class.forName(DRIVER);
             } catch (ClassNotFoundException e) {
-                //todo implement logger and custom exception
-                e.printStackTrace();
+                logger.error(e);
             }
             try{
                 for (int i = 0; i < PREFERRED_CONNECTIONS; i++) {
@@ -152,9 +147,8 @@ public class ConnectionPoolImpl implements ConnectionPool {
                 }
                 initialized = true;
                 logger.info("ConnectionPool initialized");
-            } catch (SQLException throwables) {
-                //todo implement logger and custom exception
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                logger.error(e);
             }
         }
     }
@@ -174,8 +168,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
         try {
             connection.realClose();
         } catch (SQLException e) {
-            //todo implement logger and custom exception
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 }
