@@ -32,6 +32,10 @@ public class CreditCardOutputTag extends SimpleTagSupport {
 
     private CreditCardDto creditCardDto;
 
+    /**
+     *
+     * @param creditCardDto credit card that tag will operate
+     */
     public void setCreditCardDto(CreditCardDto creditCardDto){
         this.creditCardDto = creditCardDto;
     }

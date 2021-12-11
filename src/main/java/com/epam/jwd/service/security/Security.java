@@ -37,7 +37,7 @@ public class Security {
     }
 
     /**
-     *
+     * method hashes password using PBKDF2 function
      * @param password password to be hashed
      * @return hash result
      */

@@ -32,20 +32,32 @@ public class ProfileImageOutputTag extends SimpleTagSupport {
 
     private final ProfilePictureService service = new ProfilePictureService();
 
+    /**
+     *
+     * @param pictureId id of picture
+     */
     public void setPictureId(Integer pictureId) {
         this.pictureId = pictureId;
     }
 
+    /**
+     *
+     * @param width width of pictured
+     */
     public void setWidth(Integer width) {
         this.width = width;
     }
 
+    /**
+     *
+     * @param height height of pictured
+     */
     public void setHeight(Integer height) {
         this.height = height;
     }
 
     @Override
-    public void doTag() throws JspException, IOException {
+    public void doTag() throws IOException {
 
         ProfilePictureDto profilePicture;
         URL res;
@@ -69,7 +81,7 @@ public class ProfileImageOutputTag extends SimpleTagSupport {
         stringBuilder.append("<img width=\"")
                 .append(Optional.ofNullable(width).orElse(DEFAULT_WIDTH))
                 .append("\" height=\"")
-                .append(Optional.ofNullable(width).orElse(DEFAULT_HEIGHT))
+                .append(Optional.ofNullable(height).orElse(DEFAULT_HEIGHT))
                 .append("\" src=\"data:image/jpeg;base64,")
                 .append(encodeFileToBase64(file))
                 .append("\">");

@@ -8,6 +8,9 @@ import com.epam.jwd.dao.model.user.Role;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This enum contains list of Commands
+ */
 public enum ApplicationCommand {
 
     SHOW_SIGNIN(new ShowSigninCommand()),

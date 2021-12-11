@@ -27,6 +27,10 @@ public class AdminUsersOutputTag extends SimpleTagSupport {
 
     private UserDto userDto;
 
+    /**
+     *
+     * @param userDto user that tag will operate
+     */
     public void setUserDto(UserDto userDto){
         this.userDto = userDto;
     }

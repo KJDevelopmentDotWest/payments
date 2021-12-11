@@ -37,6 +37,10 @@ public class PaymentOutputTag extends SimpleTagSupport {
 
     private PaymentDto paymentDto;
 
+    /**
+     *
+     * @param paymentDto payments that tag will operate
+     */
     public void setPaymentDto(PaymentDto paymentDto) {
         this.paymentDto = paymentDto;
     }

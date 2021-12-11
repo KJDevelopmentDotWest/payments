@@ -12,6 +12,12 @@ public interface Command {
     String LAST_PAGE_PARAMETER_NAME = "lastPage";
     String SORT_BY_PARAMETER_NAME = "sortBy";
 
+    /**
+     *
+     * @param request HTTP servlet request that method will operate
+     * @param response HTTP servlet response that method will operate
+     * @return Command response
+     */
     CommandResponse execute(HttpServletRequest request, HttpServletResponse response);
 
 }

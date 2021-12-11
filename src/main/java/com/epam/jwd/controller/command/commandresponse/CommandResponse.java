@@ -2,6 +2,11 @@ package com.epam.jwd.controller.command.commandresponse;
 
 import java.util.Objects;
 
+/**
+ * This class represents response of command
+ * @see com.epam.jwd.controller.command.api.Command
+ */
+
 public class CommandResponse {
     private String URL;
     private Boolean isRedirect;
