@@ -29,7 +29,6 @@ public class ServiceException extends Exception{
         this.errorCode = exceptionCode;
     }
 
-
     public ServiceException(ExceptionCode errorCode){
         this.errorCode = errorCode;
     }
