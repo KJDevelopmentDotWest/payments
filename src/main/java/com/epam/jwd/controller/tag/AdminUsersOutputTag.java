@@ -24,6 +24,7 @@ public class AdminUsersOutputTag extends SimpleTagSupport {
                 <input type="hidden" name="userId" value=
             """;
     private static final String STRING_FORM_TAG_END = "></form>";
+    private static final String DASH_SYMBOL = "-";
 
     private UserDto userDto;
 
@@ -68,7 +69,7 @@ public class AdminUsersOutputTag extends SimpleTagSupport {
         if (!Objects.isNull(userDto.getAccountId())){
             try {
                 AccountService service = new AccountService();
-                AccountDto accountDto = service.getById(userDto.getId());
+                AccountDto accountDto = service.getById(userDto.getAccountId());
                 stringBuilder
                         .append(COLUMN_START_TAG)
                         .append(accountDto.getName())
@@ -85,30 +86,30 @@ public class AdminUsersOutputTag extends SimpleTagSupport {
                 logger.error(e.getErrorCode());
                 stringBuilder
                         .append(COLUMN_START_TAG)
-                        .append("-")
+                        .append(DASH_SYMBOL)
                         .append(COLUMN_END_TAG);
                 stringBuilder
                         .append(COLUMN_START_TAG)
-                        .append("-")
+                        .append(DASH_SYMBOL)
                         .append(COLUMN_END_TAG);
                 stringBuilder
                         .append(COLUMN_START_TAG)
-                        .append("-")
+                        .append(DASH_SYMBOL)
                         .append(COLUMN_END_TAG);
             }
         }
         else {
             stringBuilder
                     .append(COLUMN_START_TAG)
-                    .append("-")
+                    .append(DASH_SYMBOL)
                     .append(COLUMN_END_TAG);
             stringBuilder
                     .append(COLUMN_START_TAG)
-                    .append("-")
+                    .append(DASH_SYMBOL)
                     .append(COLUMN_END_TAG);
             stringBuilder
                     .append(COLUMN_START_TAG)
-                    .append("-")
+                    .append(DASH_SYMBOL)
                     .append(COLUMN_END_TAG);
         }
         return stringBuilder.toString();

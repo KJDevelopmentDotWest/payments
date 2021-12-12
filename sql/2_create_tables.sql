@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS public.profile_pictures
 (
-    id integer NOT NULL DEFAULT nextval('profile_pictures_id_seq'::regclass),
+    id SERIAL NOT NULL,
     name character varying(15) COLLATE pg_catalog."default" NOT NULL,
     path character varying(45) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT profile_pictures_pkey PRIMARY KEY (id)
@@ -13,7 +13,7 @@ ALTER TABLE public.profile_pictures
 
 CREATE TABLE IF NOT EXISTS public.accounts
 (
-    id integer NOT NULL DEFAULT nextval('accounts_id_seq'::regclass),
+    id SERIAL NOT NULL,
     name character varying(15) COLLATE pg_catalog."default" NOT NULL,
     surname character varying(15) COLLATE pg_catalog."default" NOT NULL,
     profile_picture_id bigint,
@@ -32,7 +32,7 @@ ALTER TABLE public.accounts
 
 CREATE TABLE IF NOT EXISTS public.users
 (
-    id integer NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+    id SERIAL NOT NULL,
     login character varying(15) COLLATE pg_catalog."default" NOT NULL,
     password character varying(45) COLLATE pg_catalog."default" NOT NULL,
     account_id bigint,
@@ -58,7 +58,7 @@ CREATE INDEX login_index
 
 CREATE TABLE IF NOT EXISTS public.payments
 (
-    id integer NOT NULL DEFAULT nextval('payments_id_seq'::regclass),
+    id SERIAL NOT NULL,
     user_id bigint NOT NULL,
     destination_address character varying(45) COLLATE pg_catalog."default",
     price bigint,
@@ -85,7 +85,7 @@ CREATE INDEX user_id_index_payments
 
 CREATE TABLE IF NOT EXISTS public.credit_cards
 (
-    id integer NOT NULL DEFAULT nextval('credit_cards_id_seq'::regclass),
+    id SERIAL NOT NULL,
     name character varying(15) COLLATE pg_catalog."default",
     expire_date character varying(45) COLLATE pg_catalog."default",
     user_id bigint NOT NULL,
@@ -110,7 +110,7 @@ CREATE INDEX user_id_index_credit_cards
 
 CREATE TABLE IF NOT EXISTS public.bank_accounts
 (
-    id integer NOT NULL DEFAULT nextval('bank_accounts_id_seq'::regclass),
+    id SERIAL NOT NULL,
     balance bigint NOT NULL,
     blocked boolean,
     credit_card_id bigint NOT NULL,
