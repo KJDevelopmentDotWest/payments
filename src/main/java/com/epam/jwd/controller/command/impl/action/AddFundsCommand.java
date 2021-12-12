@@ -30,8 +30,9 @@ public class AddFundsCommand implements Command {
         Integer creditCardId;
         Integer funds;
         try {
-            creditCardId = Integer.valueOf( request.getParameter(CREDIT_CARD_ID_PARAMETER_NAME));
-            funds = Integer.valueOf(request.getParameter(FUNDS_PARAMETER_NAME));
+            creditCardId = Integer.valueOf(request.getParameter(CREDIT_CARD_ID_PARAMETER_NAME));
+            Double tempFunds = Double.valueOf(request.getParameter(FUNDS_PARAMETER_NAME));
+            funds = tempFunds.intValue();
         } catch (NumberFormatException e){
             logger.error(e);
             return new CommandResponse(request.getContextPath() + ApplicationCommand.SHOW_ERROR_PAGE_URL, true);
