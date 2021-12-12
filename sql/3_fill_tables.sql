@@ -65,3 +65,30 @@ INSERT INTO public.users(
 INSERT INTO public.users(
 	login, password, account_id, is_active, role_id)
 	VALUES ('ivan2007', 'j�����', '1', true, '2');
+
+
+INSERT INTO public.credit_cards(
+	name, expire_date, user_id, "number")
+	VALUES ('work card', '2022-11-10T15:53:28.376Z', '1', 1453255745745715);
+
+INSERT INTO public.credit_cards(
+	name, expire_date, user_id, "number")
+	VALUES ('generic card', '2022-10-12T15:53:28.376Z', '2', 5688935745834515);
+
+
+INSERT INTO public.bank_accounts(
+	balance, blocked, credit_card_id)
+	VALUES (13, false, 2);
+
+INSERT INTO public.bank_accounts(
+	balance, blocked, credit_card_id)
+	VALUES (870, false, 3);
+
+
+INSERT INTO public.payments(
+	user_id, destination_address, price, committed, "time", name)
+	VALUES (1, 'school', 270, true, '2022-10-12T15:53:28.376Z', 'school payment');
+
+INSERT INTO public.payments(
+	user_id, destination_address, price, committed, "time", name)
+	VALUES (1, 'restaurant', 270, false, null, 'restaurant');

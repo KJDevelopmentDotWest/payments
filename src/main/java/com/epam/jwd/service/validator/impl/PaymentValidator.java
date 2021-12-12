@@ -14,7 +14,7 @@ public class PaymentValidator implements Validator<PaymentDto, Integer> {
     private static final Integer NAME_MAX_LENGTH = 15;
     private static final Integer ADDRESS_MIN_LENGTH = 2;
     private static final Integer ADDRESS_MAX_LENGTH = 15;
-    private static final String NAME_PATTERN = "^[a-zA-Z]*$";
+    private static final String NAME_PATTERN = "^[a-zA-Z\\s]*$";
     private static final String ADDRESS_PATTERN = "^[a-zA-Z-/.@]*$";
 
     @Override

@@ -84,7 +84,7 @@
         function allowOnlyEngl(){
             var name = document.getElementById("name");
             var destination = document.getElementById("destination");
-            if (!/^[a-zA-Z]*$/g.test(name.value)) {
+            if (!/^[a-zA-Z\s]*$/g.test(name.value)) {
                 name.value = name.value.slice(0, -1);
                 return false;
             }

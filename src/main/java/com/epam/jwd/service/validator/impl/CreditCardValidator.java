@@ -15,7 +15,7 @@ public class CreditCardValidator implements Validator<CreditCardDto, Integer> {
     private static final Integer NAME_MIN_LENGTH = 2;
     private static final Integer NAME_MAX_LENGTH = 15;
 
-    private static final String NAME_PATTERN = "^[a-zA-Z]*$";
+    private static final String NAME_PATTERN = "^[a-zA-Z\\s]*$";
     private static final Integer NUMBER_LENGTH = 16;
 
     @Override
