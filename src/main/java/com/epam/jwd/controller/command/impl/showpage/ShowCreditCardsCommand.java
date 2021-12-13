@@ -55,7 +55,7 @@ public class ShowCreditCardsCommand implements Command {
 
         String sortBy = request.getParameter(SORT_BY_PARAMETER_NAME);
 
-        if (pageNumber > lastPage){
+        if (pageNumber > lastPage || pageNumber < 0){
             pageNumber = 1;
         }
 

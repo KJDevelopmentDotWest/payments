@@ -57,7 +57,7 @@ public class ShowAdminUsersCommand implements Command {
         Integer lastPage = getLastPage(request);
         List<UserDto> userDto;
 
-        if (pageNumber > lastPage){
+        if (pageNumber > lastPage || pageNumber < 0){
             pageNumber = 1;
         }
 

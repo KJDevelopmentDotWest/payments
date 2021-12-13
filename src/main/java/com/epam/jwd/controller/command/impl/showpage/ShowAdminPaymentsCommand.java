@@ -57,7 +57,7 @@ public class ShowAdminPaymentsCommand implements Command {
         Integer lastPage = getLastPage(request);
         List<PaymentDto> payments;
 
-        if (pageNumber > lastPage){
+        if (pageNumber > lastPage || pageNumber < 0){
             pageNumber = 1;
         }
 

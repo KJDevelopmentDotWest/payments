@@ -1,6 +1,5 @@
 package com.epam.jwd.controller.command.impl.showpage;
 
-import com.epam.jwd.controller.api.BiFunctionThrowsServiceException;
 import com.epam.jwd.controller.api.TriFunctionThrowsServiceException;
 import com.epam.jwd.controller.command.api.Command;
 import com.epam.jwd.controller.command.commandresponse.CommandResponse;
@@ -13,7 +12,11 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class ShowPaymentsCommand implements Command {
 
@@ -56,7 +59,7 @@ public class ShowPaymentsCommand implements Command {
 
         String sortBy = request.getParameter(SORT_BY_PARAMETER_NAME);
 
-        if (pageNumber > lastPage){
+        if (pageNumber > lastPage || pageNumber < 0){
             pageNumber = 1;
         }
 
